@@ -34,7 +34,7 @@ jobs:
 
       - name: Unlock
         run: |
-          echo "${{ secrets.GIT_CRYPT }}" > ./key.gpg
+          echo "${{ secrets.GIT_CRYPT }}" | base64 -d > ./key.gpg
           git-crypt unlock ./key.gpg
           rm -rf ./key.gpg
 
