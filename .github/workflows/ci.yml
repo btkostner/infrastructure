@@ -39,4 +39,5 @@ jobs:
           rm -rf ./key.gpg
 
       - name: Lint
-        run: ansible-lint ./ansible/playbooks/site.yml
+        run: ansible-lint ./playbooks/site.yml
+        working-directory: ./ansible
