@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Setup (Git Crypt)
-        run: apt install --no-install-recommends --yes git-crypt@0.6.0
+        run: sudo apt install --no-install-recommends --yes git-crypt@0.6.0
 
       - name: Setup (Python)
         uses: actions/setup-python@v2
