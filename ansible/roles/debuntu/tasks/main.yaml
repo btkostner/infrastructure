@@ -1,0 +1,16 @@
+---
+
+- name: Remove ubuntu packages
+  ansible.builtin.apt:
+    name:
+      - snapd
+      - thin-provisioning-tools
+      - ubuntu-advantage-tools
+    state: absent
+    autoclean: true
+    autoremove: true
+    purge: true
+  become: true
+  tags:
+    - debuntu
+    - packages

@@ -33,7 +33,6 @@
   loop_control:
     label: "{{ user.username }}"
     loop_var: user
-  with_items:
-    - "{{ users }}"
+  loop: "{{ users }}"
   tags:
     - users
