@@ -8,6 +8,7 @@
     - users
 
     - debuntu
+    - ssh
     - unattended-upgrades
 
     - containerd

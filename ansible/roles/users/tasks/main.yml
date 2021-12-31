@@ -3,7 +3,7 @@
 - name: Install "sudo" package
   ansible.builtin.apt:
     name: sudo
-    state: "{{ users_package_state }}"
+    state: latest
     update_cache: true
   become: true
   tags:

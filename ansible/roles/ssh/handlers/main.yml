@@ -1,0 +1,14 @@
+---
+
+- name: Enable "openssh-server"
+  service:
+    name: sshd
+    enabled: true
+    state: started
+  become: true
+
+- name: Reload "openssh-server"
+  service:
+    name: sshd
+    state: reloaded
+  become: true

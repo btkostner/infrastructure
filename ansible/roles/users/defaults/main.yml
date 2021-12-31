@@ -1,7 +1,5 @@
 ---
 
-users_package_state: latest
-
 users_sudo_group: admin
 users_default_shell: /bin/bash
 

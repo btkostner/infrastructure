@@ -23,7 +23,7 @@
 - name: Install "containerd.io" package
   ansible.builtin.apt:
     name: containerd.io
-    state: "{{ containerd_package_state }}"
+    state: latest
     update_cache: true
   become: true
   notify: Enable "containerd"
