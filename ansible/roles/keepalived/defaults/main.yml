@@ -1,0 +1,7 @@
+---
+
+keepalived_package_state: latest
+
+keepalived_priority: "{{ 100 | random(seed=hostname) }}"
+
+keepalived_password: 12345678

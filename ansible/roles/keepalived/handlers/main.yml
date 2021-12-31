@@ -1,0 +1,13 @@
+---
+
+- name: Enable "keepalived"
+  service:
+    name: keepalived
+    enabled: true
+  become: true
+
+- name: Restart "keepalived"
+  service:
+    name: keepalived
+    state: restarted
+  become: true

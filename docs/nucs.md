@@ -47,7 +47,7 @@ ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no btkostner@<s
 Once you ensure you can ssh into the server, you'll want to add the IP address to the ansible inventory file. This is located in `ansible/inventories/production/hosts`. Add it to the `common` block along with the hostname. After it's added to the inventory, you can run this ansible command to provision it:
 
 ```sh
-ansible-playbook -u btkostner --ask-pass --ask-become-pass -l <ip address> playbooks/site.yml
+ansible-playbook -u btkostner --ask-pass --ask-become-pass --ssh-common-args "-o PreferredAuthentications=password -o PubkeyAuthentication=no" -l <ip address> playbooks/site.yml
 ```
 
 This will set up the nuc with all of the needed dependencies, and add it to the kubernetes cluster!
