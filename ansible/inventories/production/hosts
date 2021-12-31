@@ -2,6 +2,6 @@
 192.168.1.141 hostname=nuc-1-zone-a zone=a
 192.168.1.161 hostname=nuc-1-zone-b zone=b
 
-[main]
+[leader]
 192.168.1.141
 192.168.1.161

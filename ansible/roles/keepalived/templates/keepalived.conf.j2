@@ -4,7 +4,7 @@ global_defs {
   router_id {{ hostname }}
 }
 
-vrrp_instance KUBE_MASTER {
+vrrp_instance KUBE_LEADER {
   state MASTER
   interface {{ ansible_default_ipv4.interface }}
   advert_int 1
@@ -13,7 +13,7 @@ vrrp_instance KUBE_MASTER {
   priority {{ keepalived_priority }}
 
   unicast_peer {
-    {{ groups.main | difference([inventory_hostname]) | join('\n') | indent(4) }}
+    {{ groups.leader | difference([inventory_hostname]) | join('\n') | indent(4) }}
   }
 
   authentication {

@@ -1,0 +1,38 @@
+---
+
+- name: Configure hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  become: true
+  tags:
+    - host
+    - provision
+
+- name: Swapoff
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/swapoff
+      - -a
+  changed_when: false
+  become: true
+  tags:
+    - host
+    - provision
+
+- name: Unmount "/swap.img"
+  ansible.builtin.mount:
+    path: /swap.img
+    state: absent
+  become: true
+  tags:
+    - host
+    - provision
+
+- name: Destroy "/swap.img"
+  ansible.builtin.file:
+    path: /swap.img
+    state: absent
+  become: true
+  tags:
+    - host
+    - provision

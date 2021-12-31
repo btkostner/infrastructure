@@ -10,21 +10,13 @@
       failed_when: false
       register: check_python
       tags:
-        - provision
         - packages
+        - provision
 
     - name: Install "python" package
       raw: apt -y update && apt install -y python3-minimal
       become: true
       when: check_python.rc != 0
       tags:
-        - provision
         - packages
-
-    - name: Configure hostname
-      hostname:
-        name: "{{ hostname }}"
-      when: hostname is defined
-      become: true
-      tags:
         - provision

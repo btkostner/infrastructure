@@ -4,4 +4,4 @@
 
 - import_playbook: ./common.yml
 
-- import_playbook: ./main.yml
+- import_playbook: ./leader.yml

@@ -1,5 +1,6 @@
 ---
 
-- hosts: main
+- hosts: leader
+  serial: 50%
   roles:
     - keepalived

@@ -11,6 +11,6 @@ users:
   - uid: 0
     name: Gabriel Grey
     username: root
-    password: false
+    password: "!"
     shell: /bin/bash
     ssh_keys: []

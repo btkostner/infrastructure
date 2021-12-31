@@ -1,8 +1,13 @@
 ---
 
 - hosts: all
+  serial: 50%
   roles:
+    - host
+
     - users
 
     - debuntu
     - unattended-upgrades
+
+    - containerd
