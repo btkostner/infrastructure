@@ -20,7 +20,7 @@
     - provision
 
 - name: Unmount "/swap.img"
-  ansible.builtin.mount:
+  mount:
     path: /swap.img
     state: absent
   become: true
