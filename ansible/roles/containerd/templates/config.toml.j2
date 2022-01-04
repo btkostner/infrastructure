@@ -1,7 +1,5 @@
 {{ ansible_managed | comment }}
 
-disabled_plugins = ["cri"]
-
 [plugins]
   [plugins."io.containerd.grpc.v1.cri"]
     [plugins."io.containerd.grpc.v1.cri".containerd]

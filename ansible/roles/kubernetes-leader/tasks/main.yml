@@ -1,0 +1,16 @@
+---
+
+- name: Template "/etc/kubernetes/init.yml"
+  ansible.builtin.template:
+    src: init.yml.j2
+    dest: /etc/kubernetes/init.yml
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  tags:
+    - kubernetes
+
+- name: Initialize Cluster
+  run_once: true
+  shell: kubeadm init --config /etc/kubernetes/init.yml

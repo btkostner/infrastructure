@@ -1,0 +1,46 @@
+---
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+
+bootstrapTokens:
+- token: {{ kubernetes_leader_token }}
+  ttl: 24h0m0s
+  groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  usages:
+  - signing
+  - authentication
+
+localAPIEndpoint:
+  advertiseAddress: {{ kubernetes_api_endpoint_address }}
+  bindPort: {{ kubernetes_api_endpoint_port }}
+
+nodeRegistration:
+  criSocket: {{ kubernetes_cri_socket }}
+  imagePullPolicy: IfNotPresent
+  name: node
+  taints: null
+
+---
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: {{ kubernetes_version }}
+
+clusterName: cluster
+imageRepository: k8s.gcr.io
+
+certificatesDir: /etc/kubernetes/pki
+controllerManager: {}
+dns: {}
+
+apiServer:
+  timeoutForControlPlane: 4m0s
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}

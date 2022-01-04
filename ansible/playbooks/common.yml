@@ -12,3 +12,4 @@
     - unattended-upgrades
 
     - containerd
+    - kubernetes
