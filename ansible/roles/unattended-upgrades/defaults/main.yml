@@ -1,3 +1,0 @@
----
-
-unattended_upgrades_reboot_time: "{{ 86400 | random(seed=hostname) }}"

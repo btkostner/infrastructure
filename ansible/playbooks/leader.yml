@@ -1,8 +1,0 @@
----
-
-- hosts: leader
-  serial: 50%
-  roles:
-    - keepalived
-
-    - kubernetes-leader

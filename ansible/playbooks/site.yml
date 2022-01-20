@@ -1,7 +1,0 @@
----
-
-- import_playbook: ./provision.yml
-
-- import_playbook: ./common.yml
-
-- import_playbook: ./leader.yml
