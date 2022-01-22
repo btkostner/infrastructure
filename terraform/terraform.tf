@@ -1,20 +1,20 @@
 provider "helm" {
   kubernetes {
     config_path    = "~/.kube/config"
-    config_context = "btkostner"
+    config_context = "admin@btkostner"
   }
 }
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
-  config_context = "btkostner"
+  config_context = "admin@btkostner"
 }
 
 terraform {
   backend "kubernetes" {
     secret_suffix    = "state"
     config_path      = "~/.kube/config"
-    config_context   = "btkostner"
+    config_context   = "admin@btkostner"
   }
 
   required_providers {

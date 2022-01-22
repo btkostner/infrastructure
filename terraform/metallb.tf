@@ -4,15 +4,6 @@ resource "kubernetes_namespace" "metallb" {
   }
 }
 
-resource "helm_release" "metallb" {
-  name      = "metallb"
-  namespace = kubernetes_namespace.metallb.metadata.0.name
-
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "bitnami/metallb"
-  version    = "2.6.1"
-}
-
 resource "kubernetes_config_map" "metallb_config" {
   metadata {
     name      = "config"
@@ -20,19 +11,30 @@ resource "kubernetes_config_map" "metallb_config" {
   }
 
   data = {
-    config = yamlencode({
-      address-pools = [
-        {
-          name      = "cheap"
-          protocol  = "layer2"
-          addresses = ["192.168.3.100-192.168.3.254"]
-        },
-        {
-          name = "expensive"
-          protocol = "layer2"
-          addresses = ["192.168.3.2-192.168.3.99"]
-        }
-      ]
+    config = jsonencode({
+      address-pools = [{
+        name      = "default"
+        protocol  = "layer2"
+        addresses = ["192.168.1.101-192.168.1.140"]
+      }]
     })
+  }
+}
+
+resource "helm_release" "metallb" {
+  name      = "metallb"
+  namespace = kubernetes_namespace.metallb.metadata.0.name
+
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "metallb"
+  version    = "2.6.1"
+
+  set {
+    name  = "existingConfigMap"
+    value = kubernetes_config_map.metallb_config.metadata.0.name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata, status]
   }
 }
