@@ -12,7 +12,7 @@ resource "kubernetes_persistent_volume" "media" {
 
   spec {
     access_modes = ["ReadWriteMany"]
-    capacity     = {
+    capacity = {
       storage = "20T"
     }
 
@@ -27,7 +27,7 @@ resource "kubernetes_persistent_volume" "media" {
 
 resource "kubernetes_persistent_volume_claim" "media" {
   metadata {
-    name = "media"
+    name      = "media"
     namespace = kubernetes_namespace.media.metadata.0.name
   }
 
