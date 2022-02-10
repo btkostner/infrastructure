@@ -171,33 +171,6 @@ resource "helm_release" "plex" {
           "nginx.org/proxy-connect-timeout" = "1m"
           "nginx.org/proxy-read-timeout" = "5m"
           "nginx.org/proxy-send-timeout" = "5m"
-/**
-          "nginx.org/server-snippets" = <<EOF
-# Borrowed from https://github.com/toomuchio/plex-nginx-reverseproxy
-send_timeout 100m;
-
-gzip on;
-gzip_vary on;
-gzip_min_length 1000;
-gzip_proxied any;
-gzip_types text/plain text/css text/xml application/xml text/javascript application/x-javascript image/svg+xml;
-gzip_disable "MSIE [1-6]\.";
-
-client_max_body_size 100M;
-
-proxy_set_header Host $host;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header X-Forwarded-Proto $scheme;
-proxy_set_header Sec-WebSocket-Extensions $http_sec_websocket_extensions;
-proxy_set_header Sec-WebSocket-Key $http_sec_websocket_key;
-proxy_set_header Sec-WebSocket-Version $http_sec_websocket_version;
-
-proxy_http_version 1.1;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "Upgrade";
-EOF
-*/
         }
 
         enabled = true
@@ -220,10 +193,6 @@ EOF
 
     persistence = {
       config = {
-        annotations = {
-          "nfs.io/storage-path" = "media-plex-config-pvc"
-        }
-
         enabled      = true
         size         = "20G"
         storageClass = "nfs-client"
@@ -278,6 +247,59 @@ resource "kubernetes_service" "plex_lb" {
     }
     selector = {
       "app.kubernetes.io/name" = helm_release.plex.metadata.0.name
+    }
+    session_affinity = "ClientIP"
+    type = "LoadBalancer"
+  }
+}
+
+resource "helm_release" "tautulli" {
+  name      = "tautulli"
+  namespace = kubernetes_namespace.media.metadata.0.name
+
+  repository = "https://k8s-at-home.com/charts/"
+  chart      = "tautulli"
+  version    = "11.2.0"
+
+  set {
+    name  = "env.TZ"
+    value = "America/Denver"
+  }
+
+  set {
+    name  = "persistence.config.enabled"
+    value = true
+  }
+
+  set {
+    name  = "persistence.config.size"
+    value = "5Gi"
+  }
+
+  set {
+    name  = "persistence.config.storageClass"
+    value = "nfs-client"
+  }
+
+  lifecycle {
+    ignore_changes = [metadata, status]
+  }
+}
+
+resource "kubernetes_service" "tautulli_lb" {
+  metadata {
+    name      = "tautulli-lb"
+    namespace = kubernetes_namespace.media.metadata.0.name
+  }
+
+  spec {
+    load_balancer_ip = "192.168.1.112"
+    port {
+      port        = 8181
+      target_port = 80
+    }
+    selector = {
+      "app.kubernetes.io/name" = helm_release.tautulli.metadata.0.name
     }
     session_affinity = "ClientIP"
     type = "LoadBalancer"
