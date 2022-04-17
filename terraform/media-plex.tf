@@ -10,16 +10,16 @@ resource "kubernetes_manifest" "plex_production_certificate" {
     }
 
     spec = {
-      secretName = "plex-btkostner-io-tls"
+      secretName = "plex-production-tls"
 
       duration    = "2160h0m0s"
       renewBefore = "360h0m0s"
 
       subject = {
-        organizations = ["btkostner.io"]
+        organizations = ["btkostner LLC"]
       }
 
-      dnsNames = ["plex.btkostner.io"]
+      dnsNames = ["abraxis.tv"]
 
       issuerRef = {
         name = kubernetes_manifest.letsencrypt_production_cert_issuer.manifest.metadata.name
@@ -56,15 +56,15 @@ resource "kubernetes_daemonset" "intel_gpu" {
 
       spec {
         init_container {
-          name            = "intel-gpu-initcontainer"
-          image           = "intel/intel-gpu-initcontainer:0.23.0"
+          name              = "intel-gpu-initcontainer"
+          image             = "intel/intel-gpu-initcontainer:0.23.0"
           image_pull_policy = "IfNotPresent"
           security_context {
             read_only_root_filesystem = true
           }
           volume_mount {
             mount_path = "/etc/kubernetes/node-feature-discovery/source.d/"
-            name      = "nfd-source-hooks"
+            name       = "nfd-source-hooks"
           }
         }
 
@@ -78,7 +78,7 @@ resource "kubernetes_daemonset" "intel_gpu" {
               }
             }
           }
-          image           = "intel/intel-gpu-plugin:0.23.0"
+          image             = "intel/intel-gpu-plugin:0.23.0"
           image_pull_policy = "IfNotPresent"
 
           security_context {
@@ -86,19 +86,19 @@ resource "kubernetes_daemonset" "intel_gpu" {
           }
 
           volume_mount {
-            name      = "devfs"
+            name       = "devfs"
             mount_path = "/dev/dri"
             read_only  = true
           }
 
           volume_mount {
-            name      = "sysfs"
+            name       = "sysfs"
             mount_path = "/sys/class/drm"
             read_only  = true
           }
 
           volume_mount {
-            name      = "kubeletsockets"
+            name       = "kubeletsockets"
             mount_path = "/var/lib/kubelet/device-plugins"
           }
         }
@@ -153,30 +153,35 @@ resource "helm_release" "plex" {
 
   values = [jsonencode({
     env = {
-      ADVERTISE_IP = "https://plex.btkostner.io:443"
+      ADVERTISE_IP = "https://abraxis.tv:443"
       TZ           = "America/Denver"
     }
 
     hostNetwork = true
 
     image = {
-      tag = "latest"
+      tag        = "latest"
+      pullPolicy = "Always"
     }
 
     ingress = {
       main = {
         annotations = {
-          "kubernetes.io/ingress.class" = "nginx"
-          "nginx.org/proxy-buffering" = "false"
+          # "external-dns.alpha.kubernetes.io/access"             = "public"
+          # "external-dns.alpha.kubernetes.io/cloudflare-proxied" = "false"
+          # "external-dns.alpha.kubernetes.io/hostname"           = "abraxis.tv"
+          # "external-dns.alpha.kubernetes.io/ttl"                = "600"
+          "kubernetes.io/ingress.class"     = "nginx"
+          "nginx.org/proxy-buffering"       = "false"
           "nginx.org/proxy-connect-timeout" = "1m"
-          "nginx.org/proxy-read-timeout" = "5m"
-          "nginx.org/proxy-send-timeout" = "5m"
+          "nginx.org/proxy-read-timeout"    = "5m"
+          "nginx.org/proxy-send-timeout"    = "5m"
         }
 
         enabled = true
 
         hosts = [{
-          host = "plex.btkostner.io"
+          host = "abraxis.tv"
           paths = [{
             path = "/"
           }]
@@ -185,7 +190,7 @@ resource "helm_release" "plex" {
         ingressClassName = "nginx"
 
         tls = [{
-          hosts      = ["plex.btkostner.io"]
+          hosts      = ["abraxis.tv"]
           secretName = kubernetes_manifest.plex_production_certificate.manifest.spec.secretName
         }]
       }
@@ -249,7 +254,7 @@ resource "kubernetes_service" "plex_lb" {
       "app.kubernetes.io/name" = helm_release.plex.metadata.0.name
     }
     session_affinity = "ClientIP"
-    type = "LoadBalancer"
+    type             = "LoadBalancer"
   }
 }
 
@@ -302,6 +307,6 @@ resource "kubernetes_service" "tautulli_lb" {
       "app.kubernetes.io/name" = helm_release.tautulli.metadata.0.name
     }
     session_affinity = "ClientIP"
-    type = "LoadBalancer"
+    type             = "LoadBalancer"
   }
 }

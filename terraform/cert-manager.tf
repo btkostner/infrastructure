@@ -70,7 +70,7 @@ resource "kubernetes_manifest" "letsencrypt_staging_cert_issuer" {
             }
           }
           selector = {
-            dnsZones = ["btkostner.io"]
+            dnsZones = ["abraxis.tv", "btkostner.io"]
           }
         }]
       }
@@ -107,7 +107,7 @@ resource "kubernetes_manifest" "letsencrypt_production_cert_issuer" {
             }
           }
           selector = {
-            dnsZones = ["btkostner.io"]
+            dnsZones = ["abraxis.tv", "btkostner.io"]
           }
         }]
       }

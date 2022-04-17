@@ -93,6 +93,6 @@ resource "kubernetes_service" "grafana_lb" {
       "app.kubernetes.io/name" = helm_release.grafana.metadata.0.name
     }
     session_affinity = "ClientIP"
-    type = "LoadBalancer"
+    type             = "LoadBalancer"
   }
 }
