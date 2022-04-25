@@ -1,5 +1,11 @@
+variable "cloudflare_token" {
+  description = "Token for cert manager on Cloudflare"
+  type        = string
+  sensitive   = true
+}
+
 variable "cloudflare_api_key" {
-  description = "API key for cert manager on Cloudflare"
+  description = "Global API key for Cloudflare"
   type        = string
   sensitive   = true
 }
@@ -30,16 +36,16 @@ resource "helm_release" "cert_manager" {
   }
 }
 
-resource "kubernetes_secret" "cloudflare_api_key" {
+resource "kubernetes_secret" "cloudflare_token" {
   metadata {
-    name      = "cloudflare-api-key"
+    name      = "cloudflare-token"
     namespace = kubernetes_namespace.cert_manager.metadata.0.name
   }
 
   type = "Opaque"
 
   data = {
-    apikey = var.cloudflare_api_key
+    token = var.cloudflare_token
   }
 }
 
@@ -64,8 +70,8 @@ resource "kubernetes_manifest" "letsencrypt_staging_cert_issuer" {
             cloudflare = {
               email = var.cloudflare_email
               apiTokenSecretRef = {
-                name = kubernetes_secret.cloudflare_api_key.metadata.0.name
-                key  = "apikey"
+                name = kubernetes_secret.cloudflare_token.metadata.0.name
+                key  = "token"
               }
             }
           }
@@ -101,8 +107,8 @@ resource "kubernetes_manifest" "letsencrypt_production_cert_issuer" {
             cloudflare = {
               email = var.cloudflare_email
               apiTokenSecretRef = {
-                name = kubernetes_secret.cloudflare_api_key.metadata.0.name
-                key  = "apikey"
+                name = kubernetes_secret.cloudflare_token.metadata.0.name
+                key  = "token"
               }
             }
           }

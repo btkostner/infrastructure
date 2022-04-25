@@ -84,7 +84,7 @@ resource "kubernetes_service" "grafana_lb" {
   }
 
   spec {
-    load_balancer_ip = "192.168.1.111"
+    load_balancer_ip = "192.168.1.120"
     port {
       port        = 80
       target_port = 3000

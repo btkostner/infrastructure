@@ -15,7 +15,7 @@ resource "kubernetes_config_map" "metallb_config" {
       address-pools = [{
         name      = "default"
         protocol  = "layer2"
-        addresses = ["192.168.1.101-192.168.1.140"]
+        addresses = ["192.168.1.100-192.168.1.140"]
       }]
     })
   }

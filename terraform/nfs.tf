@@ -10,7 +10,7 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
 
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
   chart      = "nfs-subdir-external-provisioner"
-  version    = "4.0.14"
+  version    = "4.0.16"
 
   set {
     name  = "nfs.server"
@@ -20,5 +20,10 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
   set {
     name  = "nfs.path"
     value = "/volume1/Cluster"
+  }
+
+  set {
+    name  = "storageClass.defaultClass"
+    value = true
   }
 }

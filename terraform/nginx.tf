@@ -17,7 +17,7 @@ resource "helm_release" "nginx" {
 
   set {
     name  = "service.loadBalancerIP"
-    value = "192.168.1.101"
+    value = "192.168.1.100"
   }
 
   lifecycle {
@@ -27,74 +27,73 @@ resource "helm_release" "nginx" {
 
 resource "kubernetes_secret" "ddns" {
   metadata {
-    name = "ddns-config"
+    name      = "ddns-config"
     namespace = kubernetes_namespace.nginx.metadata.0.name
   }
 
   data = {
     "ddclient.conf" = <<EOF
 daemon=600
-use=web
-web=checkip.dyndns.org
-protocol=cloudflare
-zone=btkostner.io
-ttl=1
-login=token
-password=${var.cloudflare_api_key}
-plex.btkostner.io
+syslog=yes
+verbose=yes
+ssl=yes
+use=web, web=checkip.dyndns.com/, web-skip='Current IP Address: '
+
+protocol=cloudflare, \
+zone=abraxis.tv, \
+login=btkostner@gmail.com, \
+password=${var.cloudflare_api_key} \
+abraxis.tv, request.abraxis.tv
 EOF
   }
 }
 
-resource "kubernetes_cron_job_v1" "ddns" {
+resource "kubernetes_deployment" "ddclient" {
   metadata {
-    name = "ddns"
+    name      = "ddclient"
     namespace = kubernetes_namespace.nginx.metadata.0.name
   }
 
   spec {
-    concurrency_policy            = "Forbid"
-    failed_jobs_history_limit     = 5
-    schedule                      = "*/10 * * * *"
-    starting_deadline_seconds     = 60
-    successful_jobs_history_limit = 5
+    replicas = 1
 
-    job_template {
+    selector {
+      match_labels = {
+        "app.kubernetes.io/instance" = "ddclient"
+        "app.kubernetes.io/name"     = "ddclient"
+      }
+    }
+
+    template {
       metadata {
-        name = "ddns"
+        name      = "ddclient"
+        namespace = kubernetes_namespace.nginx.metadata.0.name
+        labels = {
+          "app.kubernetes.io/instance" = "ddclient"
+          "app.kubernetes.io/name"     = "ddclient"
+        }
       }
 
       spec {
-        active_deadline_seconds    = 240
-        backoff_limit              = 2
+        container {
+          name  = "ddclient"
+          image = "linuxserver/ddclient"
 
-        template {
-          metadata {
-            name = "ddns"
+          env {
+            name  = "TZ"
+            value = "America/Denver"
           }
 
-          spec {
-            container {
-              name    = "ddclient"
-              image   = "linuxserver/ddclient"
+          volume_mount {
+            name       = "config"
+            mount_path = "/config"
+          }
+        }
 
-              env {
-                name  = "TZ"
-                value = "America/Denver"
-              }
-
-              volume_mount {
-                name = "config"
-                mount_path = "/config"
-              }
-            }
-
-            volume {
-              name = "config"
-              secret {
-                secret_name = kubernetes_secret.ddns.metadata.0.name
-              }
-            }
+        volume {
+          name = "config"
+          secret {
+            secret_name = kubernetes_secret.ddns.metadata.0.name
           }
         }
       }

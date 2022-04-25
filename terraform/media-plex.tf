@@ -1,4 +1,21 @@
-# https://github.com/k8s-at-home/charts/tree/master/charts/stable/plex
+resource "random_password" "plex_production_certificate_password" {
+  length  = 64
+  special = false
+}
+
+resource "kubernetes_secret" "plex_production_certificate_password" {
+  metadata {
+    name      = "plex-certificate-password"
+    namespace = kubernetes_namespace.media.metadata.0.name
+  }
+
+  type = "Opaque"
+
+  data = {
+    password = random_password.plex_production_certificate_password.result
+  }
+}
+
 resource "kubernetes_manifest" "plex_production_certificate" {
   manifest = {
     apiVersion = "cert-manager.io/v1"
@@ -25,119 +42,20 @@ resource "kubernetes_manifest" "plex_production_certificate" {
         name = kubernetes_manifest.letsencrypt_production_cert_issuer.manifest.metadata.name
         kind = "ClusterIssuer"
       }
-    }
-  }
 
-  depends_on = [kubernetes_manifest.letsencrypt_staging_cert_issuer]
-}
-
-resource "kubernetes_daemonset" "intel_gpu" {
-  metadata {
-    name      = "intel-gpu-plugin"
-    namespace = kubernetes_namespace.media.metadata.0.name
-    labels = {
-      app = "intel-gpu-plugin"
-    }
-  }
-
-  spec {
-    selector {
-      match_labels = {
-        app = "intel-gpu-plugin"
-      }
-    }
-
-    template {
-      metadata {
-        labels = {
-          app = "intel-gpu-plugin"
-        }
-      }
-
-      spec {
-        init_container {
-          name              = "intel-gpu-initcontainer"
-          image             = "intel/intel-gpu-initcontainer:0.23.0"
-          image_pull_policy = "IfNotPresent"
-          security_context {
-            read_only_root_filesystem = true
+      keystores = {
+        pkcs12 = {
+          create = true
+          passwordSecretRef = {
+            key  = "password"
+            name = kubernetes_secret.plex_production_certificate_password.metadata.0.name
           }
-          volume_mount {
-            mount_path = "/etc/kubernetes/node-feature-discovery/source.d/"
-            name       = "nfd-source-hooks"
-          }
-        }
-
-        container {
-          name = "intel-gpu-plugin"
-          env {
-            name = "NODE_NAME"
-            value_from {
-              field_ref {
-                field_path = "spec.nodeName"
-              }
-            }
-          }
-          image             = "intel/intel-gpu-plugin:0.23.0"
-          image_pull_policy = "IfNotPresent"
-
-          security_context {
-            read_only_root_filesystem = true
-          }
-
-          volume_mount {
-            name       = "devfs"
-            mount_path = "/dev/dri"
-            read_only  = true
-          }
-
-          volume_mount {
-            name       = "sysfs"
-            mount_path = "/sys/class/drm"
-            read_only  = true
-          }
-
-          volume_mount {
-            name       = "kubeletsockets"
-            mount_path = "/var/lib/kubelet/device-plugins"
-          }
-        }
-
-        volume {
-          name = "devfs"
-          host_path {
-            path = "/dev/dri"
-          }
-        }
-
-        volume {
-          name = "sysfs"
-          host_path {
-            path = "/sys/class/drm"
-          }
-        }
-
-        volume {
-          name = "kubeletsockets"
-          host_path {
-            path = "/var/lib/kubelet/device-plugins"
-          }
-        }
-
-        volume {
-          name = "nfd-source-hooks"
-          host_path {
-            path = "/etc/kubernetes/node-feature-discovery/source.d/"
-            type = "DirectoryOrCreate"
-          }
-        }
-
-        node_selector = {
-          "kubernetes.io/arch" = "amd64"
         }
       }
     }
   }
+
+  depends_on = [kubernetes_manifest.letsencrypt_production_cert_issuer]
 }
 
 resource "helm_release" "plex" {
@@ -167,10 +85,6 @@ resource "helm_release" "plex" {
     ingress = {
       main = {
         annotations = {
-          # "external-dns.alpha.kubernetes.io/access"             = "public"
-          # "external-dns.alpha.kubernetes.io/cloudflare-proxied" = "false"
-          # "external-dns.alpha.kubernetes.io/hostname"           = "abraxis.tv"
-          # "external-dns.alpha.kubernetes.io/ttl"                = "600"
           "kubernetes.io/ingress.class"     = "nginx"
           "nginx.org/proxy-buffering"       = "false"
           "nginx.org/proxy-connect-timeout" = "1m"
@@ -187,8 +101,6 @@ resource "helm_release" "plex" {
           }]
         }]
 
-        ingressClassName = "nginx"
-
         tls = [{
           hosts      = ["abraxis.tv"]
           secretName = kubernetes_manifest.plex_production_certificate.manifest.spec.secretName
@@ -198,14 +110,13 @@ resource "helm_release" "plex" {
 
     persistence = {
       config = {
-        enabled      = true
-        size         = "20G"
-        storageClass = "nfs-client"
+        enabled       = true
+        existingClaim = kubernetes_persistent_volume_claim.media_plex_config.metadata.0.name
       }
 
       media = {
         enabled       = true
-        existingClaim = kubernetes_persistent_volume_claim.media.metadata.0.name
+        existingClaim = kubernetes_persistent_volume_claim.media_plex_media.metadata.0.name
         mountPath     = "/media"
       }
 
@@ -215,20 +126,47 @@ resource "helm_release" "plex" {
         mountPath = "/tls"
         type      = "secret"
       }
+
+      transcode = {
+        enabled   = true
+        type      = "emptyDir"
+        medium    = "Memory"
+        sizeLimit = "4G"
+      }
+    }
+
+    podSecurityContext = {
+      supplementalGroups = [44, 109]
+    }
+
+    probes = {
+      liveness = {
+        enabled = true
+        custom  = true
+        spec = {
+          httpGet = {
+            path = "/identity"
+            port = "http"
+          }
+          initialDelaySeconds : 0
+          periodSeconds : 10
+          timeoutSeconds : 1
+          failureThreshold : 3
+        }
+      }
     }
 
     resources = {
       requests = {
-        # Hardware acceleration using an Intel iGPU w/ QuickSync and
-        # using intel-gpu-plugin (https://github.com/intel/intel-device-plugins-for-kubernetes)
-        # "gpu.intel.com/i915" = 1
-        cpu    = "2"
-        memory = "1024Mi"
+        "gpu.intel.com/i915" = 1
+        cpu                  = "2"
+        memory               = "1024Mi"
       }
 
       limits = {
-        cpu    = "8"
-        memory = "6144Mi"
+        "gpu.intel.com/i915" = 1
+        cpu                  = "8"
+        memory               = "6144Mi"
       }
     }
   })]
@@ -252,59 +190,6 @@ resource "kubernetes_service" "plex_lb" {
     }
     selector = {
       "app.kubernetes.io/name" = helm_release.plex.metadata.0.name
-    }
-    session_affinity = "ClientIP"
-    type             = "LoadBalancer"
-  }
-}
-
-resource "helm_release" "tautulli" {
-  name      = "tautulli"
-  namespace = kubernetes_namespace.media.metadata.0.name
-
-  repository = "https://k8s-at-home.com/charts/"
-  chart      = "tautulli"
-  version    = "11.2.0"
-
-  set {
-    name  = "env.TZ"
-    value = "America/Denver"
-  }
-
-  set {
-    name  = "persistence.config.enabled"
-    value = true
-  }
-
-  set {
-    name  = "persistence.config.size"
-    value = "5Gi"
-  }
-
-  set {
-    name  = "persistence.config.storageClass"
-    value = "nfs-client"
-  }
-
-  lifecycle {
-    ignore_changes = [metadata, status]
-  }
-}
-
-resource "kubernetes_service" "tautulli_lb" {
-  metadata {
-    name      = "tautulli-lb"
-    namespace = kubernetes_namespace.media.metadata.0.name
-  }
-
-  spec {
-    load_balancer_ip = "192.168.1.112"
-    port {
-      port        = 8181
-      target_port = 80
-    }
-    selector = {
-      "app.kubernetes.io/name" = helm_release.tautulli.metadata.0.name
     }
     session_affinity = "ClientIP"
     type             = "LoadBalancer"

@@ -1,0 +1,44 @@
+[
+  {
+    "op": "replace",
+    "path": "/machine/network",
+    "value": {
+      "interfaces": [{
+        "interface": "eth0",
+        "mtu": 9000,
+        "dhcp": true
+      }]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/machine/install/wipe",
+    "value": true
+  },
+  {
+    "op": "remove",
+    "path": "/machine/install/disk"
+  },
+  {
+    "op": "add",
+    "path": "/machine/install/diskSelector",
+    "value": {
+      "size": ">= 128GB"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/machine/install/extraKernelArgs",
+    "value": [
+      "talos.platform=metal",
+      "talos.config=http://192.168.1.21:8069/configuration/talos/worker.yaml"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/machine/sysfs",
+    "value": {
+      "devices.system.cpu.cpu0.cpufreq.scaling_governor": "performance"
+    }
+  }
+]
