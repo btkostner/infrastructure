@@ -70,6 +70,20 @@ resource "helm_release" "plex" {
   reset_values    = true
 
   values = [jsonencode({
+    affinity = {
+      nodeAffinity = {
+        requiredDuringSchedulingIgnoredDuringExecution = {
+          nodeSelectorTerms = [{
+            matchExpressions = [{
+              key      = "btkostner.io.node-restriction.kubernetes.io/dedicated"
+              operator = "In"
+              values   = ["plex"]
+            }]
+          }]
+        }
+      }
+    }
+
     env = {
       ADVERTISE_IP = "https://abraxis.tv:443"
       TZ           = "America/Denver"
@@ -131,7 +145,7 @@ resource "helm_release" "plex" {
         enabled   = true
         type      = "emptyDir"
         medium    = "Memory"
-        sizeLimit = "4G"
+        sizeLimit = "8G"
       }
     }
 
@@ -158,17 +172,24 @@ resource "helm_release" "plex" {
 
     resources = {
       requests = {
-        "gpu.intel.com/i915" = 1
+        "gpu.intel.com/i915" = "1"
         cpu                  = "2"
         memory               = "1024Mi"
       }
 
       limits = {
-        "gpu.intel.com/i915" = 1
+        "gpu.intel.com/i915" = "1"
         cpu                  = "8"
         memory               = "6144Mi"
       }
     }
+
+    tolerations = [{
+      key      = "dedicated"
+      operator = "Equal"
+      value    = "plex"
+      effect   = "PreferNoSchedule"
+    }]
   })]
 
   lifecycle {

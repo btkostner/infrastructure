@@ -15,6 +15,19 @@ resource "helm_release" "intel_gpu_plugin" {
   cleanup_on_fail = true
   reset_values    = true
 
+  values = [jsonencode({
+    args = [
+      "-shared-dev-num",
+      "1",
+      "-v",
+      "1"
+    ]
+
+    image = {
+      tag = "0.23.0"
+    }
+  })]
+
   lifecycle {
     ignore_changes = [metadata, status]
   }
