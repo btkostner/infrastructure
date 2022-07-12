@@ -33,7 +33,7 @@
     "op": "add",
     "path": "/machine/install/extensions",
     "value": [{
-      "image": "ghcr.io/siderolabs/intel-ucode:20220419"
+      "image": "ghcr.io/siderolabs/intel-ucode:20220510"
     }, {
       "image": "ghcr.io/siderolabs/iscsi-tools:v0.1.1"
     }]
