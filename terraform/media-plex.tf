@@ -58,6 +58,45 @@ resource "kubernetes_manifest" "plex_production_certificate" {
   depends_on = [kubernetes_manifest.letsencrypt_production_cert_issuer]
 }
 
+resource "kubernetes_persistent_volume" "media_plex_config_new" {
+  metadata {
+    name = "media-plex-config-new"
+  }
+
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    capacity = {
+      storage = "5G"
+    }
+    storage_class_name = "iscsi"
+    persistent_volume_source {
+      iscsi {
+        target_portal = "192.168.1.21:3260"
+        iqn = "iqn.2022-05.behemoth:plex-config"
+        lun = 0
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "media_plex_config_new" {
+  metadata {
+    name      = "media-plex-config-new"
+    namespace = kubernetes_namespace.media.metadata.0.name
+  }
+
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "5G"
+      }
+    }
+    storage_class_name = "iscsi"
+    volume_name = kubernetes_persistent_volume.media_plex_config_new.metadata.0.name
+  }
+}
+
 resource "helm_release" "plex" {
   name      = "plex"
   namespace = kubernetes_namespace.media.metadata.0.name
@@ -128,6 +167,15 @@ resource "helm_release" "plex" {
         existingClaim = kubernetes_persistent_volume_claim.media_plex_config.metadata.0.name
       }
 
+      /*
+      new = {
+        enabled = true
+        mountPath = "/new"
+        type = "pvc"
+        existingClaim = kubernetes_persistent_volume_claim.media_plex_config_new.metadata.0.name
+      }
+      */
+
       media = {
         enabled       = true
         existingClaim = kubernetes_persistent_volume_claim.media_plex_media.metadata.0.name
@@ -139,13 +187,6 @@ resource "helm_release" "plex" {
         name      = kubernetes_manifest.plex_production_certificate.manifest.spec.secretName
         mountPath = "/tls"
         type      = "secret"
-      }
-
-      transcode = {
-        enabled   = true
-        type      = "emptyDir"
-        medium    = "Memory"
-        sizeLimit = "8G"
       }
     }
 
@@ -180,7 +221,7 @@ resource "helm_release" "plex" {
       limits = {
         "gpu.intel.com/i915" = "1"
         cpu                  = "8"
-        memory               = "6144Mi"
+        memory               = "12288Mi"
       }
     }
 
@@ -193,7 +234,7 @@ resource "helm_release" "plex" {
   })]
 
   lifecycle {
-    ignore_changes = [metadata, status]
+    ignore_changes = [metadata]
   }
 }
 

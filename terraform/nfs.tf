@@ -24,6 +24,6 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
 
   set {
     name  = "storageClass.defaultClass"
-    value = true
+    value = false
   }
 }

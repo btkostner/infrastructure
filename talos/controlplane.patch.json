@@ -31,6 +31,15 @@
   },
   {
     "op": "add",
+    "path": "/machine/install/extensions",
+    "value": [{
+      "image": "ghcr.io/siderolabs/intel-ucode:20220419"
+    }, {
+      "image": "ghcr.io/siderolabs/iscsi-tools:v0.1.0"
+    }]
+  },
+  {
+    "op": "add",
     "path": "/machine/install/extraKernelArgs",
     "value": [
       "talos.platform=metal",
