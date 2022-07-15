@@ -58,45 +58,6 @@ resource "kubernetes_manifest" "plex_production_certificate" {
   depends_on = [kubernetes_manifest.letsencrypt_production_cert_issuer]
 }
 
-resource "kubernetes_persistent_volume" "media_plex_config_new" {
-  metadata {
-    name = "media-plex-config-new"
-  }
-
-  spec {
-    access_modes = ["ReadWriteOnce"]
-    capacity = {
-      storage = "5G"
-    }
-    storage_class_name = "iscsi"
-    persistent_volume_source {
-      iscsi {
-        target_portal = "192.168.1.21:3260"
-        iqn = "iqn.2022-05.behemoth:plex-config"
-        lun = 0
-      }
-    }
-  }
-}
-
-resource "kubernetes_persistent_volume_claim" "media_plex_config_new" {
-  metadata {
-    name      = "media-plex-config-new"
-    namespace = kubernetes_namespace.media.metadata.0.name
-  }
-
-  spec {
-    access_modes = ["ReadWriteOnce"]
-    resources {
-      requests = {
-        storage = "5G"
-      }
-    }
-    storage_class_name = "iscsi"
-    volume_name = kubernetes_persistent_volume.media_plex_config_new.metadata.0.name
-  }
-}
-
 resource "helm_release" "plex" {
   name      = "plex"
   namespace = kubernetes_namespace.media.metadata.0.name
@@ -161,32 +122,61 @@ resource "helm_release" "plex" {
       }
     }
 
+    initContainers = {
+      update-volume-permission = {
+        image = "busybox"
+        command = ["sh", "-c", "chown -R 568:568 /cache /config /logs /transcode"]
+        volumeMounts = [{
+          name      = "cache"
+          mountPath = "/cache"
+        }, {
+          name      = "config"
+          mountPath = "/config"
+        }, {
+          name      = "logs"
+          mountPath = "/logs"
+        }, {
+          name      = "transcode"
+          mountPath = "/transcode"
+        }]
+        securityContext = {
+          runAsUser = 0
+        }
+      }
+    }
+
     persistence = {
+      cache = {
+        enabled = true
+        type    = "emptyDir"
+      }
+
       config = {
         enabled       = true
         existingClaim = kubernetes_persistent_volume_claim.media_plex_config.metadata.0.name
       }
 
-      /*
-      new = {
-        enabled = true
-        mountPath = "/new"
-        type = "pvc"
-        existingClaim = kubernetes_persistent_volume_claim.media_plex_config_new.metadata.0.name
-      }
-      */
-
       media = {
         enabled       = true
         existingClaim = kubernetes_persistent_volume_claim.media_plex_media.metadata.0.name
-        mountPath     = "/media"
+      }
+
+      logs = {
+        enabled = true
+        type    = "emptyDir"
       }
 
       tls = {
+        enabled = true
+        name    = kubernetes_manifest.plex_production_certificate.manifest.spec.secretName
+        type    = "secret"
+      }
+
+      transcode = {
         enabled   = true
-        name      = kubernetes_manifest.plex_production_certificate.manifest.spec.secretName
-        mountPath = "/tls"
-        type      = "secret"
+        medium    = "Memory"
+        sizeLimit = "4Gi"
+        type      = "emptyDir"
       }
     }
 
@@ -203,10 +193,10 @@ resource "helm_release" "plex" {
             path = "/identity"
             port = "http"
           }
-          initialDelaySeconds : 0
-          periodSeconds : 10
-          timeoutSeconds : 1
-          failureThreshold : 3
+          initialDelaySeconds = 0
+          periodSeconds       = 10
+          timeoutSeconds      = 1
+          failureThreshold    = 3
         }
       }
     }
@@ -232,10 +222,6 @@ resource "helm_release" "plex" {
       effect   = "PreferNoSchedule"
     }]
   })]
-
-  lifecycle {
-    ignore_changes = [metadata]
-  }
 }
 
 resource "kubernetes_service" "plex_lb" {

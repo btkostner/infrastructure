@@ -72,9 +72,9 @@ resource "kubernetes_persistent_volume" "media_plex_media" {
   }
 }
 
-resource "kubernetes_persistent_volume_claim" "media_plex_config" {
+resource "kubernetes_persistent_volume_claim" "media_plex_config_old" {
   metadata {
-    name      = "plex-config"
+    name      = "plex-config-old"
     namespace = kubernetes_namespace.media.metadata.0.name
   }
 
@@ -87,6 +87,23 @@ resource "kubernetes_persistent_volume_claim" "media_plex_config" {
     }
     storage_class_name = "nfs-client"
     volume_name        = kubernetes_persistent_volume.media_plex_config.metadata.0.name
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "media_plex_config" {
+  metadata {
+    name      = "plex-config"
+    namespace = kubernetes_namespace.media.metadata.0.name
+  }
+
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "60G"
+      }
+    }
+    storage_class_name = "synology-csi-retain"
   }
 }
 
