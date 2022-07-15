@@ -124,18 +124,18 @@ resource "helm_release" "plex" {
 
     initContainers = {
       update-volume-permission = {
-        image = "busybox"
+        image   = "busybox"
         command = ["sh", "-c", "chown -R 568:568 /cache /config /logs /transcode"]
         volumeMounts = [{
           name      = "cache"
           mountPath = "/cache"
-        }, {
+          }, {
           name      = "config"
           mountPath = "/config"
-        }, {
+          }, {
           name      = "logs"
           mountPath = "/logs"
-        }, {
+          }, {
           name      = "transcode"
           mountPath = "/transcode"
         }]
