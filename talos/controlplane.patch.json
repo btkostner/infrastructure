@@ -1,0 +1,56 @@
+[
+  {
+    "op": "replace",
+    "path": "/machine/network",
+    "value": {
+      "interfaces": [{
+        "interface": "eth0",
+        "mtu": 9000,
+        "dhcp": true,
+        "vip": {
+          "ip": "192.168.1.150"
+        }
+      }]
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/machine/install/wipe",
+    "value": true
+  },
+  {
+    "op": "remove",
+    "path": "/machine/install/disk"
+  },
+  {
+    "op": "add",
+    "path": "/machine/install/diskSelector",
+    "value": {
+      "size": ">= 128GB"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/machine/install/extensions",
+    "value": [{
+      "image": "ghcr.io/siderolabs/intel-ucode:20220510"
+    }, {
+      "image": "ghcr.io/siderolabs/iscsi-tools:v0.1.1"
+    }]
+  },
+  {
+    "op": "add",
+    "path": "/machine/install/extraKernelArgs",
+    "value": [
+      "talos.platform=metal",
+      "talos.config=http://192.168.1.21:8069/configuration/talos/controlplane.yaml"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/machine/sysfs",
+    "value": {
+      "devices.system.cpu.cpu0.cpufreq.scaling_governor": "performance"
+    }
+  }
+]

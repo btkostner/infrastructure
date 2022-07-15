@@ -1,2 +1,6 @@
-ansible/inventories/production/group_vars/** filter=git-crypt diff=git-crypt
+talos/controlplane.yaml filter=git-crypt diff=git-crypt
+talos/talosconfig filter=git-crypt diff=git-crypt
+talos/worker.yaml filter=git-crypt diff=git-crypt
+terraform/**/*.tfvars filter=git-crypt diff=git-crypt
+terraform/**/*.encrypt.tf filter=git-crypt diff=git-crypt
 secrets/** filter=git-crypt diff=git-crypt

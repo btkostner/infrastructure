@@ -12,32 +12,4 @@ on:
     branches:
       - main
 
-jobs:
-  ansible_lint:
-    name: Ansible Lint
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Setup (Git Crypt)
-        run: sudo apt install --no-install-recommends --yes git-crypt
-
-      - name: Setup (Python)
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-
-      - name: Setup (Ansible Lint)
-        run: pip3 install "ansible-lint[core,yamllint]"
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Unlock
-        run: |
-          echo "${{ secrets.GIT_CRYPT }}" | base64 -d > ./key.gpg
-          git-crypt unlock ./key.gpg
-          rm -rf ./key.gpg
-
-      - name: Lint
-        run: ansible-lint ./playbooks/site.yml
-        working-directory: ./ansible
+jobs: []
