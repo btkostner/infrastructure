@@ -1,5 +1,5 @@
 ---
 
-keepalived_priority: "{{ 100 | random(seed=hostname) }}"
+keepalived_priority: "{{ 100 | random(seed=inventory_hostname) }}"
 
 keepalived_password: 12345678

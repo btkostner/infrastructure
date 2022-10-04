@@ -28,7 +28,7 @@ When you get to the storage configuration, you can select the entire disk, and e
 
 Then you should arrive at the "Profile setup" screen. Enter these details:
 - Your name: `Blake Kostner`
-- Your server's name: `nuc-<number>-zone-<zone>` IE: `nuc-1-zone-a`
+- Your server's name: `<ip address with dashes>` IE: `192-168-1-151`
 - Pick a username: `btkostner`
 - Choose a password: you know what ;)
 

@@ -1,0 +1,13 @@
+---
+
+- name: Enable "protonvpn"
+  service:
+    name: protonvpn
+    enabled: true
+  become: true
+
+- name: Restart "protonvpn"
+  service:
+    name: protonvpn
+    state: restarted
+  become: true

@@ -2,7 +2,7 @@
 
 - name: Configure hostname
   ansible.builtin.hostname:
-    name: "{{ hostname }}"
+    name: "{{ inventory_hostname | regex_replace('\\.', '-') }}"
   become: true
   tags:
     - host
