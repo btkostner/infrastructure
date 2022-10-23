@@ -6,6 +6,10 @@ terraform {
   }
 }
 
+provider "consul" {
+  address = "http://192.168.1.152:8500"
+}
+
 provider "nomad" {
   address = "http://192.168.1.152:4646"
   region  = "global"

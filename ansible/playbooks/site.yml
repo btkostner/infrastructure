@@ -4,20 +4,6 @@
 
 - import_playbook: ./common.yml
 
+- import_playbook: ./node.yml
+
 # - import_playbook: ./protonvpn.yml
-
-- name: Assemble Consul cluster
-  hosts: consul_instances
-  any_errors_fatal: true
-  become: true
-  become_user: root
-  roles:
-    - ansible-consul
-
-- name: Assemble Nomad cluster
-  hosts: nomad_instances
-  any_errors_fatal: true
-  become: true
-  become_user: root
-  roles:
-    - ansible-nomad

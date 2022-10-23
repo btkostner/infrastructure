@@ -1,0 +1,41 @@
+---
+
+- hosts: node
+  become: true
+  become_user: root
+  tasks:
+    - name: Use "containerd"
+      include_role:
+        name: containerd
+
+    - name: Use "ansible-consul"
+      include_role:
+        name: ansible-consul
+
+    - name: Ensure "/opt/cni/bin"
+      ansible.builtin.file:
+        path: /opt/cni/bin
+        state: directory
+        mode: 600
+
+    - name: Install "containernetworking"
+      ansible.builtin.unarchive:
+        src: https://github.com/containernetworking/plugins/releases/download/v1.1.1/cni-plugins-linux-amd64-v1.1.1.tgz
+        dest: /opt/cni/bin
+        remote_src: true
+
+    - name: Set "sysctl"
+      ansible.posix.sysctl:
+        name: "{{ item }}"
+        value: "1"
+        sysctl_set: true
+        state: present
+        reload: true
+      loop:
+        - net.bridge.bridge-nf-call-arptables
+        - net.bridge.bridge-nf-call-ip6tables
+        - net.bridge.bridge-nf-call-iptables
+
+    - name: Use "ansible-nomad"
+      include_role:
+        name: ansible-nomad

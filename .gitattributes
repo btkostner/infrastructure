@@ -1,3 +1,4 @@
 ansible/inventories/production/group_vars/** filter=git-crypt diff=git-crypt
+jobs/*.secret.hcl filter=git-crypt diff=git-crypt
 secrets/** filter=git-crypt diff=git-crypt
 terraform/*.secret.tf filter=git-crypt diff=git-crypt

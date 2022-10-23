@@ -11,6 +11,4 @@
     - ssh
     - unattended-upgrades
 
-    - containerd
-
     # - keepalived
