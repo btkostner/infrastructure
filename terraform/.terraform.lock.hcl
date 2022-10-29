@@ -4,6 +4,7 @@
 provider "registry.terraform.io/hashicorp/consul" {
   version = "2.16.2"
   hashes = [
+    "h1:epldE7sZPBTQHnWEA4WlNJIOVT1UEX+/02SMg5nniaE=",
     "h1:ooTcnRfoCQcckguRcBuY+uoIRGklL2VTy5BhFS0Hs0k=",
     "zh:0a2e11ca2ba650954951a087a1daec95eee2f3000456b295409a9880c4a10b1a",
     "zh:34f6bda06a0d1c213fa8d87d4313687681e67bc8c40c4cbaa7dbe59ce24a4f7e",
@@ -23,6 +24,7 @@ provider "registry.terraform.io/hashicorp/consul" {
 provider "registry.terraform.io/hashicorp/nomad" {
   version = "1.4.18"
   hashes = [
+    "h1:AYJqbAkH5e6edCf0r73U3nCUOT+xQ27GRG2dbpq8XGM=",
     "h1:mtmMke3y7vzbayNTLE92K89pPf6hbIT/iTILdAhSGC8=",
     "zh:2365d54523059069b63039c2b5cc2fb71c6fdfa592b5cab49f8eae298ea4744d",
     "zh:3a9f68661e73a867a0ff7444e94b4d821cc8c3dfb1f9987382c7515de12ad9db",

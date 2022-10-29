@@ -36,6 +36,36 @@
         - net.bridge.bridge-nf-call-ip6tables
         - net.bridge.bridge-nf-call-iptables
 
+    - name: Install "nfs-client" package
+      ansible.builtin.apt:
+        name: nfs-client
+        state: latest
+        update_cache: true
+      become: true
+      tags:
+        - nfs
+        - packages
+
     - name: Use "ansible-nomad"
       include_role:
         name: ansible-nomad
+
+    - name: Set "/etc/systemd/resolved.conf" DNS
+      ansible.builtin.replace:
+        path: /etc/systemd/resolved.conf
+        regexp: "^#?DNS=(.*)$"
+        replace: "DNS=127.0.0.1"
+      become: true
+      tags:
+        - dns
+
+    - name: Set "/etc/systemd/resolved.conf" FallbackDNS
+      ansible.builtin.replace:
+        path: /etc/systemd/resolved.conf
+        regexp: "^#?FallbackDNS=(.*)$"
+        replace: "FallbackDNS=192.168.1.1"
+      become: true
+      tags:
+        - dns
+
+    # TODO: systemctl restart systemd-resolved

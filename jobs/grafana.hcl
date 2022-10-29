@@ -1,5 +1,5 @@
 job "grafana" {
-  namespace   = "monitoring"
+  namespace   = "monitor"
   datacenters = ["cluster"]
   type        = "service"
 
@@ -9,8 +9,12 @@ job "grafana" {
     network {
       mode = "bridge"
 
+      port "envoy_metrics" {
+        to = 9102
+      }
+
       port "http" {
-        static = 8000
+        to = 3000
       }
     }
 
@@ -21,23 +25,16 @@ job "grafana" {
       mode     = "delay"
     }
 
-    ephemeral_disk {
-      sticky = true
-      size = 1024
-      migrate = true
-    }
-
     service {
       name = "grafana"
       tags = ["urlprefix-/"]
-      port = "http"
+      port = 3000
 
       connect {
         sidecar_service {
           proxy {
-            upstreams {
-              destination_name = "alert-manager"
-              local_bind_port  = 9093
+            config {
+              envoy_prometheus_bind_addr = "0.0.0.0:9102"
             }
 
             upstreams {
@@ -53,6 +50,10 @@ job "grafana" {
         }
 
         sidecar_task {
+          env {
+            ENVOY_UID = "0"
+          }
+
           resources {
             cpu    = 20
             memory = 64
@@ -62,6 +63,7 @@ job "grafana" {
 
       check {
         type     = "http"
+        port     = "http"
         path     = "/api/health"
         interval = "5s"
         timeout  = "2s"
@@ -72,6 +74,10 @@ job "grafana" {
           ignore_warnings = false
         }
       }
+
+      meta {
+        envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
+      }
     }
 
     task "grafana" {
@@ -79,28 +85,40 @@ job "grafana" {
 
       config {
         image = "grafana/grafana:latest"
+        ports = ["http"]
 
         volumes = [
-          "local/prometheus.yml:/local/provisioning/datasources/prometheus.yml",
+          "local/provider.yml:/local/provisioning/datasources/default.yml",
+          "local/dashboard.yml:/local/provisioning/dashboards/default.yml",
         ]
       }
 
       env {
         GF_LOG_LEVEL = "DEBUG"
         GF_LOG_MODE = "console"
-        GF_PATHS_DATA = "/alloc/data/grafana"
         GF_PATHS_PROVISIONING = "/local/provisioning"
-        GF_SERVER_HTTP_PORT = "${NOMAD_PORT_http}"
         GF_DEFAULT_INSTANCE_NAME = "btkostner"
-        GF_SECURITY_ADMIN_USER = "{{ env \"grafana/btkostner\" }}"
-        GF_SECURITY_ADMIN_PASSWORD = "{{ env \"grafana/password\" }}"
         GF_METRICS_ENABLED = "true"
         GF_METRICS_DISABLE_TOTAL_STATS = "false"
       }
 
       template {
+        data = <<EOF
+GF_SERVER_HTTP_PORT="{{ env "NOMAD_ALLOC_PORT_http" }}"
+GF_SERVER_DOMAIN=grafana.btkostner.network
+GF_DEFAULT_INSTANCE_NAME=btkostner
+GF_SECURITY_ADMIN_USER=btkostner
+GF_SECURITY_ADMIN_PASSWORD="{{ key "grafana/password" }}"
+GF_LOG_MODE=console
+EOF
+
+        destination = "secrets/file.env"
+        env         = true
+      }
+
+      template {
         change_mode = "noop"
-        destination = "local/prometheus.yml"
+        destination = "local/provider.yml"
 
         data = <<EOH
 ---
@@ -109,16 +127,48 @@ apiVersion: 1
 deleteDatasources:
   - name: Prometheus
     orgId: 1
+  - name: Loki
+    orgId: 1
 
 datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://localhost:9090
+    url: "http://{{ env "NOMAD_UPSTREAM_ADDR_prometheus" }}"
     isDefault: true
     version: 1
     editable: false
+  - name: Loki
+    type: loki
+    access: proxy
+    orgId: 1
+    url: "http://{{ env "NOMAD_UPSTREAM_ADDR_loki" }}"
+    version: 1
+    editable: false
+EOH
+      }
+
+      template {
+        change_mode = "noop"
+        destination = "local/dashboard.yml"
+
+        data = <<EOH
+---
+apiVersion: 1
+
+providers:
+  - name: default
+    type: file
+    disableDeletion: true
+    options:
+      path: /local/provisioning/dashboards/default
+
+dashboards:
+  default:
+    nomad:
+      gnetId: 13396
+      datasource: Prometheus
 EOH
       }
 
