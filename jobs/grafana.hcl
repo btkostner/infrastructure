@@ -3,9 +3,12 @@ job "grafana" {
   datacenters = ["cluster"]
   type        = "service"
 
-  group "grafana" {
-    count = 1
+  constraint {
+    attribute = "${meta.computer.plexable}"
+    value     = "false"
+  }
 
+  group "grafana" {
     network {
       mode = "bridge"
 
@@ -27,7 +30,6 @@ job "grafana" {
 
     service {
       name = "grafana"
-      tags = ["urlprefix-/"]
       port = 3000
 
       connect {
@@ -53,11 +55,6 @@ job "grafana" {
           env {
             ENVOY_UID = "0"
           }
-
-          resources {
-            cpu    = 20
-            memory = 64
-          }
         }
       }
 
@@ -77,6 +74,7 @@ job "grafana" {
 
       meta {
         envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
+        http_metrics_port = "${NOMAD_HOST_PORT_http}"
       }
     }
 
@@ -114,6 +112,12 @@ EOF
 
         destination = "secrets/file.env"
         env         = true
+      }
+
+      artifact {
+        source      = "git::https://github.com/btkostner/infrastructure.git//dashboards"
+        destination = "/local/dashboards"
+        mode        = "dir"
       }
 
       template {
@@ -158,23 +162,14 @@ EOH
 apiVersion: 1
 
 providers:
-  - name: default
+  - name: dashboards
     type: file
     disableDeletion: true
+    allowUiUpdates: false
     options:
-      path: /local/provisioning/dashboards/default
-
-dashboards:
-  default:
-    nomad:
-      gnetId: 13396
-      datasource: Prometheus
+      path: /local/dashboards
+      foldersFromFilesStructure: true
 EOH
-      }
-
-      resources {
-        cpu    = 100
-        memory = 300
       }
     }
   }

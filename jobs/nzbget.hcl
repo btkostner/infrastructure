@@ -1,4 +1,4 @@
-job "prowlarr" {
+job "nzbget" {
   namespace   = "download"
   datacenters = ["cluster"]
   type        = "service"
@@ -8,7 +8,7 @@ job "prowlarr" {
     value     = "false"
   }
 
-  group "prowlarr" {
+  group "nzbget" {
     network {
       mode = "bridge"
 
@@ -17,41 +17,19 @@ job "prowlarr" {
       }
 
       port "http" {
-        to = 9696
+        to = 6789
       }
-
-      port "metrics" {}
     }
 
     service {
-      name = "prowlarr"
-      port = 9696
+      name = "nzbget"
+      port = 6789
 
       connect {
         sidecar_service {
           proxy {
             config {
               envoy_prometheus_bind_addr = "0.0.0.0:9102"
-            }
-
-            upstreams {
-              destination_name = "lidarr"
-              local_bind_port  = 8686
-            }
-
-            upstreams {
-              destination_name = "radarr"
-              local_bind_port  = 7878
-            }
-
-            upstreams {
-              destination_name = "sonarr"
-              local_bind_port  = 8989
-            }
-
-            upstreams {
-              destination_name = "nzbget"
-              local_bind_port  = 6789
             }
           }
         }
@@ -65,27 +43,29 @@ job "prowlarr" {
 
       meta {
         envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
-        # http_metrics_port = "${NOMAD_HOST_PORT_metrics}"
       }
     }
 
     volume "config" {
       type            = "csi"
-      source          = "prowlarr-config"
+      source          = "nzbget-config"
       attachment_mode = "file-system"
       access_mode     = "single-node-writer"
     }
 
-    task "prowlarr" {
+    volume "download" {
+      type            = "csi"
+      source          = "download"
+      attachment_mode = "file-system"
+      access_mode     = "multi-node-multi-writer"
+    }
+
+    task "nzbget" {
       driver = "docker"
 
       config {
-        image = "lscr.io/linuxserver/prowlarr:develop"
+        image = "lscr.io/linuxserver/nzbget:latest"
         ports = ["http"]
-
-        volumes = [
-          "local/config.xml:/config/config.xml",
-        ]
 
         privileged = true
       }
@@ -101,32 +81,14 @@ job "prowlarr" {
         memory = 2048
       }
 
-      template {
-        data = <<EOF
-<Config>
-  <LogLevel>info</LogLevel>
-  <UrlBase></UrlBase>
-  <UpdateMechanism>Docker</UpdateMechanism>
-  <AuthenticationMethod>None</AuthenticationMethod>
-  <ApiKey>{{ key "download/prowlarr" }}</ApiKey>
-  <Branch>develop</Branch>
-  <BindAddress>*</BindAddress>
-  <Port>{{ env "NOMAD_ALLOC_PORT_http" }}</Port>
-  <SslPort>6969</SslPort>
-  <EnableSsl>False</EnableSsl>
-  <LaunchBrowser>False</LaunchBrowser>
-  <SslCertPath></SslCertPath>
-  <SslCertPassword></SslCertPassword>
-  <InstanceName>Prowlarr</InstanceName>
-</Config>
-EOF
-
-        destination = "local/config.xml"
-      }
-
       volume_mount {
         volume      = "config"
         destination = "/config"
+      }
+
+      volume_mount {
+        volume      = "download"
+        destination = "/download"
       }
     }
 
@@ -162,11 +124,6 @@ EOF
         TZ       = "America/Denver"
       }
 
-      resources {
-        cpu    = 20
-        memory = 64
-      }
-
       template {
         data = <<EOF
 VPN_AUTH="{{ key "protonvpn/username" }};{{ key "protonvpn/password" }}"
@@ -184,32 +141,5 @@ EOF
         destination = "local/vpn.conf"
       }
     }
-
-  /**
-    task "metrics" {
-      lifecycle {
-        sidecar = true
-      }
-
-      driver = "docker"
-
-      config {
-        image = "ghcr.io/onedr0p/exportarr:latest"
-        args = ["prowlarr"]
-        ports = ["metrics"]
-      }
-
-      template {
-        data = <<EOF
-PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
-URL="http://localhost:9696"
-APIKEY="{{ key "download/prowlarr" }}"
-EOF
-
-        destination = "secrets/file.env"
-        env         = true
-      }
-    }
-    */
   }
 }

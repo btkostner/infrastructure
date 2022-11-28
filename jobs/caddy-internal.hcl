@@ -3,9 +3,12 @@ job "caddy-internal" {
   datacenters = ["cluster"]
   type        = "service"
 
-  group "caddy" {
-    count = 1
+  constraint {
+    attribute = "${meta.computer.plexable}"
+    value     = "false"
+  }
 
+  group "caddy" {
     network {
       mode = "bridge"
 
@@ -24,7 +27,6 @@ job "caddy-internal" {
 
     service {
       name = "caddy-internal"
-      tags = ["urlprefix-/"]
       port = 443
 
       connect {
@@ -38,6 +40,46 @@ job "caddy-internal" {
               destination_name = "grafana"
               local_bind_port = 3000
             }
+
+            upstreams {
+              destination_name = "lidarr"
+              local_bind_port = 8686
+            }
+
+            upstreams {
+              destination_name = "nzbget"
+              local_bind_port = 6789
+            }
+
+            upstreams {
+              destination_name = "overseerr"
+              local_bind_port = 5055
+            }
+
+            upstreams {
+              destination_name = "plex"
+              local_bind_port = 32400
+            }
+
+            upstreams {
+              destination_name = "prowlarr"
+              local_bind_port = 9696
+            }
+
+            upstreams {
+              destination_name = "radarr"
+              local_bind_port = 7878
+            }
+
+            upstreams {
+              destination_name = "sonarr"
+              local_bind_port = 8989
+            }
+
+            upstreams {
+              destination_name = "tautulli"
+              local_bind_port = 8181
+            }
           }
         }
 
@@ -45,24 +87,12 @@ job "caddy-internal" {
           env {
             ENVOY_UID = "0"
           }
-
-          resources {
-            cpu    = 20
-            memory = 64
-          }
         }
       }
 
       meta {
         envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
       }
-    }
-
-    volume "caddy-data" {
-      type            = "csi"
-      source          = "caddy-internal-data"
-      attachment_mode = "file-system"
-      access_mode     = "single-node-writer"
     }
 
     volume "tailscale-data" {
@@ -76,7 +106,7 @@ job "caddy-internal" {
       driver = "docker"
 
       config {
-        image = "slothcroissant/caddy-cloudflaredns:2.6.2"
+        image = "ghcr.io/btkostner/caddy"
         args = ["caddy", "run", "--config=$${NOMAD_TASK_DIR}/Caddyfile"]
         ports = ["http", "https"]
       }
@@ -93,43 +123,59 @@ job "caddy-internal" {
         }
 
         data = <<EOF
+{
+  acme_dns cloudflare {{ key "cloudflare/api_key" }}
+
+  storage consul {
+    address      "{{ env "NOMAD_IP_http" }}:8500"
+    prefix       "caddy-internal"
+  }
+}
+
 consul.btkostner.network {
   reverse_proxy 192.168.1.152:8500
-
-  tls {
-    dns cloudflare {{ key "cloudflare" }}
-    resolvers 1.1.1.1
-  }
 }
 
 grafana.btkostner.network {
   reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_grafana" }}
+}
 
-  tls {
-    dns cloudflare {{ key "cloudflare" }}
-    resolvers 1.1.1.1
-  }
+lidarr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_lidarr" }}
 }
 
 nomad.btkostner.network {
   reverse_proxy 192.168.1.152:4646
+}
 
-  tls {
-    dns cloudflare {{ key "cloudflare" }}
-    resolvers 1.1.1.1
-  }
+nzbget.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_nzbget" }}
+}
+
+overseerr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_overseerr" }}
+}
+
+plex.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_plex" }}
+}
+
+prowlarr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_prowlarr" }}
+}
+
+radarr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_radarr" }}
+}
+
+sonarr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_sonarr" }}
+}
+
+tautulli.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_tautulli" }}
 }
 EOF
-      }
-
-      volume_mount {
-        volume      = "caddy-data"
-        destination = "/data"
-      }
-
-      resources {
-        cpu    = 100
-        memory = 300
       }
     }
 
@@ -154,11 +200,6 @@ EOF
       volume_mount {
         volume      = "tailscale-data"
         destination = "/var/lib/tailscale"
-      }
-
-      resources {
-        cpu    = 100
-        memory = 300
       }
     }
   }

@@ -3,9 +3,12 @@ job "loki" {
   datacenters = ["cluster"]
   type        = "service"
 
-  group "loki" {
-    count = 1
+  constraint {
+    attribute = "${meta.computer.plexable}"
+    value     = "false"
+  }
 
+  group "loki" {
     network {
       mode = "bridge"
 
@@ -34,11 +37,6 @@ job "loki" {
         sidecar_task {
           env {
             ENVOY_UID = "0"
-          }
-
-          resources {
-            cpu    = 20
-            memory = 64
           }
         }
       }
@@ -82,11 +80,6 @@ job "loki" {
         volumes = [
           "local/local-config.yml:/etc/loki/local-config.yml",
         ]
-      }
-
-      resources {
-        cpu    = 50
-        memory = 256
       }
 
       volume_mount {

@@ -34,13 +34,3 @@ resource "nomad_job" "democratic_csi_nfs_node" {
     enabled = true
   }
 }
-
-/**
-resource "nomad_job" "test" {
-  jobspec = file("../jobs/test.hcl")
-
-  hcl2 {
-    enabled = true
-  }
-}
-*/

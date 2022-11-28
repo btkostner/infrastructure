@@ -47,8 +47,16 @@ resource "nomad_volume" "loki_data" {
   }
 }
 
-resource "nomad_job" "prometheus" {
-  jobspec = file("../jobs/prometheus.hcl")
+resource "nomad_job" "autoscaler" {
+  jobspec = file("../jobs/autoscaler.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+}
+
+resource "nomad_job" "grafana" {
+  jobspec = file("../jobs/grafana.hcl")
 
   hcl2 {
     enabled = true
@@ -63,8 +71,16 @@ resource "nomad_job" "loki" {
   }
 }
 
-resource "nomad_job" "grafana" {
-  jobspec = file("../jobs/grafana.hcl")
+resource "nomad_job" "node_exporter" {
+  jobspec = file("../jobs/node-exporter.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+}
+
+resource "nomad_job" "prometheus" {
+  jobspec = file("../jobs/prometheus.hcl")
 
   hcl2 {
     enabled = true

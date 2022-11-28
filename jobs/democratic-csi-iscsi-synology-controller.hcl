@@ -9,7 +9,6 @@ job "democratic-csi-iscsi-synology-controller" {
 
       config {
         image = "ghcr.io/btkostner/democratic-csi:debug"
-        force_pull = true
 
         args = [
           "--csi-version=1.5.0",

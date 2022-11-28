@@ -14,7 +14,6 @@ job "democratic-csi-iscsi-synology-node" {
 
       config {
         image = "ghcr.io/btkostner/democratic-csi:debug"
-        force_pull = true
 
         args = [
           "--csi-version=1.5.0",
@@ -36,15 +35,6 @@ job "democratic-csi-iscsi-synology-node" {
           readonly = false
         }
 
-        /**
-        mount {
-          type     = "bind"
-          target   = "/var/lib/iscsi"
-          source   = "/var/lib/iscsi"
-          readonly = false
-        }
-        */
-
         mount {
           type     = "bind"
           target   = "/run/udev"
@@ -65,15 +55,6 @@ job "democratic-csi-iscsi-synology-node" {
           source   = "/sys"
           readonly = true
         }
-
-        /**
-        mount {
-          type     = "bind"
-          target   = "/dev"
-          source   = "/dev"
-          readonly = false
-        }
-        */
       }
 
       template {

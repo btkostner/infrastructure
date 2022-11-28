@@ -4,8 +4,6 @@ job "test" {
   type        = "service"
 
   group "test" {
-    count = 1
-
     volume "config-new" {
       type            = "csi"
       source          = "prowlarr-config"
