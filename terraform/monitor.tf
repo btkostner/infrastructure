@@ -86,3 +86,11 @@ resource "nomad_job" "prometheus" {
     enabled = true
   }
 }
+
+resource "nomad_job" "unifipoller" {
+  jobspec = file("../jobs/unifipoller.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+}

@@ -88,6 +88,7 @@ job "grafana" {
         volumes = [
           "local/provider.yml:/local/provisioning/datasources/default.yml",
           "local/dashboard.yml:/local/provisioning/dashboards/default.yml",
+          "local/plugin.yml:/local/provisioning/plugins/default.yml",
         ]
       }
 
@@ -98,6 +99,7 @@ job "grafana" {
         GF_DEFAULT_INSTANCE_NAME = "btkostner"
         GF_METRICS_ENABLED = "true"
         GF_METRICS_DISABLE_TOTAL_STATS = "false"
+        GF_INSTALL_PLUGINS = "grafana-piechart-panel"
       }
 
       template {
@@ -169,6 +171,20 @@ providers:
     options:
       path: /local/dashboards
       foldersFromFilesStructure: true
+EOH
+      }
+
+      template {
+        change_mode = "noop"
+        destination = "local/plugin.yml"
+
+        data = <<EOH
+---
+apiVersion: 1
+
+apps:
+  - type: grafana-piechart-panel
+    org_id: 1
 EOH
       }
     }

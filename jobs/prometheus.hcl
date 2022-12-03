@@ -154,6 +154,17 @@ scrape_configs:
     scrape_timeout: 10s
     metrics_path: /metrics
     scheme: http
+  - job_name: unifipoller
+    scrape_interval: 30s
+    consul_sd_configs:
+      - server: "{{ env "NOMAD_IP_http" }}:8500"
+        services:
+          - unifipoller
+    relabel_configs:
+      - source_labels: [__meta_consul_address,__meta_consul_service_metadata_application_metrics_port]
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $${1}:$${2}
+        target_label: __address__
   - job_name: application
     consul_sd_configs:
       - server: "{{ env "NOMAD_IP_http" }}:8500"
