@@ -60,6 +60,13 @@ job "plex" {
       }
     }
 
+    restart {
+      attempts = 8
+      delay    = "15s"
+      interval = "10m"
+      mode     = "delay"
+    }
+
     volume "config" {
       type            = "csi"
       source          = "plex-config"
@@ -94,8 +101,9 @@ job "plex" {
       }
 
       resources {
-        cpu    = 10000
-        memory = 12288
+        cpu        = 16800
+        memory     = 12288
+        memory_max = 16384
       }
 
       volume_mount {

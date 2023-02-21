@@ -20,11 +20,25 @@ job "caddy-external" {
         to = 443
         static = 443
       }
+
+      port "health" {
+        to = 8081
+      }
     }
 
     service {
       name = "caddy-external"
       port = 443
+
+      check {
+        address_mode = "alloc"
+        name = "Health Endpoint"
+        type = "http"
+        port = "health"
+        path = "/health"
+        interval = "10s"
+        timeout = "2s"
+      }
 
       connect {
         sidecar_service {
@@ -67,15 +81,9 @@ job "caddy-external" {
       }
 
       template {
-        change_mode = "script"
+        change_mode = "signal"
+        change_signal = "SIGHUP"
         destination = "$${NOMAD_TASK_DIR}/Caddyfile"
-
-        change_script {
-          command       = "/usr/bin/caddy"
-          args          = ["reload"]
-          timeout       = "5s"
-          fail_on_error = true
-        }
 
         data = <<EOF
 {
@@ -87,7 +95,7 @@ job "caddy-external" {
   }
 }
 
-abraxis.tv {
+abraxis.tv, :32400 {
   reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_plex" }}
   encode gzip
   header {
@@ -105,27 +113,26 @@ abraxis.tv {
 request.abraxis.tv {
   reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_overseerr" }}
   encode gzip
-  header {
-    Content-Security-Policy default-src "*"
-    X-Frame-Options "DENY"
-    X-Content-Type-Options "nosniff"
-    X-XSS-Protection "1; mode=block"
-    Strict-Transport-Security "max-age=31536000;"
-    Referrer-Policy "same-origin"
-    Feature-Policy "self"
-    Permissions-Policy interest-cohort=()
-  }
+}
+
+home.lizandblake.us {
+  reverse_proxy {{range service "home-assistant"}}{{.Address}}:{{.Port}}{{end}}
+  encode gzip
+}
+
+http://0.0.0.0:8081 {
+  respond "Success"
 }
 
 :80, :443 {
-  respond "Too much wub. Nothing Left. Sadness."
+  respond 404
 }
 EOF
       }
 
       resources {
         cpu    = 100
-        memory = 300
+        memory = 128
       }
     }
   }

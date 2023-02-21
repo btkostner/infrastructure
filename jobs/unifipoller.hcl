@@ -55,7 +55,7 @@ job "unifipoller" {
         ports = ["metrics"]
 
         volumes = [
-          "local/unifi-poller.conf:/config/unifi-poller.conf"
+          "local/unifi-poller.conf:/etc/unpoller/up.conf"
         ]
 
         privileged = true

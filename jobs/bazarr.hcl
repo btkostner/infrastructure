@@ -33,8 +33,8 @@ job "sonarr" {
             }
 
             upstreams {
-              destination_name = "nzbget"
-              local_bind_port  = 6789
+              destination_name = "sabnzbd"
+              local_bind_port  = 8080
             }
 
             upstreams {

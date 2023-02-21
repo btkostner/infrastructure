@@ -40,6 +40,11 @@ job "prowlarr" {
             }
 
             upstreams {
+              destination_name = "sabnzbd"
+              local_bind_port  = 8080
+            }
+
+            upstreams {
               destination_name = "radarr"
               local_bind_port  = 7878
             }
@@ -47,11 +52,6 @@ job "prowlarr" {
             upstreams {
               destination_name = "sonarr"
               local_bind_port  = 8989
-            }
-
-            upstreams {
-              destination_name = "nzbget"
-              local_bind_port  = 6789
             }
           }
         }
@@ -88,6 +88,7 @@ job "prowlarr" {
         ]
 
         privileged = true
+        network_mode = "container:vpn-${NOMAD_ALLOC_ID}"
       }
 
       env {
@@ -130,7 +131,7 @@ EOF
       }
     }
 
-    task "openvpn" {
+    task "vpn" {
       lifecycle {
         hook = "prestart"
         sidecar = true
@@ -139,13 +140,9 @@ EOF
       driver = "docker"
 
       config {
-        image = "dperson/openvpn-client"
+        image = "qmcgaw/gluetun"
 
-        cap_add = ["NET_ADMIN"]
-
-        volumes = [
-          "local/vpn.conf:/vpn/vpn.conf",
-        ]
+        cap_add = ["NET_ADMIN", "SYS_MODULE"]
 
         devices = [{
           host_path = "/dev/net/tun"
@@ -155,33 +152,31 @@ EOF
         privileged = true
       }
 
-      env {
-        FIREWALL = ""
-        ROUTE_1  = "192.168.0.0/16"
-        ROUTE_2  = "100.64.0.0/10"
-        TZ       = "America/Denver"
-      }
-
-      resources {
-        cpu    = 20
-        memory = 64
-      }
-
       template {
         data = <<EOF
-VPN_AUTH="{{ key "protonvpn/username" }};{{ key "protonvpn/password" }}"
+VPN_SERVICE_PROVIDER=custom
+VPN_TYPE=wireguard
+VPN_ENDPOINT_IP={{ key "protonvpn/prowlarr/endpoint" }}
+VPN_ENDPOINT_PORT={{ key "protonvpn/prowlarr/port" }}
+WIREGUARD_PUBLIC_KEY={{ key "protonvpn/prowlarr/public_key" }}
+WIREGUARD_PRIVATE_KEY={{ key "protonvpn/prowlarr/private_key" }}
+WIREGUARD_ADDRESSES={{ key "protonvpn/prowlarr/addresses" }}
+DOT=off
+DNS_KEEP_NAMESERVER=on
+FIREWALL=on
+FIREWALL_OUTBOUND_SUBNETS="192.168.0.0/16,100.64.0.0/10"
+HEALTH_VPN_DURATION_INITIAL=30s
+HEALTH_VPN_DURATION_ADDITION=10s
+TZ="America/Denver"
 EOF
 
         destination = "secrets/file.env"
         env         = true
       }
 
-      template {
-        data = <<EOF
-{{ key "protonvpn/config" }}
-EOF
-
-        destination = "local/vpn.conf"
+      resources {
+        cpu    = 100
+        memory = 128
       }
     }
 

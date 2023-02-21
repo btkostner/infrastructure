@@ -1,8 +1,12 @@
 [all]
+192.168.1.151
 192.168.1.152
+192.168.1.153
 
 [all:vars]
 ansible_ssh_private_key_file=../secrets/ssh-key
 
 [node]
-192.168.1.152 consul_node_role=bootstrap nomad_node_role=both nomad_meta.proxy=true
+192.168.1.151 consul_node_role=server consul_bootstrap_expect=true nomad_node_role=both nomad_meta.proxy=true
+192.168.1.152 consul_node_role=server consul_bootstrap_expect=true nomad_node_role=both nomad_meta.proxy=true
+192.168.1.153 consul_node_role=server consul_bootstrap_expect=true nomad_node_role=both nomad_meta.proxy=true

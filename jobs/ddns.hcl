@@ -3,11 +3,6 @@ job "ddns" {
   datacenters = ["cluster"]
   type = "service"
 
-//  periodic {
-//    cron             = "*/5 * * * * *"
-//    prohibit_overlap = true
-//  }
-
   group "ddclient" {
     task "ddclient" {
       driver = "docker"
@@ -32,15 +27,15 @@ job "ddns" {
         data = <<EOF
 daemon=600
 syslog=yes
-verbose=yes
+verbose=no
 ssl=yes
-use=web, web=checkip.dyndns.com/, web-skip='Current IP Address: '
+use=web, web=checkip.amazonaws.com/
 
 protocol=cloudflare, \
 zone=abraxis.tv, \
 login={{ key "cloudflare/email" }}, \
-password={{ key "cloudflare/api_key" }} \
-abraxis.tv, request.abraxis.tv
+password={{ key "cloudflare/global_api_key" }} \
+abraxis.tv, request.abraxis.tv, home.lizandblake.us
 EOF
       }
     }

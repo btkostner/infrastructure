@@ -41,6 +41,11 @@ job "overseerr" {
               destination_name = "sonarr"
               local_bind_port  = 8989
             }
+
+            upstreams {
+              destination_name = "tautulli"
+              local_bind_port  = 8181
+            }
           }
         }
 
