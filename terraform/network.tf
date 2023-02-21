@@ -23,6 +23,8 @@ resource "nomad_volume" "caddy_internal_tailscale_data" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.network, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_job" "caddy_external" {
@@ -31,6 +33,8 @@ resource "nomad_job" "caddy_external" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.network]
 }
 
 resource "nomad_job" "caddy_internal" {
@@ -39,12 +43,26 @@ resource "nomad_job" "caddy_internal" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.network, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
-resource "nomad_job" "ddns" {
-  jobspec = file("../jobs/ddns.hcl")
+resource "nomad_job" "ddns-abraxis" {
+  jobspec = file("../jobs/ddns-abraxis.hcl")
 
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.network]
+}
+
+resource "nomad_job" "ddns-lizandblake" {
+  jobspec = file("../jobs/ddns-lizandblake.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+
+  depends_on = [nomad_namespace.network]
 }

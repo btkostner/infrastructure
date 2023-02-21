@@ -39,6 +39,8 @@ resource "nomad_volume" "download_download" {
       "local_lock=none"
     ]
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_nfs_node]
 }
 
 resource "nomad_volume" "download_media" {
@@ -77,6 +79,8 @@ resource "nomad_volume" "download_media" {
       "local_lock=none"
     ]
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_nfs_node]
 }
 
 resource "nomad_volume" "download_music" {
@@ -115,6 +119,8 @@ resource "nomad_volume" "download_music" {
       "local_lock=none"
     ]
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_nfs_node]
 }
 
 resource "nomad_volume" "bazarr_config" {
@@ -137,6 +143,8 @@ resource "nomad_volume" "bazarr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "lidarr_config" {
@@ -159,6 +167,8 @@ resource "nomad_volume" "lidarr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "overseerr_config" {
@@ -181,6 +191,8 @@ resource "nomad_volume" "overseerr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "prowlarr_config" {
@@ -203,6 +215,8 @@ resource "nomad_volume" "prowlarr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "radarr_config" {
@@ -225,6 +239,8 @@ resource "nomad_volume" "radarr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "sabnzbd_config" {
@@ -247,6 +263,8 @@ resource "nomad_volume" "sabnzbd_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "sonarr_config" {
@@ -269,6 +287,8 @@ resource "nomad_volume" "sonarr_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 // Deluge
@@ -292,6 +312,8 @@ resource "nomad_volume" "disk_two" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 // Bazarr
@@ -315,6 +337,8 @@ resource "nomad_volume" "disk_three" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_job" "lidarr" {
@@ -323,6 +347,8 @@ resource "nomad_job" "lidarr" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.lidarr_config]
 }
 
 resource "nomad_job" "overseerr" {
@@ -331,6 +357,8 @@ resource "nomad_job" "overseerr" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.overseerr_config]
 }
 
 resource "nomad_job" "prowlarr" {
@@ -339,6 +367,8 @@ resource "nomad_job" "prowlarr" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.prowlarr_config]
 }
 
 resource "nomad_job" "radarr" {
@@ -347,6 +377,8 @@ resource "nomad_job" "radarr" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.radarr_config]
 }
 
 resource "nomad_job" "sabnzbd" {
@@ -355,6 +387,8 @@ resource "nomad_job" "sabnzbd" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.sabnzbd_config]
 }
 
 resource "nomad_job" "sonarr" {
@@ -363,4 +397,6 @@ resource "nomad_job" "sonarr" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.download, nomad_volume.sonarr_config]
 }

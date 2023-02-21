@@ -39,6 +39,8 @@ resource "nomad_volume" "media_media" {
       "local_lock=none"
     ]
   }
+
+  depends_on = [nomad_namespace.media, nomad_job.democratic_csi_nfs_node]
 }
 
 resource "nomad_volume" "plex_config" {
@@ -61,6 +63,8 @@ resource "nomad_volume" "plex_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.media, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "tautulli_config" {
@@ -83,6 +87,8 @@ resource "nomad_volume" "tautulli_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.media, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_job" "plex" {
@@ -91,6 +97,8 @@ resource "nomad_job" "plex" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.media, nomad_volume.plex_config]
 }
 
 resource "nomad_job" "tautulli" {
@@ -99,4 +107,6 @@ resource "nomad_job" "tautulli" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.media, nomad_volume.tautulli_config]
 }

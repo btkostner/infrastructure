@@ -23,6 +23,8 @@ resource "nomad_volume" "prometheus_data" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.monitor, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_volume" "loki_data" {
@@ -45,6 +47,8 @@ resource "nomad_volume" "loki_data" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.monitor, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_job" "autoscaler" {
@@ -53,6 +57,8 @@ resource "nomad_job" "autoscaler" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor]
 }
 
 resource "nomad_job" "grafana" {
@@ -61,6 +67,8 @@ resource "nomad_job" "grafana" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor]
 }
 
 resource "nomad_job" "loki" {
@@ -69,6 +77,8 @@ resource "nomad_job" "loki" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor, nomad_volume.loki_data]
 }
 
 resource "nomad_job" "node_exporter" {
@@ -77,6 +87,8 @@ resource "nomad_job" "node_exporter" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor]
 }
 
 resource "nomad_job" "prometheus" {
@@ -85,6 +97,8 @@ resource "nomad_job" "prometheus" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor, nomad_volume.prometheus_data]
 }
 
 resource "nomad_job" "unifipoller" {
@@ -93,4 +107,6 @@ resource "nomad_job" "unifipoller" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.monitor]
 }

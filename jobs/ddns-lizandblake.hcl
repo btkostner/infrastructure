@@ -1,4 +1,4 @@
-job "ddns" {
+job "ddns-lizandblake" {
   namespace = "network"
   datacenters = ["cluster"]
   type = "service"
@@ -32,10 +32,10 @@ ssl=yes
 use=web, web=checkip.amazonaws.com/
 
 protocol=cloudflare, \
-zone=abraxis.tv, \
+zone=lizandblake.us, \
 login={{ key "cloudflare/email" }}, \
 password={{ key "cloudflare/global_api_key" }} \
-abraxis.tv, request.abraxis.tv, home.lizandblake.us
+home.lizandblake.us
 EOF
       }
     }

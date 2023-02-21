@@ -9,6 +9,8 @@ resource "nomad_job" "democratic_csi_iscsi_synology_controller" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.storage]
 }
 
 resource "nomad_job" "democratic_csi_iscsi_synology_node" {
@@ -17,6 +19,8 @@ resource "nomad_job" "democratic_csi_iscsi_synology_node" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.storage, nomad_job.democratic_csi_iscsi_synology_controller]
 }
 
 resource "nomad_job" "democratic_csi_nfs_controller" {
@@ -25,6 +29,8 @@ resource "nomad_job" "democratic_csi_nfs_controller" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.storage]
 }
 
 resource "nomad_job" "democratic_csi_nfs_node" {
@@ -33,4 +39,6 @@ resource "nomad_job" "democratic_csi_nfs_node" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.storage, nomad_job.democratic_csi_nfs_controller]
 }

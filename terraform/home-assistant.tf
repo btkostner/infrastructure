@@ -23,6 +23,8 @@ resource "nomad_volume" "home_assistant_config" {
     access_mode = "single-node-writer"
     attachment_mode = "file-system"
   }
+
+  depends_on = [nomad_namespace.home_assistant, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
 resource "nomad_job" "home_assistant" {
@@ -31,4 +33,6 @@ resource "nomad_job" "home_assistant" {
   hcl2 {
     enabled = true
   }
+
+  depends_on = [nomad_namespace.home_assistant, nomad_volume.home_assistant_config]
 }
