@@ -51,6 +51,11 @@ job "caddy-internal" {
             }
 
             upstreams {
+              destination_name = "bazarr"
+              local_bind_port = 6767
+            }
+
+            upstreams {
               destination_name = "grafana"
               local_bind_port = 3000
             }
@@ -147,6 +152,10 @@ job "caddy-internal" {
 
 consul.btkostner.network {
   reverse_proxy 192.168.1.152:8500
+}
+
+bazarr.btkostner.network {
+  reverse_proxy {{ env "NOMAD_UPSTREAM_ADDR_bazarr" }}
 }
 
 home.btkostner.network {

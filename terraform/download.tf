@@ -316,29 +316,14 @@ resource "nomad_volume" "disk_two" {
   depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
-// Bazarr
-resource "nomad_volume" "disk_three" {
-  volume_id             = "k8s-csi-pvc-29796a5f-ed52-4567-8971-5b4f2f9868af"
-  name                  = "k8s-csi-pvc-29796a5f-ed52-4567-8971-5b4f2f9868af"
-  namespace             = "download"
-  type                  = "csi"
-  external_id           = "k8s-csi-pvc-29796a5f-ed52-4567-8971-5b4f2f9868af"
-  plugin_id             = "org.democratic-csi.iscsi-synology"
+resource "nomad_job" "bazarr" {
+  jobspec = file("../jobs/bazarr.hcl")
 
-  context = {
-    node_attach_driver = "iscsi"
-    provisioner_driver = "synology-iscsi"
-    portals = "192.168.1.21"
-    iqn = "iqn.2000-01.com.synology:Behemoth.pvc-29796a5f-ed52-4567-8971-5b4f2f9868af"
-    lun = "1"
+  hcl2 {
+    enabled = true
   }
 
-  capability {
-    access_mode = "single-node-writer"
-    attachment_mode = "file-system"
-  }
-
-  depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
+  depends_on = [nomad_namespace.download, nomad_volume.bazarr_config]
 }
 
 resource "nomad_job" "lidarr" {
