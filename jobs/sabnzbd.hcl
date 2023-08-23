@@ -19,6 +19,8 @@ job "sabnzbd" {
       port "http" {
         to = 8080
       }
+
+      port "metrics" {}
     }
 
     service {
@@ -43,6 +45,7 @@ job "sabnzbd" {
 
       meta {
         envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
+        http_metrics_port = "${NOMAD_HOST_PORT_metrics}"
       }
     }
 
@@ -116,20 +119,20 @@ job "sabnzbd" {
 
       template {
         data = <<EOF
-VPN_SERVICE_PROVIDER=custom
+VPN_SERVICE_PROVIDER=mullvad
 VPN_TYPE=wireguard
-VPN_ENDPOINT_IP={{ key "protonvpn/sabnzbd/endpoint" }}
-VPN_ENDPOINT_PORT={{ key "protonvpn/sabnzbd/port" }}
-WIREGUARD_PUBLIC_KEY={{ key "protonvpn/sabnzbd/public_key" }}
-WIREGUARD_PRIVATE_KEY={{ key "protonvpn/sabnzbd/private_key" }}
-WIREGUARD_ADDRESSES={{ key "protonvpn/sabnzbd/addresses" }}
-DOT=off
+WIREGUARD_ADDRESSES="{{ key "mullvad/sabnzbd/addresses" }}"
+WIREGUARD_PRIVATE_KEY="{{ key "mullvad/sabnzbd/private_key" }}"
+WIREGUARD_PUBLIC_KEY="{{ key "mullvad/sabnzbd/public_key" }}"
 DNS_KEEP_NAMESERVER=on
-FIREWALL=on
+DOT=off
 FIREWALL_OUTBOUND_SUBNETS="192.168.0.0/16,100.64.0.0/10"
-HEALTH_VPN_DURATION_INITIAL=30s
+FIREWALL=on
 HEALTH_VPN_DURATION_ADDITION=10s
+HEALTH_VPN_DURATION_INITIAL=30s
+OWNED_ONLY=yes
 TZ="America/Denver"
+UPDATER_PERIOD=24h
 EOF
 
         destination = "secrets/file.env"
@@ -139,6 +142,32 @@ EOF
       resources {
         cpu    = 100
         memory = 128
+      }
+    }
+
+    task "metrics" {
+      lifecycle {
+        sidecar = true
+      }
+
+      driver = "docker"
+
+      config {
+        image = "ghcr.io/onedr0p/exportarr:v1.5.3"
+        args = ["sabnzbd"]
+        ports = ["metrics"]
+      }
+
+      template {
+        data = <<EOF
+PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
+URL="http://localhost:8080"
+API_KEY="{{ key "download/sabnzbd" }}"
+ENABLE_ADDITIONAL_METRICS="true"
+EOF
+
+        destination = "secrets/file.env"
+        env         = true
       }
     }
   }

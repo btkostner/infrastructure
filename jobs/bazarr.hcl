@@ -41,6 +41,11 @@ job "bazarr" {
               destination_name = "sonarr"
               local_bind_port  = 8989
             }
+
+            upstreams {
+              destination_name = "whisper"
+              local_bind_port = 9000
+            }
           }
         }
 
@@ -106,7 +111,7 @@ debug = False
 branch = master
 auto_update = False
 single_language = False
-minimum_score = 90
+minimum_score = 80
 use_scenename = True
 use_postprocessing = False
 postprocessing_cmd =
@@ -121,7 +126,7 @@ serie_default_enabled = True
 serie_default_profile = 1
 movie_default_enabled = True
 movie_default_profile = 1
-page_size = 25
+page_size = 100
 page_size_manual_search = 10
 minimum_score_movie = 70
 use_embedded_subs = False

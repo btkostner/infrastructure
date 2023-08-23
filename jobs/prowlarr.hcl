@@ -65,7 +65,7 @@ job "prowlarr" {
 
       meta {
         envoy_metrics_port = "${NOMAD_HOST_PORT_envoy_metrics}"
-        # http_metrics_port = "${NOMAD_HOST_PORT_metrics}"
+        http_metrics_port = "${NOMAD_HOST_PORT_metrics}"
       }
     }
 
@@ -108,7 +108,7 @@ job "prowlarr" {
   <LogLevel>info</LogLevel>
   <UrlBase></UrlBase>
   <UpdateMechanism>Docker</UpdateMechanism>
-  <AuthenticationMethod>None</AuthenticationMethod>
+  <AuthenticationMethod>Forms</AuthenticationMethod>
   <ApiKey>{{ key "download/prowlarr" }}</ApiKey>
   <Branch>develop</Branch>
   <BindAddress>*</BindAddress>
@@ -119,6 +119,7 @@ job "prowlarr" {
   <SslCertPath></SslCertPath>
   <SslCertPassword></SslCertPassword>
   <InstanceName>Prowlarr</InstanceName>
+  <AuthenticationRequired>DisabledForLocalAddresses</AuthenticationRequired>
 </Config>
 EOF
 
@@ -140,7 +141,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "qmcgaw/gluetun"
+        image = "qmcgaw/gluetun:v3.35.0"
 
         cap_add = ["NET_ADMIN", "SYS_MODULE"]
 
@@ -154,20 +155,20 @@ EOF
 
       template {
         data = <<EOF
-VPN_SERVICE_PROVIDER=custom
+VPN_SERVICE_PROVIDER=mullvad
 VPN_TYPE=wireguard
-VPN_ENDPOINT_IP={{ key "protonvpn/prowlarr/endpoint" }}
-VPN_ENDPOINT_PORT={{ key "protonvpn/prowlarr/port" }}
-WIREGUARD_PUBLIC_KEY={{ key "protonvpn/prowlarr/public_key" }}
-WIREGUARD_PRIVATE_KEY={{ key "protonvpn/prowlarr/private_key" }}
-WIREGUARD_ADDRESSES={{ key "protonvpn/prowlarr/addresses" }}
-DOT=off
+WIREGUARD_ADDRESSES="{{ key "mullvad/prowlarr/addresses" }}"
+WIREGUARD_PRIVATE_KEY="{{ key "mullvad/prowlarr/private_key" }}"
+WIREGUARD_PUBLIC_KEY="{{ key "mullvad/prowlarr/public_key" }}"
 DNS_KEEP_NAMESERVER=on
-FIREWALL=on
+DOT=off
 FIREWALL_OUTBOUND_SUBNETS="192.168.0.0/16,100.64.0.0/10"
-HEALTH_VPN_DURATION_INITIAL=30s
+FIREWALL=on
 HEALTH_VPN_DURATION_ADDITION=10s
+HEALTH_VPN_DURATION_INITIAL=30s
+OWNED_ONLY=yes
 TZ="America/Denver"
+UPDATER_PERIOD=24h
 EOF
 
         destination = "secrets/file.env"
@@ -180,7 +181,6 @@ EOF
       }
     }
 
-  /**
     task "metrics" {
       lifecycle {
         sidecar = true
@@ -189,7 +189,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "ghcr.io/onedr0p/exportarr:latest"
+        image = "ghcr.io/onedr0p/exportarr:v1.5.3"
         args = ["prowlarr"]
         ports = ["metrics"]
       }
@@ -198,13 +198,13 @@ EOF
         data = <<EOF
 PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
 URL="http://localhost:9696"
-APIKEY="{{ key "download/prowlarr" }}"
+API_KEY="{{ key "download/prowlarr" }}"
+ENABLE_ADDITIONAL_METRICS="true"
 EOF
 
         destination = "secrets/file.env"
         env         = true
       }
     }
-    */
   }
 }

@@ -316,6 +316,16 @@ resource "nomad_volume" "disk_two" {
   depends_on = [nomad_namespace.download, nomad_job.democratic_csi_iscsi_synology_node]
 }
 
+resource "nomad_job" "autoscan" {
+  jobspec = file("../jobs/autoscan.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+
+  depends_on = [nomad_namespace.download]
+}
+
 resource "nomad_job" "bazarr" {
   jobspec = file("../jobs/bazarr.hcl")
 
@@ -384,4 +394,14 @@ resource "nomad_job" "sonarr" {
   }
 
   depends_on = [nomad_namespace.download, nomad_volume.sonarr_config]
+}
+
+resource "nomad_job" "whisper" {
+  jobspec = file("../jobs/whisper.hcl")
+
+  hcl2 {
+    enabled = true
+  }
+
+  depends_on = [nomad_namespace.download]
 }

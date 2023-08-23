@@ -35,6 +35,11 @@ job "radarr" {
             }
 
             upstreams {
+              destination_name = "autoscan"
+              local_bind_port  = 3030
+            }
+
+            upstreams {
               destination_name = "prowlarr"
               local_bind_port  = 9696
             }
@@ -152,7 +157,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "ghcr.io/onedr0p/exportarr:latest"
+        image = "ghcr.io/onedr0p/exportarr:v1.5.3"
         args = ["radarr"]
         ports = ["metrics"]
       }
@@ -161,7 +166,8 @@ EOF
         data = <<EOF
 PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
 URL="http://localhost:7878"
-APIKEY="{{ key "download/radarr" }}"
+API_KEY="{{ key "download/radarr" }}"
+ENABLE_ADDITIONAL_METRICS="true"
 EOF
 
         destination = "secrets/file.env"

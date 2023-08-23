@@ -35,6 +35,11 @@ job "sonarr" {
             }
 
             upstreams {
+              destination_name = "autoscan"
+              local_bind_port  = 3030
+            }
+
+            upstreams {
               destination_name = "prowlarr"
               local_bind_port  = 9696
             }
@@ -150,7 +155,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "ghcr.io/onedr0p/exportarr:latest"
+        image = "ghcr.io/onedr0p/exportarr:v1.5.3"
         args = ["sonarr"]
         ports = ["metrics"]
       }
@@ -159,7 +164,8 @@ EOF
         data = <<EOF
 PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
 URL="http://localhost:8989"
-APIKEY="{{ key "download/sonarr" }}"
+API_KEY="{{ key "download/sonarr" }}"
+ENABLE_ADDITIONAL_METRICS="true"
 EOF
 
         destination = "secrets/file.env"

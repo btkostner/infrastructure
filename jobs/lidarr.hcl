@@ -35,6 +35,11 @@ job "lidarr" {
             }
 
             upstreams {
+              destination_name = "autoscan"
+              local_bind_port  = 3030
+            }
+
+            upstreams {
               destination_name = "sabnzbd"
               local_bind_port  = 8080
             }
@@ -84,7 +89,7 @@ job "lidarr" {
       driver = "docker"
 
       config {
-        image = "randomninjaatk/lidarr-extended:latest"
+        image = "lscr.io/linuxserver/lidarr:latest"
         ports = ["http"]
 
         volumes = [
@@ -95,21 +100,6 @@ job "lidarr" {
       }
 
       env {
-        autoStart = "true"
-        enableAudioScript = "true"
-        enableVideoScript = "false"
-        scriptInterval = "15m"
-        configureLidarrWithOptimalSettings = "true"
-        searchSort = "date"
-        audioFormat = "native"
-        audioBitrate = "lossless"
-        requireQuality = "true"
-        enableReplaygainTags = "true"
-        audioLyricType = "both"
-        dlClientSource = "tidal"
-        tidalCountryCode = "US"
-        youtubeSubtitleLanguage = "en"
-        enableQueueCleaner = "true"
         PUID     = 1000
         PGID     = 1000
         TZ       = "America/Denver"
@@ -167,7 +157,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "ghcr.io/onedr0p/exportarr:latest"
+        image = "ghcr.io/onedr0p/exportarr:v1.5.3"
         args = ["lidarr"]
         ports = ["metrics"]
       }
@@ -176,7 +166,8 @@ EOF
         data = <<EOF
 PORT="{{ env "NOMAD_ALLOC_PORT_metrics" }}"
 URL="http://localhost:8686"
-APIKEY="{{ key "download/lidarr" }}"
+API_KEY="{{ key "download/lidarr" }}"
+ENABLE_ADDITIONAL_METRICS="true"
 EOF
 
         destination = "secrets/file.env"
