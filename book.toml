@@ -1,0 +1,11 @@
+[book]
+title = "Infrastructure"
+src = "docs"
+language = "en"
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/btkostner/infrastructure"
+edit-url-template = "https://github.com/btkostner/infrastructure/edit/main/{path}"
+cname = "infrastructure.btkostner.io"

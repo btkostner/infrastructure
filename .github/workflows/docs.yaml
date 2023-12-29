@@ -1,0 +1,43 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Publish:
+    environment:
+      name: Docs
+      url: https://infrastructure.btkostner.io
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - id: versions
+        name: Read .tool-versions
+        uses: marocchino/tool-versions-action@608d0ecb8f01e467223f0a854ead7d3fc784b540 # v1.1.1
+
+      - name: Setup (mdbook)
+        uses: peaceiris/actions-mdbook@adeb05db28a0c0004681db83893d56c0388ea9ea # v1.2.0
+        with:
+          mdbook-version: ${{ steps.versions.outputs.mdbook }}
+
+      - name: Build
+        run: mdbook build
+
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@a753861a5debcf57bf8b404356158c8e1e33150c # v2.0.0
+        with:
+          path: ./book
+
+      - name: Deploy
+        uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5 # v2.0.4
