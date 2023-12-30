@@ -1,0 +1,9 @@
+cluster:
+  apiServer:
+    certSANs:
+      - talos.btkostner.network
+  controlPlane:
+    endpoint: https://talos.btkostner.network:6443
+machine:
+  certSANs:
+    - talos.btkostner.network

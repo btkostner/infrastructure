@@ -1,0 +1,4 @@
+machine:
+  install:
+    extensions:
+      - image: "ghcr.io/siderolabs/iscsi-tools:v0.1.4@sha256:8bc04a227b188fb94af94b75c1fa47824c4b6a506dd2c0a7c38a098edbff703a"

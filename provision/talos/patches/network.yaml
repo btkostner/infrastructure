@@ -1,0 +1,24 @@
+machine:
+  install:
+    extraKernelArgs:
+      - ipv6.disable=1
+      - net.ifnames=1
+  network:
+    interfaces:
+      - dhcp: true
+        interface: enp88s0
+        mtu: 9000
+      - dhcp: true
+        interface: enp89s0
+        mtu: 9000
+      - dhcp: true
+        interface: eth0
+        mtu: 9000
+    nameservers:
+      - 192.168.1.1
+      - 1.1.1.1
+      - 8.8.8.8
+      - 8.8.4.4
+  time:
+    servers:
+      - time.cloudflare.com

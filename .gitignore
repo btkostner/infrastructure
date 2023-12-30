@@ -43,6 +43,6 @@ book
 
 ### Talos ###
 
-talos/controlplane.yaml
-talos/talosconfig
-talos/worker.yaml
+provision/talos/controlplane.yaml
+provision/talos/talosconfig
+provision/talos/worker.yaml
