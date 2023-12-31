@@ -43,7 +43,8 @@ book
 
 ### 1password ###
 
-provision/1password/*.secret
+provision/1password/1password-credentials.json
+provision/1password/1password-token
 
 ### Talos ###
 
