@@ -7,8 +7,6 @@ metadata:
   name: apps
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         files:
