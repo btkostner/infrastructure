@@ -5,5 +5,5 @@
 
 # Concepts
 
-[Networking](networking.md)
-[Secrets](secrets.md)
+- [Networking](networking.md)
+- [Secrets](secrets.md)
