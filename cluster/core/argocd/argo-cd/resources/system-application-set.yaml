@@ -7,10 +7,12 @@ metadata:
   name: system
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         files:
-          - path: cluster/core/*/*
+          - path: cluster/system/*/*/kustomization.yaml
         repoURL: https://github.com/btkostner/infrastructure.git
         requeueAfterSeconds: 20
         revision: HEAD
@@ -28,7 +30,7 @@ spec:
         server: https://kubernetes.default.svc
       project: default
       source:
-        path: "{{path}}"
+        path: "{{path.path}}"
         repoURL: https://github.com/btkostner/infrastructure.git
       syncPolicy:
         automated:
