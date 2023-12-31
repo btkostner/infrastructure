@@ -41,6 +41,10 @@ book
 
 # End of https://www.toptal.com/developers/gitignore/api/mdbook,visualstudiocode,git
 
+### 1password ###
+
+provision/1password/*.secret
+
 ### Talos ###
 
 provision/talos/controlplane.yaml

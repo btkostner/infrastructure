@@ -1,0 +1,14 @@
+connect:
+  create: true
+  replicas: 1
+  api:
+    serviceMonitor:
+      enabled: true
+  applicationName: onepassword-connect
+  host: onepassword-connect
+  credentialsName: op-credentials
+  credentialsKey: 1password-credentials.json
+operator:
+  create: false
+acceptanceTests:
+  enabled: false

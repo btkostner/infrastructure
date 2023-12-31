@@ -1,0 +1,36 @@
+replicaCount: 1
+revisionHistoryLimit: 1
+installCRDs: true
+crds:
+  createClusterExternalSecret: true
+  createClusterSecretStore: true
+  createPushSecret: true
+  conversion:
+    enabled: true
+processClusterExternalSecret: true
+processClusterStore: true
+processPushSecret: true
+createOperator: true
+concurrent: 1
+serviceAccount:
+  create: true
+  automount: true
+rbac:
+  create: true
+  servicebindings:
+    create: true
+serviceMonitor:
+  enabled: false
+webhook:
+  create: true
+  certManager:
+    enabled: true
+    addInjectorAnnotations: true
+    cert:
+      create: true
+certController:
+  create: true
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
