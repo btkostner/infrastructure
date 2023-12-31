@@ -20,15 +20,15 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/managed-by: argocd
-        app.kubernetes.io/name: "{{path[1]}}"
-      name: "{{path[1]}}"
-      namespace: "{{path[0]}}"
+        app.kubernetes.io/name: "{{path[3]}}"
+      name: "{{path[3]}}"
+      namespace: "{{path[2]}}"
     spec:
       destination:
         server: btkostner
       project: default
       source:
-        path: cluster/core/{{path}}
+        path: "{{path}}"
         repoURL: https://github.com/btkostner/infrastructure.git
       syncPolicy:
         automated:
