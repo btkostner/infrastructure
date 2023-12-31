@@ -22,15 +22,6 @@ rbac:
 serviceMonitor:
   enabled: false
 webhook:
-  create: true
-  certManager:
-    enabled: true
-    addInjectorAnnotations: true
-    cert:
-      create: true
+  create: false
 certController:
-  create: true
-  rbac:
-    create: true
-  serviceAccount:
-    create: true
+  create: false
