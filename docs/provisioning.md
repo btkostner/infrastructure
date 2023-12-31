@@ -54,4 +54,6 @@ talosctl kubeconfig ~/.kube/config --nodes talos.btkostner.network --force
 
 ## Installing Argo CD
 
-TODO...
+Once the Kubernetes cluster is up, we can start installing software on it. To simplify this process I just run the `provision/argo-cd/install.sh` script. This will create the Kubernetes `argocd` namespace and install all of the needed Argo CD resources. This will take a while to start up, but once it's fully complete you should see an `argocd-server` service in the `argocd` namespace. You can now port forward that service to access the Argo CD web interface.
+
+As part of this installation, 3 `ApplicationSet`s will be installed. These correlate to the `apps`, `core`, and `system` folders, and will install all of the applications setup in this repository.

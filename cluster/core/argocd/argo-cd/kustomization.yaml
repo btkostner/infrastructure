@@ -7,6 +7,9 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+  - ./resources/core-application-set.yaml
+  - ./resources/system-application-set.yaml
+  - ./resources/apps-application-set.yaml
 
 configMapGenerator:
   - name: argocd-cm
