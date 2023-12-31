@@ -25,7 +25,7 @@ spec:
       namespace: "{{path[2]}}"
     spec:
       destination:
-        server: btkostner
+        server: in-cluster
       project: default
       source:
         path: "{{path}}"
