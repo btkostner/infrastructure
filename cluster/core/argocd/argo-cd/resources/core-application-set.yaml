@@ -20,12 +20,12 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/managed-by: argocd
-        app.kubernetes.io/name: "{{path[3]}}"
-      name: "{{path[3]}}"
+        app.kubernetes.io/name: "{{path.basenameNormalized}}"
+      name: "{{path.basenameNormalized}}"
       namespace: "{{path[2]}}"
     spec:
       destination:
-        server: in-cluster
+        server: https://kubernetes.default.svcgitgi
       project: default
       source:
         path: "{{path}}"
