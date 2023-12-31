@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "additionalReviewers": ["btkostner"],
+  "branchPrefix": "renovate/",
+  "dependencyDashboard": true,
+  "extends": ["config:recommended", ":semanticCommits"],
+  "gitAuthor": "Blake Kostner <git@btkostner.io>",
+  "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "onboarding": false,
+  "packageRules": [
+    {
+      "extends": ["helpers:pinGitHubActionDigests"],
+      "groupName": "CI",
+      "matchCategories": ["ci"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "groupName": "Kubernetes",
+      "matchCategories": ["helm", "kubernetes", "cd"],
+      "minimumReleaseAge": "14 days"
+    },
+    {
+      "groupName": "Tools",
+      "matchCategories": ["asdf"],
+      "minimumReleaseAge": "14 days"
+    }
+  ],
+  "patch": {
+    "enabled": false
+  },
+  "platform": "github",
+  "prHourlyLimit": 0,
+  "repositories": ["btkostner/infrastructure"],
+  "timezone": "America/Denver",
+  "username": "btkostner"
+}
