@@ -2,12 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   creationTimestamp: null
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   labels:
     app.kubernetes.io/managed-by: argocd-autopilot
-    app.kubernetes.io/name: root
-  name: root
+    app.kubernetes.io/name: argo-cd
+  name: argo-cd
   namespace: argocd
 spec:
   destination:
@@ -20,7 +18,7 @@ spec:
     kind: Application
   project: default
   source:
-    path: projects
+    path: cluster/bootstrap/argo-cd
     repoURL: https://github.com/btkostner/infrastructure.git
   syncPolicy:
     automated:
