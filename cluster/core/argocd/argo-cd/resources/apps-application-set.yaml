@@ -10,7 +10,7 @@ spec:
   generators:
     - git:
         files:
-          - path: cluster/bootstrap/apps/**/*
+          - path: cluster/apps/**/*
         repoURL: https://github.com/btkostner/infrastructure.git
         requeueAfterSeconds: 20
         revision: HEAD
@@ -28,7 +28,7 @@ spec:
         server: btkostner
       project: default
       source:
-        path: cluster/bootstrap/apps/{{path}}
+        path: cluster/apps/{{path}}
         repoURL: https://github.com/btkostner/infrastructure.git
       syncPolicy:
         automated:
