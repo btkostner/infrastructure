@@ -15,10 +15,8 @@ configMapGenerator:
   - name: argocd-cm
     behavior: merge
     literals:
+      - "kustomize.buildOptions=--enable-helm"
       - "timeout.reconciliation=15s"
-  - name: argocd-cm
-    behavior: merge
-    literals:
       - |
         repository.credentials=- passwordSecret:
             key: git_token
