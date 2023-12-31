@@ -10,7 +10,7 @@ spec:
   generators:
     - git:
         files:
-          - path: cluster/system/**/*
+          - path: cluster/core/*/*
         repoURL: https://github.com/btkostner/infrastructure.git
         requeueAfterSeconds: 20
         revision: HEAD
