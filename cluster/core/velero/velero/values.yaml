@@ -67,6 +67,11 @@ configuration:
   defaultSnapshotMoveData: true
   features: EnableCSI
   defaultVolumesToFsBackup: true
+  extraEnvVars:
+    TZ: America/Denver
+nodeAgent:
+  extraEnvVars:
+    TZ: America/Denver
 credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"
