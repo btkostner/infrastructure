@@ -18,3 +18,18 @@ configMapGenerator:
       - "timeout.reconciliation=15s"
       # - "admin.enabled=false"
       - "accounts.btkostner=apiKey, login"
+      - |
+        resource.exclusions=
+          - apiGroups:
+              - cilium.io
+            kinds:
+              - CiliumIdentity
+            clusters:
+              - "*"
+          - apiGroups:
+              - velero.io
+            kinds:
+              - PodVolumeBackup
+              - Backup
+            clusters:
+              - "*"
