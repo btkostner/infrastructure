@@ -79,4 +79,4 @@ schedules:
     schedule: "0 3 * * *"
     useOwnerReferencesInBackup: false
     template:
-      ttl: "30d"
+      ttl: "720h0m0s"
