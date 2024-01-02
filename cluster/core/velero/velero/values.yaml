@@ -1,0 +1,93 @@
+namespace:
+  labels:
+    - key: pod-security.kubernetes.io/enforce
+      value: privileged
+    - key: pod-security.kubernetes.io/audit
+      value: privileged
+    - key: pod-security.kubernetes.io/warn
+      value: privileged
+resources:
+  requests:
+    cpu: 500m
+    memory: 128Mi
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.8.2
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+  - name: velero-plugin-for-csi
+    image: velero/velero-plugin-for-csi:v0.6.2
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+terminationGracePeriodSeconds: 3600
+metrics:
+  enabled: true
+  scrapeInterval: 30s
+  scrapeTimeout: 10s
+  serviceMonitor:
+    autodetect: true
+    enabled: false
+  nodeAgentPodMonitor:
+    autodetect: true
+    enabled: false
+  prometheusRule:
+    autodetect: true
+    enabled: false
+upgradeCRDs: true
+cleanUpCRDs: false
+configuration:
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: btkostner-cluster
+      prefix: velero
+      default: true
+      accessMode: ReadWrite
+      credential:
+        name: backblaze-credentials
+        key: cloud
+      config:
+        region: us-west-004
+        s3ForcePathStyle: "true"
+        s3Url: s3.us-west-004.backblazeb2.com
+  volumeSnapshotLocation:
+    - name: default
+      provider: aws
+      bucket: btkostner-cluster
+      prefix: velero
+      default: true
+      accessMode: ReadWrite
+      credential:
+        name: backblaze-credentials
+        key: cloud
+      config:
+        region: us-west-004
+        s3ForcePathStyle: "true"
+        s3Url: s3.us-west-004.backblazeb2.com
+  uploaderType: restic
+  defaultBackupStorageLocation: default
+  defaultVolumeSnapshotLocations: default
+  logFormat: json
+  defaultSnapshotMoveData: true
+  features: EnableCSI
+  defaultVolumesToFsBackup: true
+credentials:
+  useSecret: true
+  existingSecret: "backblaze-credentials"
+backupsEnabled: true
+snapshotsEnabled: true
+deployNodeAgent: true
+schedules:
+  cluster-full-backup:
+    disabled: false
+    schedule: "0 3 * * *"
+    useOwnerReferencesInBackup: false
+    template:
+      ttl: "30d"
