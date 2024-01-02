@@ -58,22 +58,11 @@ configuration:
         s3ForcePathStyle: "true"
         s3Url: s3.us-west-004.backblazeb2.com
   volumeSnapshotLocation:
-    - name: default
-      provider: aws
-      bucket: btkostner-cluster
-      prefix: velero
-      default: true
-      accessMode: ReadWrite
-      credential:
-        name: backblaze-credentials
-        key: cloud
-      config:
-        region: us-west-004
-        s3ForcePathStyle: "true"
-        s3Url: s3.us-west-004.backblazeb2.com
+    - name: rook-ceph
+      provider: csi
   uploaderType: restic
   defaultBackupStorageLocation: default
-  defaultVolumeSnapshotLocations: default
+  defaultVolumeSnapshotLocations: csi:rook-ceph
   logFormat: json
   defaultSnapshotMoveData: true
   features: EnableCSI
