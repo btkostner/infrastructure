@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./external-secrets/onepassword
   - ./external-secrets/external-secrets-operator
-  - ./kube-system/gateway-api
   - ./kube-system/cilium
   - ./argocd/argo-cd
   - ./argocd/application-sets

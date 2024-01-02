@@ -6,6 +6,7 @@ metadata:
 namespace: argocd
 
 resources:
+  - ./resources/application-crds.yaml
   - ./resources/application-set-core.yaml
   - ./resources/application-set-system.yaml
   - ./resources/application-set-apps.yaml
