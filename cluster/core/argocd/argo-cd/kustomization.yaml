@@ -16,5 +16,5 @@ configMapGenerator:
     literals:
       - "kustomize.buildOptions=--enable-helm"
       - "timeout.reconciliation=15s"
-      - "admin.enabled=false"
+      # - "admin.enabled=false"
       - "accounts.btkostner=apiKey, login"
