@@ -13,6 +13,4 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
-  - ./resources/namespace.yaml
-  - ./resources/ip-address-pool.yaml
-  - ./resources/l2-advertisement.yaml
+  - ./resources/secret-backblaze-credentials.yaml
