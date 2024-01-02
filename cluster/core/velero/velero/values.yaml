@@ -56,7 +56,7 @@ configuration:
       config:
         region: us-west-004
         s3ForcePathStyle: "true"
-        s3Url: s3.us-west-004.backblazeb2.com
+        s3Url: https://s3.us-west-004.backblazeb2.com
   volumeSnapshotLocation:
     - name: rook-ceph
       provider: csi
