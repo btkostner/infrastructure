@@ -13,4 +13,5 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
+  - ./resources/namespace.yaml
   - ./resources/secret-backblaze-credentials.yaml
