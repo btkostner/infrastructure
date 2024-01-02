@@ -52,12 +52,10 @@ Finally I run this command to generate the needed `kubectl` entry:
 talosctl kubeconfig ~/.kube/config --nodes talos.btkostner.network --force
 ```
 
-## Installing Argo CD
+## Installing Core Resources
 
-Once the Kubernetes cluster is up, we can start installing software on it. To simplify this process I just run the `provision/argo-cd/install.sh` script. This will create the Kubernetes `argocd` namespace and install all of the needed Argo CD resources. This will take a while to start up, but once it's fully complete you should see an `argocd-server` service in the `argocd` namespace. You can now port forward that service to access the Argo CD web interface.
+Once the Kubernetes cluster is up, we can start installing software on it. To simplify this process I just run the `provision/core/install.sh` script. This will install all of the resources in the `cluster/core` directory. Once this is ran initially, ArgoCD will take care of syncing all resources, so you should never need to run this provision core install script again.
 
-As part of this installation, 3 `ApplicationSet`s will be installed. These correlate to the `apps`, `core`, and `system` folders, and will install all of the applications setup in this repository.
-
-## Installing 1Password authentication
+## Bootstrapping 1Password credentials
 
 The last step of provisioning a cluster is setting up 1Password connect to handle secrets in Kubernetes. Luckily Argo will install the 1Password connect service and the external secrets operator, _but_ we have to add the required 1Password secret for your vault. To do this, I have an install script at `provision/1password/install.sh`. This will use the 1Password CLI to verify if the `1Password Connect` password exists in the 1Password vault (or create it if it doesn't), then copies the password to Kubernetes. If you are running it on your own, please verify the variables in the script before running. It makes heavy assumptions based on my own 1Password setup.

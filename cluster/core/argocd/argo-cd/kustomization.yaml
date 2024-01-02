@@ -7,6 +7,8 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+  - ./resources/secret-repository.yaml
+  - ./resources/secret-repo-creds.yaml
 
 configMapGenerator:
   - name: argocd-cm
@@ -14,11 +16,5 @@ configMapGenerator:
     literals:
       - "kustomize.buildOptions=--enable-helm"
       - "timeout.reconciliation=15s"
-      - |
-        repository.credentials=- passwordSecret:
-            key: git_token
-            name: autopilot-secret
-          url: https://github.com/
-          usernameSecret:
-            key: git_username
-            name: autopilot-secret
+      - "admin.enabled=false"
+      - "accounts.btkostner=apiKey, login"

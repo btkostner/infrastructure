@@ -17,10 +17,18 @@ debug:
   enabled: false
 enableRuntimeDeviceDetection: true
 enableXTSocketFallback: false
+envoyConfig:
+  enabled: false
+  secretsNamespace:
+    create: false
+    name: kube-system
 externalIPs:
   enabled: true
 gatewayAPI:
   enabled: true
+  secretsNamespace:
+    create: false
+    name: kube-system
 hostFirewall:
   enabled: true
 hostPort:
@@ -34,6 +42,12 @@ hubble:
       server:
         ipv6:
           enabled: false
+ingressController:
+  enabled: true
+  loadbalancerMode: dedicated
+  secretsNamespace:
+    create: false
+    name: kube-system
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.0.0.0/8"

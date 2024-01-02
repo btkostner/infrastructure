@@ -3,7 +3,8 @@ connect:
   replicas: 1
   api:
     serviceMonitor:
-      enabled: true
+      # TODO: Enable once prometheus crds are installed
+      enabled: false
   applicationName: onepassword-connect
   host: onepassword-connect
   credentialsName: op-credentials

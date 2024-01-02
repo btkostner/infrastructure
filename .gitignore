@@ -41,6 +41,10 @@ book
 
 # End of https://www.toptal.com/developers/gitignore/api/mdbook,visualstudiocode,git
 
+### Kustomization ###
+
+cluster/*/*/*/charts
+
 ### 1password ###
 
 provision/1password/1password-credentials.json

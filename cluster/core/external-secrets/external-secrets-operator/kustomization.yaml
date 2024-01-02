@@ -14,4 +14,4 @@ helmCharts:
     valuesFile: values.yaml
 
 resources:
-  - ./resources/onepassword-secret-store.yaml
+  - ./resources/cluster-secret-store.yaml
