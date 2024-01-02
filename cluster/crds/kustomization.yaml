@@ -14,7 +14,14 @@ resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/main/config/crd/experimental/gateway.networking.k8s.io_udproutes.yaml
 
   # Metallb
-  - https://raw.githubusercontent.com/metallb/metallb/main/charts/metallb/charts/crds/templates/crds.yaml
+  - ./resources/addresspools.metallb.io.yaml
+  - ./resources/bfdprofiles.metallb.io.yaml
+  - ./resources/bgpadvertisements.metallb.io.yaml
+  - ./resources/bgpadvertisements.metallb.io.yaml
+  - ./resources/bgppeers.metallb.io.yaml
+  - ./resources/communities.metallb.io.yaml
+  - ./resources/ipaddresspools.metallb.io.yaml
+  - ./resources/l2advertisements.metallb.io.yaml
 
   # Prometheus Operator
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
