@@ -13,6 +13,9 @@ resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/main/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/main/config/crd/experimental/gateway.networking.k8s.io_udproutes.yaml
 
+  # Metallb
+  - https://raw.githubusercontent.com/metallb/metallb/main/charts/metallb/charts/crds/templates/crds.yaml
+
   # Prometheus Operator
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml
