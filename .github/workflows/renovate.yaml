@@ -17,14 +17,14 @@ jobs:
 
       - id: appToken
         name: Get App Token
-        uses: jnwng/github-app-installation-token-action@778da2ab509f3ef5e4b902bc15daf25ef3e34939 # v2
+        uses: jnwng/github-app-installation-token-action@c54add4c02866dc41e106745ac6dcf5cdd6339e5 # v2
         with: 
           appId: 779659
           installationId: 45764102
           privateKey: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
       - name: Renovate
-        uses: renovatebot/github-action@5c6c06aa0e3d7a6a9b6cba05c078c51631b5f11a # v39.1.1
+        uses: renovatebot/github-action@b8ce565a2e98de1fec9696a76fba7beb01ec29b2 # v39.2.3
         with:
           configurationFile: .github/renovate.json
           token: ${{ steps.appToken.outputs.token }}
