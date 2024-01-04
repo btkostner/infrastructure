@@ -10,9 +10,9 @@ spec:
     privateKeySecretRef:
       name: cloudflare-staging
     solvers:
-    - dns01:
-        cloudflare:
-          email: "btkostner@gmail.com"
-          apiTokenSecretRef:
-            name: cloudflare-credentials
-            key: api-token
+      - dns01:
+          cloudflare:
+            email: "btkostner@gmail.com"
+            apiTokenSecretRef:
+              name: cloudflare-credentials
+              key: api-token

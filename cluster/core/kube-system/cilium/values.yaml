@@ -52,7 +52,7 @@ ingressController:
     name: cilium-ingress
     type: LoadBalancer
     insecureNodePort: 30080
-    secureNodePort : 30433
+    secureNodePort: 30433
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.0.0.0/8"
