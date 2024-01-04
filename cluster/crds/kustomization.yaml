@@ -27,7 +27,7 @@ resources:
   # - ./resources/l2advertisements.metallb.io.yaml
 
   # Cert Manager
-  - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
+  # - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
 
   # Velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_backuprepositories.yaml
