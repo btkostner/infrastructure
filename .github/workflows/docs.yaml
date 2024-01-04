@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - talos-argo
+    paths:
+      - book.toml
+      - "**/*.md"
 
 jobs:
   Publish:
