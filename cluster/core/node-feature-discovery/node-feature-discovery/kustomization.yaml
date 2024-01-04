@@ -11,3 +11,6 @@ helmCharts:
     releaseName: node-feature-discovery
     version: 0.14.3
     valuesFile: ./values.yaml
+
+resources:
+  - ./resources/namespace.yaml

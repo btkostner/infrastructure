@@ -11,3 +11,9 @@ helmCharts:
     releaseName: cert-manager
     version: 1.13.3
     valuesFile: ./values.yaml
+
+resources:
+  - ./resources/namespace.yaml
+  - ./resources/secret-cloudflare-credentials.yaml
+  - ./resources/cluster-issuer-production.yaml
+  - ./resources/cluster-issuer-staging.yaml
