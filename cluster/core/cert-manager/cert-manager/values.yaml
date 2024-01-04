@@ -1,7 +1,14 @@
 installCRDs: true
 prometheus:
   enabled: true
-extraArgs:
-  - "--feature-gates=ExperimentalGatewayAPISupport=true"
+  servicemonitor:
+    enabled: true
+featureGates: "ExperimentalGatewayAPISupport"
+leaderElection:
+  namespace: cert-manager
+clusterResourceNamespace: cert-manager
+namespace: cert-manager
+rbac:
+  create: true
 cainjector:
-  enabled: false
+  enabled: true
