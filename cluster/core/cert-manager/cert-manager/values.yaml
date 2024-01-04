@@ -1,5 +1,5 @@
-installCRDs: false
+installCRDs: true
 prometheus:
-  enabled: false
+  enabled: true
 extraArgs:
   - "--feature-gates=ExperimentalGatewayAPISupport=true"
