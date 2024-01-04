@@ -15,10 +15,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
+      - id: appToken
+        name: Get App Token
+        uses: jnwng/github-app-installation-token-action@778da2ab509f3ef5e4b902bc15daf25ef3e34939 # v2
+        with: 
+          appId: 779659
+          installationId: 45764102
+          privateKey: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Renovate
         uses: renovatebot/github-action@5c6c06aa0e3d7a6a9b6cba05c078c51631b5f11a # v39.1.1
         with:
           configurationFile: .github/renovate.json
-          token: ${{ secrets.RENOVATE_TOKEN }}
+          token: ${{ steps.appToken.outputs.token }}
         env:
           LOG_LEVEL: ${{ runner.debug && 'debug' || 'info' }}
