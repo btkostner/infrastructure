@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: device-plugin-operator
+  name: intel-device-plugins-operator
 
 namespace: node-feature-discovery
 
 helmCharts:
-  - name: device-plugin-operator
+  - name: intel-device-plugins-operator
     repo: https://intel.github.io/helm-charts
-    releaseName: device-plugin-operator
+    releaseName: intel-device-plugins-operator
     version: 0.28.0
