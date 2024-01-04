@@ -4,4 +4,4 @@ prometheus:
 extraArgs:
   - "--feature-gates=ExperimentalGatewayAPISupport=true"
 cainjector:
-  enabled: true
+  enabled: false
