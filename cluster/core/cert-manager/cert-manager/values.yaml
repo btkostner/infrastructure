@@ -3,3 +3,5 @@ prometheus:
   enabled: true
 extraArgs:
   - "--feature-gates=ExperimentalGatewayAPISupport=true"
+cainjector:
+  enabled: true
