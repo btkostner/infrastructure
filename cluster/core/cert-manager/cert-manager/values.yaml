@@ -1,0 +1,5 @@
+installCRDs: false
+prometheus:
+  enabled: false
+extraArgs:
+  - "--feature-gates=ExperimentalGatewayAPISupport=true"

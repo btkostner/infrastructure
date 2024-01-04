@@ -1,0 +1,4 @@
+name: gpudeviceplugin
+nodeFeatureRule: true
+resourceManager: true
+sharedDevNum: 10
