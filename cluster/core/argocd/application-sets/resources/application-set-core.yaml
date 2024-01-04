@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "1"
   name: core
   namespace: argocd
 spec:
@@ -32,27 +32,24 @@ spec:
       syncPolicy:
         automated:
           allowEmpty: false
-          prune: false
+          prune: true
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
       ignoreDifferences:
         - group: ""
           kind: ConfigMap
-          name: hubble-ca-cert
-          jsonPointers:
-            - /data/ca.crt
-        - group: ""
-          kind: Secret
-          name: hubble-relay-client-certs
           jsonPointers:
             - /data/ca.crt
             - /data/tls.crt
             - /data/tls.key
         - group: ""
           kind: Secret
-          name: hubble-server-certs
           jsonPointers:
             - /data/ca.crt
             - /data/tls.crt
             - /data/tls.key
+        - group: apiextensions.k8s.io
+          kind: CustomResourceDefinition
+          jsonPointers:
+            - /metadata/annotations
