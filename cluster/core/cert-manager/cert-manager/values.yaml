@@ -12,3 +12,8 @@ rbac:
   create: true
 cainjector:
   enabled: true
+
+# wtf, this should not be how any of this works.
+global:
+  leaderElection:
+    namespace: cert-manager
