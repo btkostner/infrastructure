@@ -26,6 +26,7 @@ spec:
     spec:
       destination:
         server: https://kubernetes.default.svc
+        namespace: "{{path[2]}}"
       project: default
       source:
         path: "{{path}}"
