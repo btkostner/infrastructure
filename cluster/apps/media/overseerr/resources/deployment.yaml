@@ -43,7 +43,7 @@ spec:
               value: America/Denver
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: /app/config
       volumes:
         - name: config
           persistentVolumeClaim:
