@@ -51,6 +51,7 @@ ingressController:
   service:
     name: cilium-ingress
     type: LoadBalancer
+    loadBalancerIP: 192.168.3.50
     insecureNodePort: 30080
     secureNodePort: 30433
 ipam:

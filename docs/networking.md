@@ -16,7 +16,8 @@ My Intel NUC cluster runs on a separate vlan powered by [Ubiquiti](https://www.u
 | Intel NUC11PAHI5 | NUC 2 | 192.168.3.12 |
 | Intel NUC11PAHI5 | NUC 3 | 192.168.3.13 |
 | Intel NUC11PAHI5 | NUC 4 | 192.168.3.14 |
-| Kubernetes ingress VIP | external-egress | 192.168.3.50 |
+| Kubernetes ingress VIP | cilium-ingress | 192.168.3.50 |
+| Kubernetes ingress VIP | cilium-gateway-external-gateway | 192.168.3.51
 
 ## Private Network
 
