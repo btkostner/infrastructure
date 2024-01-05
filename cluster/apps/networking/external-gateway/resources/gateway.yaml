@@ -18,7 +18,7 @@ spec:
       protocol: HTTPS
       allowedRoutes:
         namespaces:
-          from: ALL
+          from: All
       tls:
         mode: Terminate
         certificateRefs:
@@ -30,7 +30,7 @@ spec:
       protocol: HTTPS
       allowedRoutes:
         namespaces:
-          from: ALL
+          from: All
       tls:
         mode: Terminate
         certificateRefs:
