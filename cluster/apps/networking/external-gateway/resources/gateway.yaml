@@ -1,0 +1,37 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external-gateway
+  namespace: networking
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-production
+    metallb.universe.tf/loadBalancerIPs: 192.168.3.50
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 192.168.3.50
+  listeners:
+    - hostname: abraxis.tv
+      name: abraxis-tv
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: ALL
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: abraxis-tv
+
+    - hostname: request.abraxis.tv
+      name: request-abraxis-tv
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: ALL
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: request-abraxis-tv
