@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: plex
+
+namespace: media
+
+resources:
+  - ./resources/deployment.yaml
+  - ./resources/http-route.yaml
+  - ./resources/pv-config.yaml
+  - ./resources/pv-media.yaml
+  - ./resources/pvc-config.yaml
+  - ./resources/pvc-media.yaml
+  - ./resources/service.yaml
