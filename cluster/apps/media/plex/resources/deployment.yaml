@@ -47,8 +47,10 @@ spec:
               memory: 8Gi
               gpu.intel.com/i915: 1
           env:
-            TZ: America/Denver
-            VERSION: docker
+            - name: TZ
+              value: America/Denver
+            - name: VERSION
+              value: docker
           volumeMounts:
             - name: config
               mountPath: /config
