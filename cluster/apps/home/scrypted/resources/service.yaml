@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scrypted
+  namespace: home
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.3.60
+spec:
+  selector:
+    app: scrypted
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 11080
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 10443

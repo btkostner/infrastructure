@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrypted
+  namespace: home
+  labels:
+    app: scrypted
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrypted
+  template:
+    metadata:
+      labels:
+        app: scrypted
+    spec:
+      containers:
+        - name: scrypted
+          image: docker.io/koush/scrypted:latest
+          imagePullPolicy: Always
+          hostNetwork: true
+          ports:
+            - containerPort: 11080
+              name: http
+              protocol: TCP
+            - containerPort: 10443
+              name: https
+              protocol: TCP
+            - containerPort: 3348
+              name: homekit
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+              gpu.intel.com/i915: 1
+            limits:
+              cpu: 4000m
+              memory: 4Gi
+              gpu.intel.com/i915: 1
+          volumeMounts:
+            - name: config
+              mountPath: /server/volume
+            - name: gpu
+              mountPath: /dev/dri
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: scrypted-config
+        - name: gpu
+          hostPath:
+            path: /dev/dri
