@@ -7,6 +7,9 @@ metadata:
     app: scrypted
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: scrypted
@@ -15,9 +18,13 @@ spec:
       labels:
         app: scrypted
     spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
       containers:
         - name: scrypted
-          image: docker.io/koush/scrypted:latest
+          image: ghcr.io/koush/scrypted:full
           imagePullPolicy: Always
           ports:
             - containerPort: 11080
@@ -37,6 +44,21 @@ spec:
               hostPort: 3350
               name: camera-gds
               protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 11080
+            failureThreshold: 3
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 11080
+            failureThreshold: 3
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 11080
+            failureThreshold: 3
+            periodSeconds: 10
           resources:
             requests:
               cpu: 1000m
@@ -51,7 +73,6 @@ spec:
               mountPath: /server/volume
             - name: gpu
               mountPath: /dev/dri
-      hostNetwork: true
       volumes:
         - name: config
           persistentVolumeClaim:
