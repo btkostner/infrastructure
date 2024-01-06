@@ -18,6 +18,9 @@ spec:
       port: 443
       protocol: TCP
       targetPort: 10443
+    - containerPort: 5353
+      name: mdns
+      protocol: UDP
     - name: homekit
       port: 3348
       protocol: TCP

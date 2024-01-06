@@ -26,6 +26,9 @@ spec:
             - containerPort: 10443
               name: https
               protocol: TCP
+            - containerPort: 5353
+              name: mdns
+              protocol: UDP
             - containerPort: 3348
               name: homekit
               protocol: TCP
