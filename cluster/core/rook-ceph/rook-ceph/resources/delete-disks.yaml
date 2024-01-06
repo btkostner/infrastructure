@@ -15,8 +15,13 @@ spec:
         name: delete-disks
     spec:
       containers:
-        - name: nuker
+        - name: disk-nuker
           image: busybox
           command: ["/bin/sh", "-c", "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda"]
+          securityContext:
+            privileged: true
+        - name: rook-nuker
+          image: busybox
+          command: ["/bin/sh", "-c", "rm -rf /var/lib/rook"]
           securityContext:
             privileged: true
