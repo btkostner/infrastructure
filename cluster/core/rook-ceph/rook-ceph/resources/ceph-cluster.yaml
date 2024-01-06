@@ -15,8 +15,6 @@ spec:
     modules:
       - name: nfs
         enabled: true
-      - name: prometheus
-        enabled: true
       - name: rook
         enabled: true
   removeOSDsIfOutAndSafeToRemove: true
