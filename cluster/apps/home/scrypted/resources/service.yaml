@@ -4,7 +4,7 @@ metadata:
   name: scrypted
   namespace: home
   annotations:
-    metallb.universe.tf/loadBalancerIPs: 192.168.4.4
+    metallb.universe.tf/loadBalancerIPs: 192.168.3.60
 spec:
   selector:
     app: scrypted
