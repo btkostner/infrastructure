@@ -53,6 +53,24 @@ spec:
           kind: CustomResourceDefinition
           jsonPointers:
             - /metadata/annotations
+        - group: ceph.rook.io
+          kind: CephCluster
+          jsonPointers:
+            - /spec/cephVersion
+            - /spec/cleanupPolicy
+            - /spec/continueUpgradeAfterChecksEvenIfNotHealthy
+            - /spec/crashCollector
+            - /spec/dashboard
+            - /spec/disruptionManagement
+            - /spec/disruptionManagement/managePodBudgets
+            - /spec/healthCheck
+            - /spec/mgr
+            - /spec/mon
+            - /spec/monitoring
+            - /spec/network/connections
+            - /spec/removeOSDsIfOutAndSafeToRemove
+            - /spec/skipUpgradeChecks
+            - /spec/storage/onlyApplyOSDPlacement
         # This is a workaround for mutated CRD, where ingoreDifferences must be set
         # https://github.com/metallb/metallb/issues/1681
         - group: "apiextensions.k8s.io"

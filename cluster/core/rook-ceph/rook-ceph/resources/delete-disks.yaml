@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: delete-disks
+  namespace: rook-ceph
+  labels:
+    k8s-app: delete-disks
+spec:
+  selector:
+    matchLabels:
+      name: delete-disks
+  template:
+    metadata:
+      labels:
+        name: delete-disks
+    spec:
+      containers:
+        - name: nuker
+          image: busybox
+          command: ["/bin/sh", "-c", "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda"]
+          securityContext:
+            privileged: true
