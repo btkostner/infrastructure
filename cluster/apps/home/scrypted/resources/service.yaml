@@ -8,6 +8,7 @@ metadata:
 spec:
   selector:
     app: scrypted
+  type: LoadBalancer
   ports:
     - name: http
       port: 80
@@ -21,3 +22,7 @@ spec:
       port: 3348
       protocol: TCP
       targetPort: 3348
+    - name: garage-drive-side-camera
+      port: 3350
+      protocol: TCP
+      targetPort: 3350

@@ -19,7 +19,6 @@ spec:
         - name: scrypted
           image: docker.io/koush/scrypted:latest
           imagePullPolicy: Always
-          hostNetwork: true
           ports:
             - containerPort: 11080
               name: http
@@ -29,6 +28,10 @@ spec:
               protocol: TCP
             - containerPort: 3348
               name: homekit
+              protocol: TCP
+            - containerPort: 3350
+              name: garage-drive-side-camera
+              protocol: TCP
           resources:
             requests:
               cpu: 1000m
