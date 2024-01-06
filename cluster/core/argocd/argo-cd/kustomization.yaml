@@ -7,9 +7,9 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+  - ./resources/http-route.yaml
   - ./resources/secret-repository.yaml
   - ./resources/secret-repo-creds.yaml
-  - ./resources/tls-route.yaml
 
 configMapGenerator:
   - name: argocd-cm

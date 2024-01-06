@@ -39,11 +39,11 @@ spec:
     - hostname: argocd.btkostner.network
       name: argocd-btkostner-network
       port: 443
-      protocol: TLS
+      protocol: HTTPS
       allowedRoutes:
         namespaces:
           from: All
       tls:
-        mode: Passthrough
+        mode: Terminate
         certificateRefs:
-          - name: argocd-btkostner-network
+          - name: argocd-abraxis-tv

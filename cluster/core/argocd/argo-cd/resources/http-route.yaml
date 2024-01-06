@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TLSRoute
 metadata:
-  name: argocd-tls
+  name: argocd-http
   namespace: argocd
 spec:
   hostnames:
