@@ -15,8 +15,8 @@ helmCharts:
 
 resources:
   - https://raw.githubusercontent.com/rook/rook/v1.13.1/deploy/examples/toolbox.yaml
+  - ./resources/ceph-block-pool.yaml
   - ./resources/ceph-cluster.yaml
-  - ./resources/ceph-filesystem.yaml
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
   - ./resources/storage-class.yaml

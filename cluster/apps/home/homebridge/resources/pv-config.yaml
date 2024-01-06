@@ -8,3 +8,4 @@ spec:
     - ReadWriteMany
   capacity:
     storage: 25Gi
+  volumeMode: Block
