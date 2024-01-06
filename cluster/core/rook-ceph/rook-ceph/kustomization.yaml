@@ -14,8 +14,9 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
+  - https://raw.githubusercontent.com/rook/rook/v1.13.1/deploy/examples/toolbox.yaml
   - ./resources/ceph-cluster.yaml
   - ./resources/ceph-filesystem.yaml
-  - https://raw.githubusercontent.com/rook/rook/v1.13.1/deploy/examples/toolbox.yaml
+  - ./resources/http-route.yaml
   - ./resources/namespace.yaml
   - ./resources/storage-class.yaml
