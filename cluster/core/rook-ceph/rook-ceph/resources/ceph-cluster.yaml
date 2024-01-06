@@ -1,0 +1,30 @@
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: ceph
+  namespace: rook-ceph
+spec:
+  cephVersion:
+    image: quay.io/ceph/ceph:v18.2.1
+  dataDirHostPath: /var/lib/rook
+  mon:
+    allowMultiplePerNode: false
+    count: 3
+  mgr:
+    count: 2
+    modules:
+      - name: nfs
+        enabled: true
+      - name: prometheus
+        enabled: true
+      - name: rook
+        enabled: true
+  removeOSDsIfOutAndSafeToRemove: true
+  dashboard:
+    enabled: true
+  monitoring:
+    enabled: true
+  storage:
+    useAllNodes: true
+    useAllDevices: true
+    deviceFilter: "sda"

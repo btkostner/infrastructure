@@ -1,0 +1,10 @@
+csi:
+  readAffinity:
+    enabled: true
+  topology:
+    domainLabels:
+      - kubernetes.io/hostname
+    enabled: true
+enableDiscoveryDaemon: true
+monitoring:
+  enabled: true
