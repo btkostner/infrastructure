@@ -30,9 +30,11 @@ spec:
               name: mdns
               protocol: UDP
             - containerPort: 3348
+              hostPort: 3348
               name: homekit
               protocol: TCP
             - containerPort: 3350
+              hostPort: 3350
               name: camera-gds
               protocol: TCP
           resources:
@@ -49,6 +51,7 @@ spec:
               mountPath: /server/volume
             - name: gpu
               mountPath: /dev/dri
+      hostNetwork: true
       volumes:
         - name: config
           persistentVolumeClaim:
