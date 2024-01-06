@@ -3,22 +3,9 @@ kind: PersistentVolume
 metadata:
   name: home-homebridge-config
 spec:
-  volumeMode: Filesystem
   storageClassName: rook-ceph-block
   persistentVolumeReclaimPolicy: Retain
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   capacity:
     storage: 25Gi
-  csi:
-    driver: rbd.csi.ceph.com
-    fsType: ext4
-    nodeStageSecretRef:
-      name: rook-csi-rbd-node
-      namespace: rook-ceph
-    volumeAttributes:
-      clusterID: "f127d5b0-92a9-4117-8258-b51130cdd406"
-      pool: "replicapool"
-      staticVolume: "true"
-      imageFeatures: "layering,fast-diff,object-map,deep-flatten,exclusive-lock"
-    volumeHandle: homebridge-config

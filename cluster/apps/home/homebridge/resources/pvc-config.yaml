@@ -4,11 +4,10 @@ metadata:
   name: homebridge-config
   namespace: home
 spec:
+  volumeName: home-homebridge-config
+  storageClassName: rook-ceph-block
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 25Gi
-  volumeMode: Filesystem
-  volumeName: home-homebridge-config
-  storageClassName: rook-ceph-block

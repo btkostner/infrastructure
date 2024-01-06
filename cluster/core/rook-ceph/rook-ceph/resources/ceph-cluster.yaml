@@ -4,6 +4,9 @@ metadata:
   name: ceph
   namespace: rook-ceph
 spec:
+  csi:
+    readAffinity:
+      enabled: true
   cephVersion:
     image: quay.io/ceph/ceph:v18.2.1
   dataDirHostPath: /var/lib/rook
