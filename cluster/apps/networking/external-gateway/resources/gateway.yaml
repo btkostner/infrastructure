@@ -35,3 +35,15 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: request-abraxis-tv
+
+    - hostname: argocd.btkostner.network
+      name: argocd-btkostner-network
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: argocd-btkostner-network
