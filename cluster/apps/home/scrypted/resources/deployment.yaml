@@ -30,7 +30,7 @@ spec:
               name: homekit
               protocol: TCP
             - containerPort: 3350
-              name: garage-drive-side-camera
+              name: camera-gds
               protocol: TCP
           resources:
             requests:

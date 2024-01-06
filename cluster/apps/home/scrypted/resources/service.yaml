@@ -22,7 +22,7 @@ spec:
       port: 3348
       protocol: TCP
       targetPort: 3348
-    - name: garage-drive-side-camera
+    - name: camera-gds
       port: 3350
       protocol: TCP
       targetPort: 3350
