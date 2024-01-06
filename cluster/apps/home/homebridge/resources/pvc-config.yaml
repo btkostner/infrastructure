@@ -4,7 +4,7 @@ metadata:
   name: homebridge-config
   namespace: home
 spec:
-  storageClassName: cephfs
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteMany
   volumeName: home-homebridge-config

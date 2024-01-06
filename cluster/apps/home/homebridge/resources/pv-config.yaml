@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: home-homebridge-config
 spec:
-  storageClassName: cephfs
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteMany
   capacity:
