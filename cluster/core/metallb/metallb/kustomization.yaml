@@ -13,6 +13,7 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
-  - ./resources/namespace.yaml
-  - ./resources/ip-address-pool.yaml
+  - ./resources/ip-address-pool-iot.yaml
+  - ./resources/ip-address-pool-lab.yaml
   - ./resources/l2-advertisement.yaml
+  - ./resources/namespace.yaml
