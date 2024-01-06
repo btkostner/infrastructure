@@ -17,3 +17,7 @@ spec:
       port: 443
       protocol: TCP
       targetPort: 10443
+    - name: homekit
+      port: 3348
+      protocol: TCP
+      targetPort: 3348
