@@ -46,4 +46,4 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: argocd-abraxis-tv
+          - name: argocd-btkostner-network
