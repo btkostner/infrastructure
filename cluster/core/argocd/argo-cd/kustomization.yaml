@@ -15,10 +15,10 @@ configMapGenerator:
   - name: argocd-cm
     behavior: merge
     literals:
-      - "kustomize.buildOptions=--enable-helm"
-      - "timeout.reconciliation=15s"
-      # - "admin.enabled=false"
       - "accounts.btkostner=apiKey, login"
+      - "kustomize.buildOptions=--enable-helm"
+      - "server.insecure=true"
+      - "timeout.reconciliation=15s"
       - |
         resource.exclusions=
           - apiGroups:
