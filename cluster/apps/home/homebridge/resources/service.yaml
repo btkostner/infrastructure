@@ -18,3 +18,7 @@ spec:
       port: 51644
       protocol: UDP
       targetPort: 51644
+    - name: bridge-protect
+      port: 51645
+      protocol: UDP
+      targetPort: 51645
