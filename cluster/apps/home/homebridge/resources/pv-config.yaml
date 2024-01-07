@@ -13,8 +13,15 @@ spec:
       clusterID: rook-ceph
       imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
       imageFormat: '2'
+      imageName: homebridge-config
       journalPool: replicapool
       pool: replicapool
+      nodeStageSecretRef:
+        name: rook-csi-rbd-node
+        namespace: rook-ceph
+      controllerExpandSecretRef:
+        name: rook-csi-rbd-provisioner
+        namespace: rook-ceph
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
