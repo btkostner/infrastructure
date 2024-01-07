@@ -35,5 +35,5 @@
   "prHourlyLimit": 0,
   "repositories": ["btkostner/infrastructure"],
   "timezone": "America/Denver",
-  "username": "btkostner"
+  "username": "btkostner-infrastructure[bot]"
 }
