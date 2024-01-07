@@ -5,6 +5,7 @@ metadata:
   namespace: home
 spec:
   volumeName: home-homebridge-config
+  volumeMode: Filesystem
   storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce

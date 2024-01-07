@@ -3,9 +3,13 @@ kind: PersistentVolume
 metadata:
   name: home-homebridge-config
 spec:
+  volumeMode: Filesystem
   storageClassName: rook-ceph-block
   persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteOnce
   capacity:
     storage: 25Gi
+  csi:
+    driver: rbd.csi.ceph.com
+    volumeHandle: homebridge-config
