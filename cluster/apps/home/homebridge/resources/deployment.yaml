@@ -38,6 +38,10 @@ spec:
               name: bridge-protect
               protocol: UDP
               hostPort: 51645
+            - containerPort: 51646
+              name: bridge-levoit
+              protocol: UDP
+              hostPort: 51646
           readinessProbe:
             httpGet:
               path: /
