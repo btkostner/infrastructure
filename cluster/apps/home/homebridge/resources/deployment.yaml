@@ -30,6 +30,9 @@ spec:
             - containerPort: 8581
               name: http
               protocol: TCP
+            - containerPort: 51644
+              name: bridge
+              protocol: UDP
           readinessProbe:
             httpGet:
               path: /
