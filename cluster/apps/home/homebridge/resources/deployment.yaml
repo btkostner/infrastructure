@@ -34,10 +34,6 @@ spec:
               name: bridge
               protocol: UDP
               hostPort: 51644
-            - containerPort: 51645
-              name: bridge-protect
-              protocol: UDP
-              hostPort: 51645
             - containerPort: 51646
               name: bridge-levoit
               protocol: UDP

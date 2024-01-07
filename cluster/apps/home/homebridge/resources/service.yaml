@@ -14,15 +14,3 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 8581
-    - name: bridge
-      port: 51644
-      protocol: UDP
-      targetPort: 51644
-    - name: bridge-protect
-      port: 51645
-      protocol: UDP
-      targetPort: 51645
-    - name: bridge-levoit
-      port: 51646
-      protocol: UDP
-      targetPort: 51646
