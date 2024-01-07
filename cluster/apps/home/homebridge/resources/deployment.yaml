@@ -35,7 +35,7 @@ spec:
               protocol: UDP
               hostPort: 51644
             - containerPort: 51645
-              name: bridge-switchbot
+              name: bridge-swtchbot
               protocol: UDP
               hostPort: 51645
             - containerPort: 51646
