@@ -30,18 +30,6 @@ spec:
             - containerPort: 8581
               name: http
               protocol: TCP
-            - containerPort: 51644
-              name: bridge
-              protocol: UDP
-              hostPort: 51644
-            - containerPort: 51645
-              name: bridge-swtchbot
-              protocol: UDP
-              hostPort: 51645
-            - containerPort: 51646
-              name: bridge-levoit
-              protocol: UDP
-              hostPort: 51646
           readinessProbe:
             httpGet:
               path: /
