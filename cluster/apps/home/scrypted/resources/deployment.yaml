@@ -17,6 +17,8 @@ spec:
     metadata:
       labels:
         app: scrypted
+      annotations:
+        backup.velero.io/backup-volumes-excludes: gpu
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
