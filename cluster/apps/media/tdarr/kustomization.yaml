@@ -10,7 +10,9 @@ resources:
   - ./resources/deployment-server.yaml
   - ./resources/http-route.yaml
   - ./resources/pv-media.yaml
+  - ./resources/pv-transcode.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-media.yaml
   - ./resources/pvc-server.yaml
+  - ./resources/pvc-transcode.yaml
   - ./resources/service.yaml
