@@ -59,9 +59,11 @@ spec:
               value: "1000"
           volumeMounts:
             - name: config
-              mountPath: /app
+              mountPath: /app/config
             - name: media
               mountPath: /media
+            - name: server
+              mountPath: /app/server
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -69,3 +71,6 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: tdarr-media
+        - name: server
+          persistentVolumeClaim:
+            claimName: tdarr-server
