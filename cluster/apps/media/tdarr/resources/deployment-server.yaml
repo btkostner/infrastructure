@@ -42,9 +42,9 @@ spec:
             - name: serverIP
               value: "0.0.0.0"
             - name: serverPort
-              value: 8266
+              value: "8266"
             - name: webUIPort
-              value: 8265
+              value: "8265"
             - name: inContainer
               value: "true"
             - name: ffmpegVersion
