@@ -35,7 +35,7 @@ spec:
               gpu.intel.com/i915: 1
           env:
             - name: serverIP
-              value: tdarr-server
+              value: tdarr
             - name: serverPort
               value: "8266"
             - name: ffmpegVersion
