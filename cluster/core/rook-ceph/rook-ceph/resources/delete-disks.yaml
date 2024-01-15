@@ -17,7 +17,12 @@ spec:
       containers:
         - name: disk-nuker
           image: busybox
-          command: ["/bin/sh", "-c", "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda"]
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "dd if=/dev/zero bs=1M count=100 oflag=direct of=/dev/sda",
+            ]
           securityContext:
             privileged: true
         - name: rook-nuker

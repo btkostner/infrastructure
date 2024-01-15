@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr-server
+  namespace: media
+  labels:
+    app: tdarr-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tdarr-server
+  template:
+    metadata:
+      labels:
+        app: tdarr-server
+      annotations:
+        backup.velero.io/backup-volumes-excludes: gpu,media
+    spec:
+      containers:
+        - name: tdarr-server
+          image: ghcr.io/haveagitgat/tdarr:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8266
+              name: server
+              protocol: TCP
+            - containerPort: 8265
+              name: dashboard
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 0.5Gi
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+          env:
+            - name: serverIP
+              value: "0.0.0.0"
+            - name: serverPort
+              value: 8266
+            - name: webUIPort
+              value: 8265
+            - name: inContainer
+              value: "true"
+            - name: ffmpegVersion
+              value: "6"
+            - name: internalNode
+              value: "false"
+            - name: TZ
+              value: America/Denver
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - name: config
+              mountPath: /app
+            - name: media
+              mountPath: /media
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: tdarr-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: tdarr-media
