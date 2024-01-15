@@ -18,7 +18,7 @@ spec:
       labels:
         app: tdarr-server
       annotations:
-        backup.velero.io/backup-volumes-excludes: gpu,media
+        backup.velero.io/backup-volumes-excludes: media,transcode
     spec:
       containers:
         - name: tdarr-server
@@ -64,6 +64,8 @@ spec:
               mountPath: /media
             - name: server
               mountPath: /app/server
+            - name: transcode
+              mountPath: /transcode
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -74,3 +76,6 @@ spec:
         - name: server
           persistentVolumeClaim:
             claimName: tdarr-server
+        - name: transcode
+          persistentVolumeClaim:
+            claimName: tdarr-transcode

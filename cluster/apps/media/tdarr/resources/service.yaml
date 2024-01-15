@@ -7,6 +7,10 @@ spec:
   selector:
     app: tdarr-server
   ports:
+    - name: server
+      port: 8266
+      protocol: TCP
+      targetPort: 8266
     - name: dashboard
       port: 80
       protocol: TCP
