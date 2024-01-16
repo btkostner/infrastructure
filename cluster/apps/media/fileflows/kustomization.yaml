@@ -10,8 +10,6 @@ resources:
   - ./resources/deployment-server.yaml
   - ./resources/http-route.yaml
   - ./resources/pv-media.yaml
-  - ./resources/pv-temp.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-media.yaml
-  - ./resources/pvc-temp.yaml
   - ./resources/service.yaml
