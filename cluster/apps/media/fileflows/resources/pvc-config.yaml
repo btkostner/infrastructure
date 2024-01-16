@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tdarr-server
+  name: fileflows-config
   namespace: media
 spec:
   volumeMode: Filesystem
@@ -10,4 +10,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 30Gi

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-tdarr-media
+  name: media-fileflows-temp
 spec:
   storageClassName: nfs
   accessModes:
@@ -22,4 +22,4 @@ spec:
     - wsize=32768
   nfs:
     server: 192.168.3.4
-    path: "/volume2/Media"
+    path: "/volume1/Cluster/transcode"

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fileflows-node
+  namespace: media
+  labels:
+    app: fileflows-node
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: fileflows-node
+  template:
+    metadata:
+      labels:
+        app: fileflows-node
+      annotations:
+        backup.velero.io/backup-volumes-excludes: media,temp
+    spec:
+      containers:
+        - name: fileflows
+          image: docker.io/revenz/fileflows:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 0.5Gi
+            limits:
+              cpu: 4000m
+              memory: 4Gi
+          env:
+            - name: TZ
+              value: "America/Denver"
+            - name: TempPathHost
+              value: "/temp"
+            - name: FFNODE
+              value: "1"
+            - name: ServerUrl
+              value: "http://fileflows:80"
+          volumeMounts:
+            - name: media
+              mountPath: /media
+            - name: temp
+              mountPath: /temp
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: fileflows-media
+        - name: temp
+          persistentVolumeClaim:
+            claimName: fileflows-temp

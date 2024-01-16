@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tdarr-transcode
+  name: fileflows-temp
   namespace: media
 spec:
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
-  volumeName: media-tdarr-transcode
+  volumeName: media-fileflows-temp
   resources:
     requests:
       storage: 1Mi
