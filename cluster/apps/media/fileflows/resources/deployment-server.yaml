@@ -40,6 +40,8 @@ spec:
               value: "America/Denver"
             - name: TempPathHost
               value: "/temp"
+            - name: FFNODE
+              value: "0"
           volumeMounts:
             - name: config
               mountPath: /app/Data

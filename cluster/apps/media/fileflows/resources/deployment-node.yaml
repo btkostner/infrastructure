@@ -6,7 +6,7 @@ metadata:
   labels:
     app: fileflows-node
 spec:
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 1
   strategy:
     type: Recreate
@@ -18,7 +18,7 @@ spec:
       labels:
         app: fileflows-node
       annotations:
-        backup.velero.io/backup-volumes-excludes: media,temp
+        backup.velero.io/backup-volumes-excludes: gpu,media,temp
     spec:
       containers:
         - name: fileflows
@@ -28,9 +28,11 @@ spec:
             requests:
               cpu: 1000m
               memory: 0.5Gi
+              gpu.intel.com/i915: 1
             limits:
               cpu: 4000m
               memory: 4Gi
+              gpu.intel.com/i915: 1
           env:
             - name: TZ
               value: "America/Denver"
@@ -41,11 +43,16 @@ spec:
             - name: ServerUrl
               value: "http://fileflows:80"
           volumeMounts:
+            - name: gpu
+              mountPath: /dev/dri
             - name: media
               mountPath: /media
             - name: temp
               mountPath: /temp
       volumes:
+        - name: gpu
+          hostPath:
+            path: /dev/dri
         - name: media
           persistentVolumeClaim:
             claimName: fileflows-media
