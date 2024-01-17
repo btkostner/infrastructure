@@ -3,8 +3,6 @@ kind: Kustomization
 metadata:
   name: vpn-gateway
 
-namespace: vpn
-
 helmCharts:
   - name: pod-gateway
     repo: https://angelnu.github.io/helm-charts
@@ -15,5 +13,13 @@ helmCharts:
 
 resources:
   - ./resources/namespace.yaml
-  - ./resources/network-policy.yaml
   - ./resources/secret.yaml
+
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: notImportantHere
+      namespace: vpn
+    unsetOnly: true
