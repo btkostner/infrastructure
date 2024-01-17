@@ -3,7 +3,7 @@ name: Renovate
 
 on:
   schedule:
-    - cron: '23 4 * * *'
+    - cron: "23 4 * * *"
   workflow_call:
   workflow_dispatch:
 
@@ -18,7 +18,7 @@ jobs:
       - id: appToken
         name: Get App Token
         uses: jnwng/github-app-installation-token-action@c54add4c02866dc41e106745ac6dcf5cdd6339e5 # v2
-        with: 
+        with:
           appId: 779659
           installationId: 45764102
           privateKey: ${{ secrets.GH_APP_PRIVATE_KEY }}
