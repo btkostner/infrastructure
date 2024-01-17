@@ -10,7 +10,7 @@ helmCharts:
     repo: https://angelnu.github.io/helm-charts
     releaseName: pod-gateway
     namespace: vpn
-    version: 6.0.0
+    version: 6.5.1
     valuesFile: values.yaml
 
 resources:
