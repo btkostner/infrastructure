@@ -32,16 +32,10 @@ spec:
             httpGet:
               path: /ping
               port: 7878
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
           livenessProbe:
             httpGet:
               path: /ping
               port: 7878
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
           resources:
             requests:
               cpu: 100m
@@ -49,6 +43,10 @@ spec:
             limits:
               memory: 1024M
           env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: TZ
               value: America/Denver
           volumeMounts:

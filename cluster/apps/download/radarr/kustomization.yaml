@@ -14,5 +14,4 @@ resources:
   - ./resources/pvc-config.yaml
   - ./resources/pvc-download.yaml
   - ./resources/pvc-media.yaml
-  - ./resources/secret.yaml
   - ./resources/service.yaml
