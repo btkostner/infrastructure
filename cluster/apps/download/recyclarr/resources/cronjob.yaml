@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: recyclarr
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: recyclarr
+        spec:
+          containers:
+            - name: recyclarr
+              image: lscr.io/linuxserver/recyclarr:latest
+              imagePullPolicy: Always
+              args: ["sync"]
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128M
+                limits:
+                  memory: 256M
+              env:
+                - name: PUID
+                  value: "1000"
+                - name: PGID
+                  value: "1000"
+                - name: TZ
+                  value: America/Denver
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+          volumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: recyclarr-config
