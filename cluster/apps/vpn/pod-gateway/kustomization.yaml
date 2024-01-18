@@ -23,3 +23,19 @@ transformers:
       name: notImportantHere
       namespace: vpn
     unsetOnly: true
+
+patches:
+  - target:
+      kind: Certificate
+      name: pod-gateway-webhook-tls
+    patch: |-
+      - op: replace
+        path: "/spec/duration"
+        value: "8760h0m0s"
+  - target:
+      kind: Certificate
+      name: pod-gateway-webhook-ca
+    patch: |-
+      - op: replace
+        path: "/spec/duration"
+        value: "43800h0m0s"
