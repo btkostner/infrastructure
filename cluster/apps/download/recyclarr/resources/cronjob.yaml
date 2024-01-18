@@ -5,7 +5,6 @@ metadata:
 spec:
   concurrencyPolicy: Forbid
   schedule: "0 0 * * *"
-  restartPolicy: Never
   jobTemplate:
     spec:
       template:
@@ -13,6 +12,7 @@ spec:
           labels:
             app: recyclarr
         spec:
+          restartPolicy: Never
           containers:
             - name: recyclarr
               image: lscr.io/linuxserver/recyclarr:latest
