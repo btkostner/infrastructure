@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-media
+  namespace: download
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  volumeName: download-radarr-media
+  resources:
+    requests:
+      storage: 1Mi
