@@ -1,11 +1,22 @@
-apiVersion: batch/v1
-kind: CronJob
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: recyclarr
+  namespace: download
+  labels:
+    app: recyclarr
 spec:
-  concurrencyPolicy: Forbid
-  schedule: "0 0 * * *"
-  jobTemplate:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: recyclarr
+  template:
+    metadata:
+      labels:
+        app: recyclarr
     spec:
       template:
         metadata:
@@ -17,7 +28,7 @@ spec:
             - name: recyclarr
               image: ghcr.io/recyclarr/recyclarr:6.0.2
               imagePullPolicy: Always
-              args: ["sync"]
+              command: ["/bin/bash", "-c", "sleep 36000"]
               resources:
                 requests:
                   cpu: 100m

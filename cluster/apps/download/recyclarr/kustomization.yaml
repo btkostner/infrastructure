@@ -7,4 +7,5 @@ namespace: download
 
 resources:
   - ./resources/cronjob.yaml
+  - ./resources/deployment.yaml
   - ./resources/pvc-config.yaml
