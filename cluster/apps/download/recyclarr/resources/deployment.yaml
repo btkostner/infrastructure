@@ -18,34 +18,29 @@ spec:
       labels:
         app: recyclarr
     spec:
-      template:
-        metadata:
-          labels:
-            app: recyclarr
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: recyclarr
-              image: ghcr.io/recyclarr/recyclarr:6.0.2
-              imagePullPolicy: Always
-              command: ["/bin/bash", "-c", "sleep 36000"]
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 128M
-                limits:
-                  memory: 256M
-              env:
-                - name: PUID
-                  value: "1000"
-                - name: PGID
-                  value: "1000"
-                - name: TZ
-                  value: America/Denver
-              volumeMounts:
-                - name: config
-                  mountPath: /config
-          volumes:
+      restartPolicy: Never
+      containers:
+        - name: recyclarr
+          image: ghcr.io/recyclarr/recyclarr:6.0.2
+          imagePullPolicy: Always
+          command: ["/bin/bash", "-c", "sleep 36000"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128M
+            limits:
+              memory: 256M
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Denver
+          volumeMounts:
             - name: config
-              persistentVolumeClaim:
-                claimName: recyclarr-config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: recyclarr-config
