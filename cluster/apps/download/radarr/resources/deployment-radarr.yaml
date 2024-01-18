@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: radarr
-          image: ghcr.io/onedr0p/radarr-develop:5.2.6
-          imagePullPolicy: IfNotPresent
+          image: lscr.io/linuxserver/radarr:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 7878
               name: http
@@ -48,27 +48,9 @@ spec:
               memory: 128M
             limits:
               memory: 1024M
-          envFrom:
-            - prefix: RADARR__
-              secretRef:
-                name: radarr-config
           env:
-            - name: RADARR__INSTANCE_NAME
-              value: Radarr
-            - name: RADARR__LOG_LEVEL
-              value: info
-            - name: RADARR__AUTHENTICATION_METHOD
-              value: External
-            - name: RADARR__AUTHENTICATION_REQUIRED
-              value: DisabledForLocalAddresses
-            - name: RADARR__UPDATE_MECHANISM
-              value: docker
-            - name: RADARR__THEME
-              value: dark
             - name: TZ
               value: America/Denver
-            - name: COMPlus_EnableDiagnostics
-              value: "0"
           volumeMounts:
             - name: config
               mountPath: /config
