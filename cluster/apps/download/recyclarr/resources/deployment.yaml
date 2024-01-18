@@ -18,7 +18,6 @@ spec:
       labels:
         app: recyclarr
     spec:
-      restartPolicy: Never
       containers:
         - name: recyclarr
           image: ghcr.io/recyclarr/recyclarr:6.0.2
