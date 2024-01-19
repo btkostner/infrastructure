@@ -22,7 +22,9 @@ spec:
     spec:
       containers:
         - name: radarr
-          image: lscr.io/linuxserver/radarr:latest
+          image: ubuntu:latest
+          command: ["/bin/bash", "-c", "sleep 100000"]
+          # image: lscr.io/linuxserver/radarr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 7878
