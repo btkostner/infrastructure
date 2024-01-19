@@ -3,8 +3,10 @@ kind: CronJob
 metadata:
   name: recyclarr
 spec:
+  schedule: "@daily"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
-  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
@@ -28,19 +30,14 @@ spec:
                 - secretRef:
                     name: recyclarr-credentials
               env:
-                #- name: PUID
-                #  value: "1000"
-                #- name: PGID
-                #  value: "1000"
                 - name: TZ
                   value: America/Denver
               volumeMounts:
                 - name: config
-                  mountPath: /config
+                  mountPath: /config/recyclarr.yml
+                  subPath: recyclarr.yml
+                  readOnly: true
           volumes:
             - name: config
               configMap:
                 name: recyclarr-config
-                items:
-                  - key: recyclarr.yml
-                    path: recyclarr.yml
