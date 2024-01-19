@@ -52,6 +52,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: old-config
+              mountPath: /old-config
             - name: download
               mountPath: /download
             - name: media
@@ -60,6 +62,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config
+        - name: old-config
+          persistentVolumeClaim:
+            claimName: radarr-old-config
         - name: download
           persistentVolumeClaim:
             claimName: radarr-download
