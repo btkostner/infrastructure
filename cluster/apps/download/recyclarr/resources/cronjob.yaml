@@ -28,10 +28,10 @@ spec:
                 - secretRef:
                     name: recyclarr-credentials
               env:
-                - name: PUID
-                  value: "1000"
-                - name: PGID
-                  value: "1000"
+                #- name: PUID
+                #  value: "1000"
+                #- name: PGID
+                #  value: "1000"
                 - name: TZ
                   value: America/Denver
               volumeMounts:
