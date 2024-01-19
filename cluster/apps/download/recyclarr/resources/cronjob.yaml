@@ -24,6 +24,9 @@ spec:
                   memory: 128M
                 limits:
                   memory: 256M
+              envFrom:
+                - secretRef:
+                    name: recyclarr-credentials
               env:
                 - name: PUID
                   value: "1000"
@@ -34,7 +37,11 @@ spec:
               volumeMounts:
                 - name: config
                   mountPath: /config
+                  readOnly: true
           volumes:
             - name: config
-              persistentVolumeClaim:
-                claimName: recyclarr-config
+              configMap:
+                name: recyclarr-config
+                items:
+                  - key: recyclarr.yml
+                    path: recyclarr.yml
