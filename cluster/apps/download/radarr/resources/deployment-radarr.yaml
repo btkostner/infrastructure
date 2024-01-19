@@ -24,20 +24,11 @@ spec:
         - name: radarr
           image: ubuntu:latest
           command: ["/bin/bash", "-c", "sleep 100000"]
-          # image: lscr.io/linuxserver/radarr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 7878
               name: http
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 7878
-          livenessProbe:
-            httpGet:
-              path: /ping
-              port: 7878
           resources:
             requests:
               cpu: 100m
