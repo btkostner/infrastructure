@@ -22,13 +22,20 @@ spec:
     spec:
       containers:
         - name: radarr
-          image: ubuntu:latest
-          command: ["/bin/bash", "-c", "sleep 100000"]
+          image: lscr.io/linuxserver/radarr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 7878
               name: http
               protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
           resources:
             requests:
               cpu: 100m
@@ -45,8 +52,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: old-config
-              mountPath: /old-config
             - name: download
               mountPath: /download
             - name: media
@@ -55,9 +60,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config
-        - name: old-config
-          persistentVolumeClaim:
-            claimName: radarr-old-config
         - name: download
           persistentVolumeClaim:
             claimName: radarr-download
