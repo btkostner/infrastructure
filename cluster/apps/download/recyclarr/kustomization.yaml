@@ -6,6 +6,6 @@ metadata:
 namespace: download
 
 resources:
+  - ./resources/configmap.yaml
   - ./resources/cronjob.yaml
-  - ./resources/deployment.yaml
-  - ./resources/pvc-config.yaml
+  - ./resources/secret.yaml
