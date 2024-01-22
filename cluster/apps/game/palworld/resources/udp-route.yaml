@@ -1,4 +1,4 @@
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: UDPRoute
 metadata:
   name: palworld-udp
@@ -14,3 +14,4 @@ spec:
     - backendRefs:
         - name: rcon
           port: 27015
+g
