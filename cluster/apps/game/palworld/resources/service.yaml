@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: palworld
-  type: LoadBalancer
   ports:
     - name: game
       port: 8211

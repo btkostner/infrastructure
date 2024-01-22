@@ -12,5 +12,5 @@ spec:
         - name: palworld
           port: 8211
     - backendRefs:
-        - name: rcon
+        - name: palworld
           port: 27015
