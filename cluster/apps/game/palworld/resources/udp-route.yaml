@@ -14,4 +14,3 @@ spec:
     - backendRefs:
         - name: rcon
           port: 27015
-g
