@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: palworld
+  namespace: game
+  labels:
+    app: palworld
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: palworld
+  template:
+    metadata:
+      labels:
+        app: palworld
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
+      containers:
+        - name: palworld
+          image: docker.io/thijsvanloef/palworld-server-docker:latest
+          imagePullPolicy: Always
+          env:
+            - name: SERVER_NAME
+              value: "Abraxis"
+            - name: SERVER_PASSWORD
+              # If you get this far, :shrug:, join if you want ;)g
+              value: "64bityolo"
+            - name: UPDATE_ON_BOOT
+              value: "true"
+            - name: COMMUNITY
+              value: "false"
+            - name: PLAYERS
+              value: "16"
+            - name: MULTITHREADING
+              value: "true"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          ports:
+            - containerPort: 8211
+              name: game
+              protocol: UDP
+            - containerPort: 27015
+              name: rcon
+              protocol: UDP
+          resources:
+            requests:
+              cpu: 4000m
+              memory: 8Gi
+            limits:
+              cpu: 8000m
+              memory: 20Gi
+          volumeMounts:
+            - name: save
+              mountPath: /palworld
+      volumes:
+        - name: save
+          persistentVolumeClaim:
+            claimName: palworld-save
