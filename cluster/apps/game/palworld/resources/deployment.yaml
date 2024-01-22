@@ -21,7 +21,6 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
       dnsPolicy: ClusterFirstWithHostNet
-      hostNetwork: true
       containers:
         - name: palworld
           image: docker.io/thijsvanloef/palworld-server-docker:latest
