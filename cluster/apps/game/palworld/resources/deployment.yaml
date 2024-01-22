@@ -28,9 +28,6 @@ spec:
           env:
             - name: SERVER_NAME
               value: "Abraxis"
-            - name: SERVER_PASSWORD
-              # If you get this far, :shrug:, join if you want ;)g
-              value: "64bityolo"
             - name: UPDATE_ON_BOOT
               value: "true"
             - name: COMMUNITY
