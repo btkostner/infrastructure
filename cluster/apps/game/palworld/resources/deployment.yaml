@@ -23,8 +23,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: palworld
-          image: ubuntu:latest
-          command: ["bash", "-c", "sleep 36000"]
+          image: docker.io/thijsvanloef/palworld-server-docker:latest
           imagePullPolicy: Always
           env:
             - name: SERVER_NAME
