@@ -19,7 +19,7 @@ spec:
         app: palworld
     spec:
       restartPolicy: Always
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 60
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: palworld
@@ -36,10 +36,14 @@ spec:
               value: "16"
             - name: MULTITHREADING
               value: "true"
+            - name: RCON_ENABLED
+              value: "true"
             - name: PUID
               value: "1000"
             - name: PGID
               value: "1000"
+            - name: TZ
+              value: "America/Denver"
           ports:
             - containerPort: 8211
               name: game
@@ -53,7 +57,7 @@ spec:
               memory: 8Gi
             limits:
               cpu: 8000m
-              memory: 20Gi
+              memory: 24Gi
           volumeMounts:
             - name: save
               mountPath: /palworld
