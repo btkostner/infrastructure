@@ -23,7 +23,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: palworld
-          image: docker.io/thijsvanloef/palworld-server-docker:0.17.0
+          image: docker.io/thijsvanloef/palworld-server-docker:v0.18.0
           imagePullPolicy: Always
           env:
             - name: SERVER_NAME
