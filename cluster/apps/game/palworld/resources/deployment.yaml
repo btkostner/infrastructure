@@ -23,7 +23,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: palworld
-          image: docker.io/thijsvanloef/palworld-server-docker:latest
+          image: docker.io/thijsvanloef/palworld-server-docker:0.17.0
           imagePullPolicy: Always
           env:
             - name: SERVER_NAME
@@ -44,6 +44,8 @@ spec:
               value: "1000"
             - name: TZ
               value: "America/Denver"
+            - name: BUILD_OBJECT_DETERIORATION_DAMAGE_RATE
+              value: "0.000000"
           ports:
             - containerPort: 8211
               name: game
