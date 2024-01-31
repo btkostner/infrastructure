@@ -9,7 +9,6 @@
   "lockFileMaintenance": {
     "enabled": true
   },
-  "onboarding": false,
   "packageRules": [
     {
       "extends": ["helpers:pinGitHubActionDigests"],
@@ -31,9 +30,6 @@
   "patch": {
     "enabled": false
   },
-  "platform": "github",
   "prHourlyLimit": 0,
-  "repositories": ["btkostner/infrastructure"],
-  "timezone": "America/Denver",
-  "username": "btkostner-infrastructure[bot]"
+  "timezone": "America/Denver"
 }
