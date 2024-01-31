@@ -7,7 +7,7 @@ spec:
   hostnames:
     - argocd.btkostner.network
   parentRefs:
-    - name: external-gateway
+    - name: internal-gateway
       namespace: networking
   rules:
     - backendRefs:
