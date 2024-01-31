@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abraxis-tv
+  namespace: network
+  labels:
+    app: abraxis-tv
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: abraxis-tv
+  template:
+    metadata:
+      labels:
+        app: abraxis-tv
+      annotations:
+        backup.velero.io/backup-volumes-excludes: config
+    spec:
+      containers:
+        - name: ddns
+          image: lscr.io/linuxserver/ddclient:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128M
+          env:
+            - name: TZ
+              value: America/Denver
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          secret:
+            secretName: abraxis-tv-config
