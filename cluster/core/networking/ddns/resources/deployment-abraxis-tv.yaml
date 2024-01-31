@@ -40,7 +40,8 @@ spec:
               value: America/Denver
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: /defaults/ddclient.conf
+              subPath: ddclient.conf
               readOnly: false
       volumes:
         - name: config
