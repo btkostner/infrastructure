@@ -26,8 +26,11 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: 50m
-              memory: 128M
+              memory: 32Mi
+              cpu: 125m
+            limits:
+              memory: 64Mi
+              cpu: 250m
           env:
             - name: PUID
               value: "1000"
@@ -38,6 +41,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+              readOnly: false
       volumes:
         - name: config
           secret:
