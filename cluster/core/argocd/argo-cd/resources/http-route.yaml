@@ -10,12 +10,6 @@ spec:
     - name: external-gateway
       namespace: networking
   rules:
-    - filters:
-        - type: ResponseHeaderModifier
-          responseHeaderModifier:
-            add:
-              - name: X-Forwarded-Proto
-                value: https
-      backendRefs:
+    - backendRefs:
         - name: argocd-server
-          port: 443
+          port: 80
