@@ -29,6 +29,10 @@ spec:
               cpu: 50m
               memory: 128M
           env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: TZ
               value: America/Denver
           volumeMounts:
