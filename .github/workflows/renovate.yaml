@@ -24,7 +24,7 @@ jobs:
           privateKey: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
       - name: Renovate
-        uses: renovatebot/github-action@b8ce565a2e98de1fec9696a76fba7beb01ec29b2 # v39.2.3
+        uses: renovatebot/github-action@42c1d3cb1d1ca891765626ba71cdff5e757258de # v40.0.2
         with:
           configurationFile: .github/renovate-bot.json
           token: ${{ steps.appToken.outputs.token }}
