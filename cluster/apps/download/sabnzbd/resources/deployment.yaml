@@ -25,17 +25,17 @@ spec:
           image: lscr.io/linuxserver/sabnzbd:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8090
+            - containerPort: 8080
               name: http
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /
-              port: 8090
+              port: 8080
           livenessProbe:
             httpGet:
               path: /
-              port: 8090
+              port: 8080
           resources:
             requests:
               cpu: 100m
@@ -44,6 +44,8 @@ spec:
               cpu: 4000m
               memory: 16G
           env:
+            - name: HAS_IPV6
+              value: "false"
             - name: PUID
               value: "1000"
             - name: PGID
