@@ -9,8 +9,6 @@ resources:
   - ./resources/deployment.yaml
   - ./resources/http-route.yaml
   - ./resources/pv-download.yaml
-  - ./resources/pv-old-config.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-download.yaml
-  - ./resources/pvc-old-config.yaml
   - ./resources/service.yaml
