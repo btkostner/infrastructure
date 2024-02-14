@@ -18,15 +18,6 @@ spec:
         - name: gluetun
           image: ghcr.io/qdm12/gluetun:v3.37.0
           imagePullPolicy: Always
-          livenessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - if [ $(wget -q -O- https://ipinfo.io/country) != 'US' ]; then exit 0; else exit $?; fi
-            initialDelaySeconds: 30
-            periodSeconds: 60
-            failureThreshold: 3
           env:
             - name: VPN_TYPE
               value: wireguard
