@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabnzbd
+  namespace: download
+  labels:
+    app: sabnzbd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sabnzbd
+  template:
+    metadata:
+      labels:
+        app: sabnzbd
+      annotations:
+        backup.velero.io/backup-volumes-excludes: download
+    spec:
+      containers:
+        - name: sabnzbd
+          image: lscr.io/linuxserver/sabnzbd:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8090
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8090
+          resources:
+            requests:
+              cpu: 100m
+              memory: 8G
+            limits:
+              cpu: 4000m
+              memory: 16G
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Denver
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: download
+              mountPath: /download
+            - name: old-config
+              mountPath: /old-config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: sabnzbd-config
+        - name: download
+          persistentVolumeClaim:
+            claimName: sabnzbd-download
+        - name: old-config
+          persistentVolumeClaim:
+            claimName: sabnzbd-old-config

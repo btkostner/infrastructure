@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: download-sabnzbd-download
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Mi
+  mountOptions:
+    - local_lock=none
+    - namlen=255
+    - proto=tcp
+    - relatime
+    - retrans=2
+    - rsize=32768
+    - rw
+    - sec=sys
+    - timeo=14
+    - vers=4.1
+    - wsize=32768
+  nfs:
+    server: 192.168.3.4
+    path: "/volume1/Cluster/download-pool"
