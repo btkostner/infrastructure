@@ -38,7 +38,6 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - FailOnSharedResource=true
       ignoreDifferences:
         - group: ""
           kind: ConfigMap
