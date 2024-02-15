@@ -6,7 +6,7 @@ spec:
   selectors:
     - podSelector:
         matchLabels:
-          btkostner.network/egress: download-vpn
+          network.btkostner/egress: download-vpn
   destinationCIDRs:
     - "0.0.0.0/0"
   excludedCIDRs:

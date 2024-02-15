@@ -17,6 +17,7 @@ debug:
   enabled: false
 egressGateway:
   enabled: true
+  installRoutes: true
 enableRuntimeDeviceDetection: true
 enableXTSocketFallback: false
 envoyConfig:
