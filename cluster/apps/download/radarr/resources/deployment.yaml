@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         app: radarr
+        btkostner.network/egress: download-vpn
       annotations:
         backup.velero.io/backup-volumes-excludes: download,media
     spec:

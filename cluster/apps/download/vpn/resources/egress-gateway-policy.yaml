@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: download-vpn
+spec:
+  selectors:
+    - podSelector:
+        matchLabels:
+          btkostner.network/egress: download-vpn
+  destinationCIDRs:
+    - "0.0.0.0/0"
+  excludedCIDRs:
+    - "192.168.0.0/16"
+    - "10.244.0.0/16"
+    - "10.96.0.0/12"
+  egressGateway:
+    interface: wg0

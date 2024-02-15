@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         app: sabnzbd
+        btkostner.network/egress: download-vpn
       annotations:
         backup.velero.io/backup-volumes-excludes: download
     spec:
