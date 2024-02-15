@@ -43,3 +43,5 @@ spec:
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
+      nodeSelector:
+        kubernetes.io/os: linux

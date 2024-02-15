@@ -15,3 +15,6 @@ spec:
     - "10.96.0.0/12"
   egressGateway:
     interface: wg0
+    nodeSelector:
+      matchLabels:
+        kubernetes.io/os: linux
