@@ -4,6 +4,7 @@ bandwidthManager:
 bpf:
   autoMount:
     enabled: false
+  masquerade: true
 cgroup:
   autoMount:
     enabled: false
@@ -18,6 +19,7 @@ debug:
 egressGateway:
   enabled: true
   installRoutes: true
+enableIPv4Masquerade: true
 enableRuntimeDeviceDetection: true
 enableXTSocketFallback: false
 envoyConfig:
