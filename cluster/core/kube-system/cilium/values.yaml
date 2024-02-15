@@ -11,7 +11,7 @@ cgroup:
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: talos
+  name: cluster.local
 containerRuntime:
   integration: containerd
 debug:
@@ -39,6 +39,8 @@ hostFirewall:
 hostPort:
   enabled: true
 hubble:
+  peerService:
+    clusterDomain: cluster.local
   relay:
     enabled: true
   ui:
