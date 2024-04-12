@@ -18,6 +18,7 @@ debug:
   enabled: false
 egressGateway:
   enabled: true
+  installRoutes: true
 enableIPv4Masquerade: true
 enableRuntimeDeviceDetection: true
 enableXTSocketFallback: false
