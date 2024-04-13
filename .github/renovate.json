@@ -33,7 +33,7 @@
   "prHourlyLimit": 0,
   "regexManagers": [
     {
-      "fileMatch": ["*.yaml"],
+      "fileMatch": [".*y[a]?ml$"],
       "matchStrings": ["image: (?<depName>.*?):(?<currentValue>.*?)"],
       "datasourceTemplate": "docker"
     },
