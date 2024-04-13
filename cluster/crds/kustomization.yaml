@@ -41,17 +41,17 @@ resources:
   # - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
 
   # Velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_backuprepositories.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_backups.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_downloadrequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_podvolumebackups.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_podvolumerestores.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_restores.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_schedules.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.12.2/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_backuprepositories.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_backups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_downloadrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_podvolumebackups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_podvolumerestores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_restores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_schedules.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.13.1/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
 
   # Prometheus Operator
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
