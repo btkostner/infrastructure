@@ -16,6 +16,11 @@ if [ ! -f "./talosconfig" ]; then
     --endpoints talos.btkostner.network \
     --force
 
+  # Use 1Password CLI to fill in secret values
+  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i controlplane.yaml -o controlplane.yaml
+  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i talosconfig -o talosconfig
+  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i worker.yaml -o worker.yaml
+
   # Update the talosconfig endpoint to the correct internal DNS name
   sed -i "" "s/127.0.0.1/talos.btkostner.network/" ./talosconfig
 fi

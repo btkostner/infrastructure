@@ -1,8 +1,4 @@
 machine:
-  install:
-    extraKernelArgs:
-      - ipv6.disable=1
-      - net.ifnames=1
   network:
     interfaces:
       - dhcp: true

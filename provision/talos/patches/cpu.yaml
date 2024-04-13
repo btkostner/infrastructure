@@ -1,4 +1,0 @@
-machine:
-  install:
-    extraKernelArgs:
-      - cpufreq.default_governor=performance

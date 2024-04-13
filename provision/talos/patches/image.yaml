@@ -1,0 +1,11 @@
+# This image is based off Talos 1.6.7 with the following extensions:
+# - siderolabs/i915-ucode
+# - siderolabs/intel-ucode
+# - siderolabs/iscsi-tools
+# And the following kernel args
+# - cpufreq.default_governor=performance
+# - ipv6.disable=1
+# - net.ifnames=1
+machine:
+  install:
+    image: factory.talos.dev/installer/90e1d8f217f1607719dc2eefa67433d565d31f36cfd7ebd0d2e33ea242125e5c:v1.6.7

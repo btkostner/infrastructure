@@ -1,5 +1,0 @@
-machine:
-  install:
-    extensions:
-      - image: "ghcr.io/siderolabs/i915-ucode:20230804@sha256:c63532146ab92e3e31dc55d6947f99f2477b648e3e431d9c7fb0977265d89064"
-      - image: "ghcr.io/siderolabs/intel-ucode:20230808@sha256:f9cf1174bb7833db4f1cc548d3fb8b61f0a93bb716368d5b846ce7298854cd71"
