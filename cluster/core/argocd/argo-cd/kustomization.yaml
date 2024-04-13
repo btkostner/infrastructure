@@ -6,7 +6,7 @@ metadata:
 namespace: argocd
 
 resources:
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.3/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.6/manifests/ha/install.yaml
   - ./resources/http-route.yaml
   - ./resources/secret-repository.yaml
   - ./resources/secret-repo-creds.yaml
