@@ -26,7 +26,7 @@ spec:
       hostNetwork: true
       containers:
         - name: scrypted
-          image: ghcr.io/koush/scrypted:18-jammy-full-v0.97.0
+          image: ghcr.io/koush/scrypted:20-jammy-full-v0.98.0
           imagePullPolicy: Always
           ports:
             - containerPort: 11080
