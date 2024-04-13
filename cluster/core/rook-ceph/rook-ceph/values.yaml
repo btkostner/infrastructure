@@ -1,6 +1,4 @@
 csi:
-  readAffinity:
-    enabled: true
   topology:
     domainLabels:
       - kubernetes.io/hostname
