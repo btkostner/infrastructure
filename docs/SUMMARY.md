@@ -7,3 +7,7 @@
 
 - [Networking](networking.md)
 - [Secrets](secrets.md)
+
+# Processes
+
+- [Cilium Upgrades](cilium-upgrades.md)
