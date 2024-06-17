@@ -3,11 +3,12 @@ prometheus:
   enabled: true
   servicemonitor:
     enabled: true
-featureGates: "ExperimentalGatewayAPISupport=true"
 leaderElection:
   namespace: cert-manager
 clusterResourceNamespace: cert-manager
 namespace: cert-manager
+extraArgs:
+  - --enable-gateway-api
 rbac:
   create: true
 cainjector:
