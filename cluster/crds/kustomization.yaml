@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   # Gateway API
-  - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0-rc2/config/crd/experimental/gateway.networking.k8s.io_backendtlspolicies.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.0.0/config/crd/experimental/gateway.networking.k8s.io_backendtlspolicies.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0-rc2/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0-rc2/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0-rc2/config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
