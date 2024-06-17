@@ -6,10 +6,10 @@ metadata:
 namespace: media
 
 resources:
-  - ./resources/deployment-node.yaml
   - ./resources/deployment-server.yaml
   - ./resources/http-route.yaml
   - ./resources/pv-media.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-media.yaml
   - ./resources/service.yaml
+  - ./resources/stateful-set-node.yaml
