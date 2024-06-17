@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: fileflows-node
   namespace: media
@@ -8,8 +8,6 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: fileflows-node
