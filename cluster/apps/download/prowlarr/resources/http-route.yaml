@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prowlarr-http
+  namespace: download
+spec:
+  hostnames:
+    - prowlarr.btkostner.network
+  parentRefs:
+    - name: internal-gateway
+      namespace: networking
+  rules:
+    - backendRefs:
+        - name: prowlarr
+          port: 80

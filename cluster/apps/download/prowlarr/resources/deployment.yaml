@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: radarr
+  name: prowlarr
   namespace: download
   labels:
-    app: radarr
+    app: prowlarr
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -12,30 +12,28 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: radarr
+      app: prowlarr
   template:
     metadata:
       labels:
-        app: radarr
-      annotations:
-        backup.velero.io/backup-volumes-excludes: download,media
+        app: prowlarr
     spec:
       containers:
-        - name: radarr
-          image: lscr.io/linuxserver/radarr:latest
+        - name: prowlarr
+          image: lscr.io/linuxserver/prowlarr:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 7878
+            - containerPort: 9696
               name: http
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /ping
-              port: 7878
+              port: 9696
           livenessProbe:
             httpGet:
               path: /ping
-              port: 7878
+              port: 9696
           resources:
             requests:
               cpu: 100m
@@ -52,17 +50,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: download
-              mountPath: /download
-            - name: media
-              mountPath: /media
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: radarr-config
-        - name: download
-          persistentVolumeClaim:
-            claimName: radarr-download
-        - name: media
-          persistentVolumeClaim:
-            claimName: radarr-media
+            claimName: prowlarr-config
