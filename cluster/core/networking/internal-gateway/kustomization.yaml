@@ -7,3 +7,4 @@ namespace: networking
 
 resources:
   - ./resources/gateway.yaml
+  - ./resources/ingress.yaml

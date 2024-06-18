@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: tailscale
+
+namespace: networking
+
+helmCharts:
+  - name: tailscale-operator
+    repo: https://pkgs.tailscale.com/helmcharts
+    releaseName: tailscale-operator
+    version: 1.56.1
+
+resources:
+  - ./resources/secret.yaml
