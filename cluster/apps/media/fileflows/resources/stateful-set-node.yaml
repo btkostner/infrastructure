@@ -16,7 +16,7 @@ spec:
       labels:
         app: fileflows-node
       annotations:
-        backup.velero.io/backup-volumes-excludes: gpu,media,temp
+        backup.velero.io/backup-volumes-excludes: download,gpu,media,temp
     spec:
       containers:
         - name: fileflows
@@ -41,6 +41,8 @@ spec:
             - name: ServerUrl
               value: "http://fileflows:80"
           volumeMounts:
+            - name: download
+              mountPath: /download
             - name: gpu
               mountPath: /dev/dri
             - name: media
@@ -48,6 +50,9 @@ spec:
             - name: temp
               mountPath: /temp
       volumes:
+        - name: download
+          persistentVolumeClaim:
+            claimName: fileflows-download
         - name: gpu
           hostPath:
             path: /dev/dri

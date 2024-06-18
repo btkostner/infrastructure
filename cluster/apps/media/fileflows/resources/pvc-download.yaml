@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fileflows-download
+  namespace: media
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  volumeName: media-fileflows-download
+  resources:
+    requests:
+      storage: 1Mi
