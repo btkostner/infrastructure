@@ -18,6 +18,54 @@ spec:
       labels:
         app: prowlarr
     spec:
+      initContainers:
+        - name: gluetun
+          image: ghcr.io/qdm12/gluetun:v3.37.0
+          imagePullPolicy: Always
+          restartPolicy: Always
+          env:
+            - name: VPN_TYPE
+              value: wireguard
+            - name: VPN_INTERFACE
+              value: wg0
+            - name: FIREWALL
+              value: "off"
+            - name: DOT
+              value: "off"
+            - name: LOG_LEVEL
+              value: debug
+            - name: TZ
+              value: "America/Denver"
+            - name: UPDATER_PERIOD
+              value: "24h"
+            - name: TZ
+              value: "America/Denver"
+            - name: UPDATER_PERIOD
+              value: "24h"
+          envFrom:
+            - secretRef:
+                name: gluetun-credentials
+          startupProbe:
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
+            delaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 4
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
