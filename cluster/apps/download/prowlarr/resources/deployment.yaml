@@ -18,22 +18,19 @@ spec:
       labels:
         app: prowlarr
     spec:
+      shareProcessNamespace: true
       initContainers:
         - name: gluetun
-          image: ghcr.io/qdm12/gluetun:v3.37.0
+          image: ghcr.io/qdm12/gluetun:v3.38.0
           imagePullPolicy: Always
           restartPolicy: Always
           env:
             - name: VPN_TYPE
               value: wireguard
-            - name: VPN_INTERFACE
-              value: wg0
             - name: FIREWALL
               value: "off"
-            - name: DOT
-              value: "off"
-            - name: DNS_KEEP_NAMESERVER
-              value: "on"
+            - name: DNS_ADDRESS
+              value: "10.96.0.10"
             - name: LOG_LEVEL
               value: debug
             - name: TZ
@@ -67,7 +64,7 @@ spec:
             failureThreshold: 4
           securityContext:
             capabilities:
-              add: ["NET_ADMIN"]
+              add: ["NET_ADMIN", "SYS_MODULE"]
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
