@@ -11,9 +11,7 @@ resources:
   - ./resources/namespace.yaml
   - ./resources/pv-download.yaml
   - ./resources/pv-media.yaml
-  - ./resources/pv-old-config.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-download.yaml
   - ./resources/pvc-media.yaml
-  - ./resources/pvc-old-config.yaml
   - ./resources/service.yaml

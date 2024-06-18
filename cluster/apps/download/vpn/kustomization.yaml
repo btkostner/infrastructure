@@ -6,6 +6,4 @@ metadata:
 namespace: download
 
 resources:
-  - ./resources/daemonset.yaml
-  - ./resources/egress-gateway-policy.yaml
   - ./resources/secret.yaml
