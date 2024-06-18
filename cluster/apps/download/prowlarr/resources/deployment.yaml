@@ -18,7 +18,7 @@ spec:
       labels:
         app: prowlarr
     spec:
-      shareProcessNamespace: true
+      DNSPolicy: ClusterFirst
       initContainers:
         - name: gluetun
           image: ghcr.io/qdm12/gluetun:v3.38.0
@@ -29,8 +29,16 @@ spec:
               value: wireguard
             - name: FIREWALL
               value: "off"
-            - name: DNS_ADDRESS
-              value: "10.96.0.10"
+            - name: UNBLOCK
+              value: "radarr,sabnzbd,cluster.local"
+            - name: DOT_PRIVATE_ADDRESS
+              value: "10.0.0.0/8"
+            - name: DOT_VERBOSITY
+              value: "5"
+            - name: DOT_VERBOSITY_DETAILS
+              value: "4"
+            - name: DOT_VALIDATION_LOGLEVEL
+              value: "2"
             - name: LOG_LEVEL
               value: debug
             - name: TZ
@@ -64,9 +72,10 @@ spec:
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
+            privileged: true
       containers:
         - name: prowlarr
-          image: ghcr.io/hotio/prowlarr:latest
+          image: lscr.io/linuxserver/prowlarr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9696
