@@ -34,6 +34,8 @@ spec:
               value: "off"
             - name: DOT
               value: "off"
+            - name: DNS_KEEP_NAMESERVER
+              value: "on"
             - name: LOG_LEVEL
               value: debug
             - name: TZ
