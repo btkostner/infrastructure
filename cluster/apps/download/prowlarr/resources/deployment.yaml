@@ -63,7 +63,7 @@ spec:
             failureThreshold: 4
           securityContext:
             capabilities:
-              add: ["NET_ADMIN", "SYS_MODULE"]
+              add: ["NET_ADMIN"]
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
