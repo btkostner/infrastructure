@@ -4,6 +4,7 @@ metadata:
   name: internal-gateway
   namespace: networking
   annotations:
+    tailscale.com/expose: "true"
     cert-manager.io/cluster-issuer: cloudflare-production
     metallb.universe.tf/loadBalancerIPs: 192.168.3.52
 spec:

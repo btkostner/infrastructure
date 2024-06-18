@@ -37,7 +37,7 @@ spec:
             - name: HEALTH_VPN_DURATION_INITIAL
               value: "20s"
             - name: LOG_LEVEL
-              value: warn
+              value: warning
             - name: TZ
               value: "America/Los_Angeles"
             - name: UPDATER_PERIOD
