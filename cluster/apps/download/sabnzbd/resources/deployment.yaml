@@ -55,7 +55,7 @@ spec:
                 - healthcheck
             delaySeconds: 10
             periodSeconds: 10
-            successThreshold: 2
+            successThreshold: 1
             failureThreshold: 5
           readinessProbe:
             exec:
