@@ -48,10 +48,16 @@ spec:
           envFrom:
             - secretRef:
                 name: gluetun-credentials
+          startupProbe:
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
           readinessProbe:
-            httpGet:
-              path: /
-              port: 9999
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
