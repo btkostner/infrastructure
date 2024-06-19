@@ -21,4 +21,4 @@ patches:
       name: intel-dp-gpu-device
     patch: |-
       - op: remove
-        path: /spec/rules/0/matchFeatures/1
+        path: /spec/rules/0/matchAny

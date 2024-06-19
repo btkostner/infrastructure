@@ -89,7 +89,7 @@ spec:
               cpu: 100m
               memory: 8G
             limits:
-              cpu: 4000m
+              cpu: "4"
               memory: 16G
           env:
             - name: HAS_IPV6
