@@ -22,24 +22,20 @@ spec:
     spec:
       containers:
         - name: sonarr
-          # image: lscr.io/linuxserver/sonarr:latest
-          image: ubuntu:latest
-          command:
-            - "sleep"
-            - "604800"
+          image: lscr.io/linuxserver/sonarr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8989
               name: http
               protocol: TCP
-          # readinessProbe:
-          #  httpGet:
-          #    path: /ping
-          #    port: 8989
-          # livenessProbe:
-          #  httpGet:
-          #    path: /ping
-          #    port: 8989
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8989
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8989
           resources:
             requests:
               cpu: 100m
@@ -60,8 +56,6 @@ spec:
               mountPath: /download
             - name: media
               mountPath: /media
-            - name: old-config
-              mountPath: /old-config
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -72,6 +66,3 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: sonarr-media
-        - name: old-config
-          persistentVolumeClaim:
-            claimName: sonarr-old-config
