@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: synology-iscsi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 10Gi
   csi:
