@@ -7,5 +7,7 @@ subsets:
   - addresses:
       - ip: 192.168.3.52
     ports:
-      - port: 80
-      - port: 443
+      - name: http
+        port: 80
+      - name: https
+        port: 443
