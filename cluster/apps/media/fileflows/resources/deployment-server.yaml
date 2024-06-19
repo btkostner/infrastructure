@@ -37,9 +37,7 @@ spec:
               memory: 1Gi
           env:
             - name: TZ
-              value: "America/Denver"
-            - name: TempPathHost
-              value: "/temp"
+              value: "America/Los_Angeles"
             - name: FFNODE
               value: "0"
           volumeMounts:
@@ -49,8 +47,6 @@ spec:
               mountPath: /download
             - name: media
               mountPath: /media
-            - name: temp
-              mountPath: /temp
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -61,6 +57,3 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: fileflows-media
-        - name: temp
-          emptyDir:
-            sizeLimit: 100Gi

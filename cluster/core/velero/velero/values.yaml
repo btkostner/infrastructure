@@ -68,10 +68,10 @@ configuration:
   features: EnableCSI
   defaultVolumesToFsBackup: true
   extraEnvVars:
-    TZ: America/Denver
+    TZ: America/Los_Angeles
 nodeAgent:
   extraEnvVars:
-    TZ: America/Denver
+    TZ: America/Los_Angeles
 credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"

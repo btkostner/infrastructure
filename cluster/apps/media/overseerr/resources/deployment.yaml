@@ -43,7 +43,7 @@ spec:
               memory: 2Gi
           env:
             - name: TZ
-              value: America/Denver
+              value: America/Los_Angeles
           volumeMounts:
             - name: config
               mountPath: /app/config

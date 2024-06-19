@@ -52,5 +52,5 @@
       "datasourceTemplate": "github-tags"
     }
   ],
-  "timezone": "America/Denver"
+  "timezone": "America/Los_Angeles"
 }

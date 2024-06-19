@@ -29,11 +29,11 @@ spec:
               gpu.intel.com/i915: 1
             limits:
               cpu: 4000m
-              memory: 4Gi
+              memory: 16Gi
               gpu.intel.com/i915: 1
           env:
             - name: TZ
-              value: "America/Denver"
+              value: "America/Los_Angeles"
             - name: TempPathHost
               value: "/temp"
             - name: FFNODE
@@ -61,4 +61,4 @@ spec:
             claimName: fileflows-media
         - name: temp
           emptyDir:
-            sizeLimit: 100Gi
+            sizeLimit: 250Gi

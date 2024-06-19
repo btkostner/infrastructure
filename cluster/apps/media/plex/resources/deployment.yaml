@@ -53,7 +53,7 @@ spec:
               gpu.intel.com/i915: 1
           env:
             - name: TZ
-              value: America/Denver
+              value: America/Los_Angeles
             - name: VERSION
               value: docker
           volumeMounts:
