@@ -1,0 +1,11 @@
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: internal-gateway
+  namespace: networking
+subsets:
+  - addresses:
+      - ip: 192.168.3.52
+    ports:
+      - port: 80
+      - port: 443

@@ -6,5 +6,7 @@ metadata:
 namespace: networking
 
 resources:
+  - ./resources/endpoint.yaml
   - ./resources/gateway.yaml
   - ./resources/ingress.yaml
+  - ./resources/service.yaml

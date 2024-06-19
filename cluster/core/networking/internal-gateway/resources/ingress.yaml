@@ -6,7 +6,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: cilium-gateway-internal-gateway
+      name: internal-gateway
       port:
         number: 443
   ingressClassName: tailscale
