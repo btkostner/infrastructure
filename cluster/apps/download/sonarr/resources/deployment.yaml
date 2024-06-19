@@ -24,8 +24,9 @@ spec:
         - name: sonarr
           # image: lscr.io/linuxserver/sonarr:latest
           image: ubuntu:latest
-          command: ["/bin/bash", "-c", "--"]
-          args: ["while true; do sleep 30; done;"]
+          command:
+            - "sleep"
+            - "604800"
           imagePullPolicy: Always
           ports:
             - containerPort: 8989
