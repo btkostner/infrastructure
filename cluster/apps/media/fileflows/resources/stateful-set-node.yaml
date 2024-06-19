@@ -32,14 +32,18 @@ spec:
               memory: 16Gi
               gpu.intel.com/i915: 1
           env:
-            - name: TZ
-              value: "America/Los_Angeles"
-            - name: TempPathHost
-              value: "/temp"
             - name: FFNODE
               value: "1"
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
             - name: ServerUrl
               value: "http://fileflows:80"
+            - name: TempPathHost
+              value: "/temp"
+            - name: TZ
+              value: "America/Los_Angeles"
           volumeMounts:
             - name: download
               mountPath: /download
