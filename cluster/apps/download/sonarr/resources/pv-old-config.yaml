@@ -10,4 +10,4 @@ spec:
     storage: 10Gi
   csi:
     driver: csi.san.synology.com
-    volumeHandle: 42aedc09-0f8b-4fdd-99a2-0b94c5b5882f
+    volumeHandle: 6b6ae7ab-da86-4ac5-8505-55a91e3dfa8d
