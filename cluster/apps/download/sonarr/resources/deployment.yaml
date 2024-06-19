@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: radarr
+  name: sonarr
   namespace: download
   labels:
-    app: radarr
+    app: sonarr
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -12,30 +12,33 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: radarr
+      app: sonarr
   template:
     metadata:
       labels:
-        app: radarr
+        app: sonarr
       annotations:
         backup.velero.io/backup-volumes-excludes: download,media
     spec:
       containers:
-        - name: radarr
-          image: lscr.io/linuxserver/radarr:latest
+        - name: sonarr
+          # image: lscr.io/linuxserver/sonarr:latest
+          image: ubuntu:latest
+          command: ["/bin/bash", "-c", "--"]
+          args: ["while true; do sleep 30; done;"]
           imagePullPolicy: Always
           ports:
-            - containerPort: 7878
+            - containerPort: 8989
               name: http
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 7878
-          livenessProbe:
-            httpGet:
-              path: /ping
-              port: 7878
+          # readinessProbe:
+          #  httpGet:
+          #    path: /ping
+          #    port: 8989
+          # livenessProbe:
+          #  httpGet:
+          #    path: /ping
+          #    port: 8989
           resources:
             requests:
               cpu: 100m
@@ -56,13 +59,18 @@ spec:
               mountPath: /download
             - name: media
               mountPath: /media
+            - name: old-config
+              mountPath: /old-config
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: radarr-config
+            claimName: sonarr-config
         - name: download
           persistentVolumeClaim:
-            claimName: radarr-download
+            claimName: sonarr-download
         - name: media
           persistentVolumeClaim:
-            claimName: radarr-media
+            claimName: sonarr-media
+        - name: old-config
+          persistentVolumeClaim:
+            claimName: sonarr-old-config
