@@ -35,9 +35,9 @@ spec:
             - name: FFNODE
               value: "1"
             - name: PGID
-              value: "0"
+              value: "1024"
             - name: PUID
-              value: "0"
+              value: "100"
             - name: ServerUrl
               value: "http://fileflows:80"
             - name: TempPathHost
