@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dizquetv
+  namespace: media
+  labels:
+    app: dizquetv
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dizquetv
+  template:
+    metadata:
+      labels:
+        app: dizquetv
+      annotations:
+        backup.velero.io/backup-volumes-excludes: gpu,media
+    spec:
+      containers:
+        - name: dizquetv
+          image: docker.io/vexorian/dizquetv:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              name: http
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 10
+            failureThreshold: 60
+            timeoutSeconds: 2
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+              gpu.intel.com/i915: 1
+            limits:
+              cpu: 4000m
+              memory: 8Gi
+              gpu.intel.com/i915: 1
+          env:
+            - name: PUID
+              value: "1000"
+            - name: USER_ID
+              value: "1000"
+            - name: UID
+              value: "1000"
+            - name: UMASK
+              value: "2"
+            - name: UMASK_SET
+              value: "2"
+            - name: PGID
+              value: "1000"
+            - name: GROUP_ID
+              value: "1000"
+            - name: GID
+              value: "1000"
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /home/node/app/.dizquetv
+            - name: gpu
+              mountPath: /dev/dri
+            - name: media
+              mountPath: /media
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: dizquetv-config
+        - name: gpu
+          hostPath:
+            path: /dev/dri
+        - name: media
+          persistentVolumeClaim:
+            claimName: dizquetv-media
