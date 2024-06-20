@@ -44,6 +44,13 @@ spec:
               value: "/temp"
             - name: TZ
               value: "America/Los_Angeles"
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: true
+            privileged: true
           volumeMounts:
             - name: download
               mountPath: /download
