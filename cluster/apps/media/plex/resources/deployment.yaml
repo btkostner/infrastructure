@@ -6,6 +6,16 @@ metadata:
   labels:
     app: plex
 spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: affinity.btkostner.network/namespace
+                operator: In
+                values:
+                  - media
+          topologyKey: kubernetes.io/hostname
   replicas: 1
   revisionHistoryLimit: 1
   strategy:
@@ -16,6 +26,7 @@ spec:
   template:
     metadata:
       labels:
+        affinity.btkostner.network/namespace: media
         app: plex
       annotations:
         backup.velero.io/backup-volumes-excludes: gpu,media,transcode
