@@ -3,7 +3,9 @@ kind: ApplicationSet
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  creationTimestamp: null
+  labels:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: apps
   name: apps
   namespace: argocd
 spec:
