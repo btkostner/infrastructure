@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ersatztv
+  namespace: media
+  labels:
+    app: ersatztv
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: affinity.btkostner.network/namespace
+                operator: In
+                values:
+                  - media
+          topologyKey: kubernetes.io/hostname
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ersatztv
+  template:
+    metadata:
+      labels:
+        affinity.btkostner.network/namespace: media
+        app: ersatztv
+      annotations:
+        backup.velero.io/backup-volumes-excludes: gpu,media
+    spec:
+      containers:
+        - name: ersatztv
+          image: docker.io/jasongdove/ersatztv:latest-vaapi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8409
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8409
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8409
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+              gpu.intel.com/i915: 1
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+              gpu.intel.com/i915: 1
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /root/.local/share/ersatztv
+            - name: gpu
+              mountPath: /dev/dri
+            - name: media
+              mountPath: /media
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: ersatztv-config
+        - name: gpu
+          hostPath:
+            path: /dev/dri
+        - name: media
+          persistentVolumeClaim:
+            claimName: ersatztv-media
