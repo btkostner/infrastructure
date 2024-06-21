@@ -57,3 +57,7 @@ spec:
           kind: Certificate
           jsonPointers:
             - /spec/duration
+        - group: ""
+          kind: PersistentVolumeClaim
+          jsonPointers:
+            - /spec/volumeName
