@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscan
+  namespace: media
+  labels:
+    app: autoscan
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: autoscan
+  template:
+    metadata:
+      labels:
+        app: autoscan
+      annotations:
+        backup.velero.io/backup-volumes-excludes: config,media
+    spec:
+      containers:
+        - name: autoscan
+          image: docker.io/cloudb0x/autoscan:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3030
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3030
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3030
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /opt/autoscan
+            - name: media
+              mountPath: /media
+      volumes:
+        - name: config
+          secret:
+            secretName: autoscan-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: ersatztv-media
