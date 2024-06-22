@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli
+  namespace: media
+  labels:
+    app: tautulli
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tautulli
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      containers:
+        - name: tautulli
+          image: ghcr.io/tautulli/tautulli:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8181
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 8181
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8181
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: tautulli-config

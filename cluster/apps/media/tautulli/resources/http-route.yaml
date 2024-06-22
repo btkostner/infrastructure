@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: tautulli-http
+  namespace: media
+spec:
+  hostnames:
+    - tautulli.abraxis.tv
+  parentRefs:
+    - name: external-gateway
+      namespace: networking
+  rules:
+    - backendRefs:
+        - name: tautulli
+          port: 80
