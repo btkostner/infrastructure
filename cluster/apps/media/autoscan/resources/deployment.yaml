@@ -54,7 +54,7 @@ spec:
               value: America/Los_Angeles
           volumeMounts:
             - name: config
-              mountPath: /opt/autoscan
+              mountPath: /config
             - name: media
               mountPath: /media
       volumes:
