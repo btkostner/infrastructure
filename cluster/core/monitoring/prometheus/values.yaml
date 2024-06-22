@@ -1,3 +1,5 @@
+namespaceOverride: monitoring
+
 kubeProxy:
   enabled: false
 
