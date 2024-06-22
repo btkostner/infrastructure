@@ -6,8 +6,12 @@ metadata:
 namespace: monitoring
 
 helmCharts:
+  - name: prometheus-operator-crds
+    repo: https://prometheus-community.github.io/helm-charts
+    releaseName: prometheus-operator-crds
+    version: 8.0.1
   - name: kube-prometheus-stack
     repo: https://prometheus-community.github.io/helm-charts
     releaseName: kube-prometheus-stack
-    version: 55.5.0
+    version: 55.5.2
     valuesFile: ./values.yaml
