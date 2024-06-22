@@ -5,9 +5,9 @@ metadata:
   namespace: media
 spec:
   hostnames:
-    - tautulli.abraxis.tv
+    - tautulli.btkostner.network
   parentRefs:
-    - name: external-gateway
+    - name: internal-gateway
       namespace: networking
   rules:
     - backendRefs:
