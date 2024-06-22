@@ -50,11 +50,13 @@ spec:
               cpu: 1000m
               memory: 512Mi
           env:
+            - name: AUTOSCAN_CONFIG
+              value: /autoscan-config/config.yml
             - name: TZ
               value: America/Los_Angeles
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: /autoscan-config
             - name: media
               mountPath: /media
       volumes:
