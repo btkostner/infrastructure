@@ -1,0 +1,17 @@
+kubeProxy:
+  enabled: false
+
+prometheus:
+  server:
+    persistentVolume:
+      enabled: true
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: rook-ceph-block
+          resources:
+            requests:
+              storage: 250Gi
