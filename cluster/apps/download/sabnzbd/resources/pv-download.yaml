@@ -11,6 +11,7 @@ spec:
   mountOptions:
     - local_lock=none
     - namlen=255
+    - nconnect=16
     - proto=tcp
     - relatime
     - retrans=2
