@@ -17,6 +17,8 @@ resources:
   - https://raw.githubusercontent.com/rook/rook/v1.14.0/deploy/examples/toolbox.yaml
   - ./resources/ceph-block-pool.yaml
   - ./resources/ceph-cluster.yaml
+  - ./resources/distributed-filesystem.yaml
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
-  - ./resources/storage-class.yaml
+  - ./resources/storage-class-block.yaml
+  - ./resources/storage-class-fs.yaml
