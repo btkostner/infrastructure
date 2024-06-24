@@ -18,7 +18,7 @@ spec:
       labels:
         app: sabnzbd
       annotations:
-        backup.velero.io/backup-volumes-excludes: download
+        backup.velero.io/backup-volumes-excludes: download,incomplete
     spec:
       initContainers:
         - name: gluetun
@@ -105,6 +105,8 @@ spec:
               mountPath: /config
             - name: download
               mountPath: /download
+            - name: incomplete
+              mountPath: /incomplete
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -112,3 +114,6 @@ spec:
         - name: download
           persistentVolumeClaim:
             claimName: sabnzbd-download
+        - name: incomplete
+          persistentVolumeClaim:
+            claimName: sabnzbd-incomplete
