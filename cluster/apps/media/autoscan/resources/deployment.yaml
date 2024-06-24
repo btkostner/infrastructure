@@ -65,4 +65,4 @@ spec:
             secretName: autoscan-config
         - name: media
           persistentVolumeClaim:
-            claimName: ersatztv-media
+            claimName: autoscan-media
