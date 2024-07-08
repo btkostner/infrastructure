@@ -26,14 +26,6 @@ spec:
             - containerPort: 3689
               name: http
               protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /about
-              port: 3689
-          livenessProbe:
-            httpGet:
-              path: /about
-              port: 3689
           resources:
             requests:
               cpu: 1000m
