@@ -36,13 +36,20 @@ spec:
           env:
             - name: TZ
               value: America/Los_Angeles
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: true
+            privileged: true
           volumeMounts:
             - name: cache
               mountPath: /var/cache/owntone
             - name: config
               mountPath: /etc/owntone
             - name: media
-              mountPath: /media
+              mountPath: /srv/media
       hostNetwork: true
       volumes:
         - name: cache
