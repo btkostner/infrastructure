@@ -2,6 +2,12 @@
 
 set -e
 
+if [ ! -f "secrets.yaml" ]; then
+  echo "=== Pulling secrets from 1Password"
+
+  op read "op://Infrastructure/Talos Secrets/secrets.yaml" > secrets.yaml
+fi
+
 if [ ! -f "./talosconfig" ]; then
   echo "=== Generating configuration"
 
@@ -13,16 +19,19 @@ if [ ! -f "./talosconfig" ]; then
 
   talosctl gen config btkostner https://talos.btkostner.network:6443 \
     $patch_args \
+    --additional-sans 127.0.0.1 \
+    --additional-sans 192.168.3.10 \
+    --additional-sans 192.168.3.11 \
+    --additional-sans 192.168.3.12 \
+    --additional-sans 192.168.3.13 \
+    --additional-sans 192.168.3.14 \
+    --additional-sans 192.168.3.15 \
+    --additional-sans 192.168.3.16 \
+    --additional-sans 192.168.3.17 \
+    --additional-sans 192.168.3.18 \
     --endpoints talos.btkostner.network \
-    --force
-
-  # Use 1Password CLI to fill in secret values
-  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i controlplane.yaml -o controlplane.yaml
-  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i talosconfig -o talosconfig
-  op --account AVQ6FPWP5ZAUPN6GGDQUKDVXVE inject -i worker.yaml -o worker.yaml
-
-  # Update the talosconfig endpoint to the correct internal DNS name
-  sed -i "" "s/127.0.0.1/talos.btkostner.network/" ./talosconfig
+    --force \
+    --with-secrets secrets.yaml
 fi
 
 echo "=== Copying local talos configuration to primary storage"

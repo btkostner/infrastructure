@@ -1,11 +1,20 @@
-# This image is based off Talos 1.6.7 with the following extensions:
-# - siderolabs/i915-ucode
-# - siderolabs/intel-ucode
-# - siderolabs/iscsi-tools
-# And the following kernel args
-# - cpufreq.default_governor=performance
-# - ipv6.disable=1
-# - net.ifnames=1
+# This image is based off Talos 1.7.5 with the following configuration:
+#
+# https://factory.talos.dev/?arch=amd64&board=undefined&cmdline=cpufreq.default_governor%3Dperformance+ipv6.disable%3D1+net.ifnames%3D1&cmdline-set=true&extensions=-&extensions=siderolabs%2Fi915-ucode&extensions=siderolabs%2Fintel-ice-firmware&extensions=siderolabs%2Fintel-ucode&extensions=siderolabs%2Fiscsi-tools&extensions=siderolabs%2Fthunderbolt&extensions=siderolabs%2Futil-linux-tools&platform=metal&secureboot=undefined&target=metal&version=1.7.5
+#
+# customization:
+#   extraKernelArgs:
+#     - cpufreq.default_governor=performance
+#     - ipv6.disable=1
+#     - net.ifnames=1
+#   systemExtensions:
+#     officialExtensions:
+#       - siderolabs/i915-ucode
+#       - siderolabs/intel-ice-firmware
+#       - siderolabs/intel-ucode
+#       - siderolabs/iscsi-tools
+#       - siderolabs/thunderbolt
+#       - siderolabs/util-linux-tools
 machine:
   install:
-    image: factory.talos.dev/installer/90e1d8f217f1607719dc2eefa67433d565d31f36cfd7ebd0d2e33ea242125e5c:v1.6.7
+    image: factory.talos.dev/installer/2af79371e75a12701f0703e6b5fb97cafb9d8e5e6f3544d3f3f568255dcacf69:v1.7.5
