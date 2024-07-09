@@ -31,3 +31,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: request-abraxis-tv
+
+    - name: http-redirect
+      port: 8080
+      protocol: HTTP

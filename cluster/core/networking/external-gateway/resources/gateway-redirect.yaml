@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: external-gateway-redirect
+  namespace: networking
+spec:
+  parentRefs:
+    - name: external-gateway
+      sectionName: http-redirect
+  hostnames:
+    - abraxis.tv
+    - request.abraxis.tv
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301

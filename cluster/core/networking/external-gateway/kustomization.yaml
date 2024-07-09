@@ -6,4 +6,5 @@ metadata:
 namespace: networking
 
 resources:
+  - ./resources/gateway-redirect.yaml
   - ./resources/gateway.yaml

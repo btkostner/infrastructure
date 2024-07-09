@@ -4,18 +4,13 @@ metadata:
   name: internal-gateway
   namespace: networking
   annotations:
-    tailscale.com/expose: "true"
     cert-manager.io/cluster-issuer: cloudflare-production
-    metallb.universe.tf/loadBalancerIPs: 192.168.3.52
 spec:
   gatewayClassName: cilium
-  addresses:
-    - type: IPAddress
-      value: 192.168.3.52
   listeners:
     - hostname: "*.btkostner.network"
       name: btkostner-network
-      port: 443
+      port: 9443
       protocol: HTTPS
       allowedRoutes:
         namespaces:

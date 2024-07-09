@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: internal-ingress
+  namespace: networking
+spec:
+  defaultBackend:
+    service:
+      name: cilium-envoy
+      port:
+        number: 9443
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - "*.btkostner.network"
+      secretName: btkostner-network
