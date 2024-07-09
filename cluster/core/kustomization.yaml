@@ -4,7 +4,11 @@ kind: Kustomization
 resources:
   # This does not contain _all_ core directories. Just what's needed to
   # get argo cd setup and running everything itself.
-  - ./metallb/metallb
-  - ./kube-system/cilium
-  - ./argocd/argo-cd
-  - ./argocd/application-sets
+  #- ./metallb/metallb
+  # - ./kube-system/cilium
+  #- ./argocd/argo-cd
+  #- ./argocd/application-sets
+  #- ./external-secrets/onepassword
+  #- ./external-secrets/external-secrets-operator
+  - ./rook-ceph/rook-ceph
+  #- ./velero/velero

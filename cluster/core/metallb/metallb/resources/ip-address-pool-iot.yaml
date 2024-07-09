@@ -1,8 +1,0 @@
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: iot-vlan
-  namespace: metallb
-spec:
-  addresses:
-    - "192.168.4.2-192.168.4.4"
