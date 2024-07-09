@@ -25,8 +25,3 @@ spec:
             ]
           securityContext:
             privileged: true
-        - name: rook-nuker
-          image: busybox
-          command: ["/bin/sh", "-c", "rm -rf /var/lib/rook"]
-          securityContext:
-            privileged: true
