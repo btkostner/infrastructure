@@ -11,6 +11,8 @@ externalIPs:
   enabled: true
 gatewayAPI:
   enabled: true
+  hostNetwork:
+    enabled: true
   secretsNamespace:
     create: false
     name: kube-system
