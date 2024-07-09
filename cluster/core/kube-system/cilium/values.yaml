@@ -1,32 +1,12 @@
-autoDirectNodeRoutes: true
-bandwidthManager:
-  enabled: true
-bpf:
-  autoMount:
-    enabled: false
-  masquerade: true
 cgroup:
   autoMount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-cluster:
-  id: 1
-  name: cluster.local
-containerRuntime:
-  integration: containerd
 debug:
-  enabled: false
-egressGateway:
   enabled: true
-  installRoutes: true
-enableIPv4Masquerade: true
 enableRuntimeDeviceDetection: true
-enableXTSocketFallback: false
-envoyConfig:
-  enabled: false
-  secretsNamespace:
-    create: false
-    name: kube-system
+endpointRoutes:
+  enabled: true
 externalIPs:
   enabled: true
 gatewayAPI:
@@ -34,13 +14,9 @@ gatewayAPI:
   secretsNamespace:
     create: false
     name: kube-system
-hostFirewall:
-  enabled: true
 hostPort:
   enabled: true
 hubble:
-  peerService:
-    clusterDomain: cluster.local
   relay:
     enabled: true
   ui:
@@ -50,38 +26,28 @@ hubble:
         ipv6:
           enabled: false
 ingressController:
-  enabled: true
-  loadbalancerMode: dedicated
+  enabled: false
   secretsNamespace:
     create: false
     name: kube-system
-  service:
-    name: cilium-ingress
-    type: LoadBalancer
-    loadBalancerIP: 192.168.3.50
-    insecureNodePort: 30080
-    secureNodePort: 30433
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: "10.0.0.0/8"
 k8sClientRateLimit:
   burst: 50
   qps: 200
 k8sServiceHost: localhost
 k8sServicePort: 7445
-kubeProxyReplacement: strict
+kubeProxyReplacement: true
 l2announcements:
   enabled: true
-l7Proxy: true
-loadBalancer:
-  mode: dsr
-MTU: 9000
 nodePort:
   enabled: true
 operator:
   rollOutPods: true
+  replicas: 2
+  podDisruptionBudget:
+    enabled: true
 rollOutCiliumPods: true
-routingMode: native
 securityContext:
   capabilities:
     cleanCiliumState:

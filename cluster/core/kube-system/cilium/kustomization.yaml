@@ -10,9 +10,10 @@ helmCharts:
     repo: https://helm.cilium.io
     releaseName: cilium
     namespace: kube-system
-    version: 1.14.9
+    version: 1.15.6
     valuesFile: ./values.yaml
 
 resources:
   - ./resources/cilium-l2-announcement-policy.yaml
+  - ./resources/cilium-load-balancer-ip-pool.yaml
   - ./resources/gateway-class.yaml
