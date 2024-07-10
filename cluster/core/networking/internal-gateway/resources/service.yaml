@@ -4,7 +4,8 @@ metadata:
   name: internal-gateway
   namespace: networking
 spec:
-  clusterIP: None
+  clusterIP: 10.69.69.69
+  ipFamilyPolicy: SingleStack
   ports:
     - name: gateway
       port: 443

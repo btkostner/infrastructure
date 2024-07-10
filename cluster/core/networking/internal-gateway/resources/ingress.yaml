@@ -4,21 +4,23 @@ metadata:
   name: internal-ingress
   namespace: networking
 spec:
+  ingressClassName: tailscale
   defaultBackend:
     service:
       name: internal-gateway
       port:
         name: gateway
-  ingressClassName: tailscale
-  rules:
-    - host: argocd.btkostner.network
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: internal-gateway
-              servicePort: 443
   tls:
     - hosts:
         - "*.btkostner.network"
       secretName: btkostner-network
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: internal-gateway
+                port:
+                  number: 443
