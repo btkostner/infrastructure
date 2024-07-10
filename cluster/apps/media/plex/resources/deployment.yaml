@@ -6,16 +6,6 @@ metadata:
   labels:
     app: plex
 spec:
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: affinity.btkostner.network/namespace
-                operator: In
-                values:
-                  - media
-          topologyKey: kubernetes.io/hostname
   replicas: 1
   revisionHistoryLimit: 1
   strategy:
@@ -31,6 +21,16 @@ spec:
       annotations:
         backup.velero.io/backup-volumes-excludes: gpu,media,transcode
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: affinity.btkostner.network/namespace
+                    operator: In
+                    values:
+                      - media
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: plex
           image: docker.io/plexinc/pms-docker:plexpass

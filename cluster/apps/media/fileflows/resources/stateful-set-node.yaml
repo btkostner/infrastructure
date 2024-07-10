@@ -6,16 +6,6 @@ metadata:
   labels:
     app: fileflows-node
 spec:
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: affinity.btkostner.network/namespace
-                operator: In
-                values:
-                  - media
-          topologyKey: kubernetes.io/hostname
   replicas: 2
   revisionHistoryLimit: 1
   selector:
@@ -29,6 +19,16 @@ spec:
       annotations:
         backup.velero.io/backup-volumes-excludes: download,gpu,media,temp
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: affinity.btkostner.network/namespace
+                    operator: In
+                    values:
+                      - media
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: fileflows
           image: docker.io/revenz/fileflows:latest
