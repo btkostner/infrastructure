@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: internal-gateway
   namespace: networking
+  annotations:
+    tailscale.com/expose: "true"
 spec:
   ipFamilyPolicy: SingleStack
   ports:
