@@ -16,22 +16,10 @@ spec:
   template:
     metadata:
       labels:
-        affinity.btkostner.network/namespace: media
         app: ersatztv
       annotations:
         backup.velero.io/backup-volumes-excludes: gpu,media
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: affinity.btkostner.network/namespace
-                    operator: In
-                    values:
-                      - media
-              topologyKey: kubernetes.io/hostname
-              weight: 100
       containers:
         - name: ersatztv
           image: docker.io/jasongdove/ersatztv:latest-vaapi
@@ -57,12 +45,14 @@ spec:
           resources:
             requests:
               cpu: 1000m
-              memory: 1Gi
               gpu.intel.com/i915: 1
+              gpu.intel.com/millicores: 500
+              memory: 1Gi
             limits:
               cpu: 4000m
-              memory: 8Gi
               gpu.intel.com/i915: 1
+              gpu.intel.com/millicores: 500
+              memory: 8Gi
           env:
             - name: TZ
               value: America/Los_Angeles
