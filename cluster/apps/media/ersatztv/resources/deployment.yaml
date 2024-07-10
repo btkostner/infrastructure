@@ -31,6 +31,7 @@ spec:
                     values:
                       - media
               topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - name: ersatztv
           image: docker.io/jasongdove/ersatztv:latest-vaapi

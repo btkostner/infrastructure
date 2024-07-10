@@ -29,6 +29,7 @@ spec:
                     values:
                       - media
               topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - name: fileflows
           image: docker.io/revenz/fileflows:latest
