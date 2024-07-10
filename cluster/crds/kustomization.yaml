@@ -54,13 +54,13 @@ resources:
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
 
   # Prometheus Operator
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-probes.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-probes.yaml
   # - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusagents.yaml
   # - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheuses.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-scrapeconfigs.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-thanosrulers.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-scrapeconfigs.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml
+  #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-thanosrulers.yaml
