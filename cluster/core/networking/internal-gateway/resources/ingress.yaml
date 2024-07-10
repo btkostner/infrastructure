@@ -8,8 +8,16 @@ spec:
     service:
       name: internal-gateway
       port:
-        number: 443
+        name: gateway
   ingressClassName: tailscale
+  rules:
+    - host: argocd.btkostner.network
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: internal-gateway
+              servicePort: 443
   tls:
     - hosts:
         - "*.btkostner.network"
