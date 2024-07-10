@@ -6,9 +6,9 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: cilium-envoy
+      name: internal-gateway
       port:
-        number: 9443
+        number: 443
   ingressClassName: tailscale
   tls:
     - hosts:

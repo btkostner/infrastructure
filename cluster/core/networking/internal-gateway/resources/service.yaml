@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: internal-gateway
+  namespace: networking
+spec:
+  clusterIP: None
+  ports:
+    - name: gateway
+      port: 443
+      protocol: TCP
+      targetPort: 9443
+  type: ClusterIP
