@@ -21,7 +21,7 @@ initContainers:
       - mountPath: /target
         name: plugins
   - name: velero-plugin-for-csi
-    image: velero/velero-plugin-for-csi:v0.7.0
+    image: velero/velero-plugin-for-csi:v0.7.1
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
@@ -57,9 +57,6 @@ configuration:
         region: us-west-004
         s3ForcePathStyle: "true"
         s3Url: https://s3.us-west-004.backblazeb2.com
-  volumeSnapshotLocation:
-    - name: rook-ceph
-      provider: csi
   uploaderType: restic
   defaultBackupStorageLocation: default
   defaultVolumeSnapshotLocations: csi:rook-ceph
