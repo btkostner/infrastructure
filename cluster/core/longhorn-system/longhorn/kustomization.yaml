@@ -15,4 +15,4 @@ helmCharts:
 
 resources:
   - ./resources/http-route.yaml
-  - ./resources/namespace.yaml
+  - ./resources/namepace.yaml
