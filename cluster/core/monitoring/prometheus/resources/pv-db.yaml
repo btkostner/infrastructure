@@ -19,6 +19,6 @@ spec:
   claimRef:
     name: prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0
     namespace: monitoring
-  persistentVolumeReclaimPolicy: Keep
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: longhorn
   volumeMode: Filesystem
