@@ -115,5 +115,4 @@ spec:
           persistentVolumeClaim:
             claimName: sabnzbd-download
         - name: incomplete
-          persistentVolumeClaim:
-            claimName: sabnzbd-incomplete
+          emptyDir: {}
