@@ -1,2 +1,11 @@
+defaultSettings:
+  backupTarget: "nfs://192.168.3.4:/volume1/Cluster/longhorn"
+  defaultDataLocality: best-effort
+  replicaAutoBalance: best-effort
+  defaultReplicaCount: 3
+  autoSalvage: true
+  snapshotDataIntegrityCronjob: "0 1 * * ?"
+  fastReplicaRebuildEnabled: true
+
 preUpgradeChecker:
   jobEnabled: false

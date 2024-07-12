@@ -16,3 +16,7 @@ helmCharts:
 resources:
   - ./resources/http-route.yaml
   - ./resources/namepace.yaml
+  - ./resources/node-nuc-1.yaml
+  - ./resources/node-nuc-2.yaml
+  - ./resources/node-nuc-4.yaml
+  - ./resources/recurring-job-daily-backup.yaml

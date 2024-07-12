@@ -5,7 +5,7 @@ metadata:
   namespace: download
 spec:
   volumeMode: Filesystem
-  storageClassName: rook-ceph-block
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
