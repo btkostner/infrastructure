@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: monitoring-prometheus-db
+spec:
+  capacity:
+    storage: 250Gi
+  csi:
+    driver: driver.longhorn.io
+    volumeHandle: monitoring-prometheus-db
+    fsType: ext4
+    volumeAttributes:
+      dataLocality: best-effort
+      fsType: ext4
+      numberOfReplicas: "3"
+      staleReplicaTimeout: "30"
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    name: prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0
+    namespace: monitoring
+  persistentVolumeReclaimPolicy: Keep
+  storageClassName: longhorn
+  volumeMode: Filesystem

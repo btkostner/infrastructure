@@ -14,6 +14,9 @@ helmCharts:
     valuesFile: ./values.yaml
     version: 61.3.0
 
+resources:
+  - ./resources/pv-db.yaml
+
 patches:
   - patch: |-
       - op: add

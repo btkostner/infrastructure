@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: download-sonarr-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  claimRef:
+    name: sonarr-config
+    namespace: download
+  csi:
+    driver: driver.longhorn.io
+    volumeHandle: download-sonarr-config
+    fsType: ext4
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: longhorn
+  volumeMode: Filesystem
