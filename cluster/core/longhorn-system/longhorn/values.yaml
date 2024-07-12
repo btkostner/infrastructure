@@ -1,5 +1,6 @@
 defaultSettings:
-  backupTarget: "nfs://192.168.3.4:/volume1/Cluster/longhorn"
+  backupTarget: "s3://btkostner-cluster@us-west-004/longhorn"
+  backupTargetCredentialSecret: backup-target
   defaultDataLocality: best-effort
   replicaAutoBalance: best-effort
   defaultReplicaCount: 3

@@ -58,9 +58,8 @@ configuration:
   defaultBackupStorageLocation: default
   defaultVolumeSnapshotLocations: csi:default
   logFormat: json
-  defaultSnapshotMoveData: true
-  features: EnableCSI
-  defaultVolumesToFsBackup: true
+  defaultSnapshotMoveData: false
+  defaultVolumesToFsBackup: false
   extraEnvVars:
     TZ: America/Los_Angeles
 nodeAgent:
@@ -70,8 +69,8 @@ credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"
 backupsEnabled: true
-snapshotsEnabled: true
-deployNodeAgent: true
+snapshotsEnabled: false
+deployNodeAgent: false
 schedules:
   cluster-full-backup:
     disabled: false

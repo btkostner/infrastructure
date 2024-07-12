@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-tautulli-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  claimRef:
+    name: tautulli-config
+    namespace: media
+  csi:
+    driver: driver.longhorn.io
+    volumeHandle: media-tautulli-config
+    fsType: ext4
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: longhorn
+  volumeMode: Filesystem

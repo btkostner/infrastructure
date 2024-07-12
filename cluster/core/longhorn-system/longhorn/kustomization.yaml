@@ -20,3 +20,4 @@ resources:
   - ./resources/node-nuc-2.yaml
   - ./resources/node-nuc-4.yaml
   - ./resources/recurring-job-daily-backup.yaml
+  - ./resources/secret-backblaze-credentials.yaml
