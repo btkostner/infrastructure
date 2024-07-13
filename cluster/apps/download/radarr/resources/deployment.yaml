@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: radarr
-      annotations:
-        backup.velero.io/backup-volumes-excludes: download,media
     spec:
       containers:
         - name: radarr
@@ -53,6 +51,10 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-file
+              mountPath: /config
+              subPath: config.xml
+              readOnly: true
             - name: download
               mountPath: /download
             - name: media
@@ -61,6 +63,12 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config
+        - name: config-file
+          secret:
+            secretName: radarr-config
+            items:
+              - key: config.xml
+                path: config.xml
         - name: download
           persistentVolumeClaim:
             claimName: radarr-download
