@@ -53,14 +53,26 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-file
+              mountPath: /config/config.xml
+              subPath: config.xml
+              readOnly: true
             - name: download
               mountPath: /download
             - name: media
               mountPath: /media
+      securityContext:
+        fsGroup: 1000
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: sonarr-config
+        - name: config-file
+          secret:
+            secretName: sonarr-config
+            items:
+              - key: config.xml
+                path: config.xml
         - name: download
           persistentVolumeClaim:
             claimName: sonarr-download

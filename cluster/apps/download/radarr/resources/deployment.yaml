@@ -59,6 +59,8 @@ spec:
               mountPath: /download
             - name: media
               mountPath: /media
+      securityContext:
+        fsGroup: 1000
       volumes:
         - name: config
           persistentVolumeClaim:
