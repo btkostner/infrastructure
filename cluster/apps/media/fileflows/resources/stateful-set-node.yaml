@@ -15,8 +15,6 @@ spec:
     metadata:
       labels:
         app: fileflows-node
-      annotations:
-        backup.velero.io/backup-volumes-excludes: download,gpu,media,temp
     spec:
       containers:
         - name: fileflows

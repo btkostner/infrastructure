@@ -1,0 +1,8 @@
+kind: VolumeSnapshotClass
+apiVersion: snapshot.storage.k8s.io/v1
+metadata:
+  name: synology-backup
+  labels:
+    velero.io/csi-volumesnapshot-class: "true"
+driver: csi.san.synology.com
+deletionPolicy: Delete

@@ -21,3 +21,4 @@ resources:
   - ./resources/node-nuc-4.yaml
   - ./resources/recurring-job-daily-backup.yaml
   - ./resources/secret-backup-target.yaml
+  - ./resources/volume-snapshot-class.yaml

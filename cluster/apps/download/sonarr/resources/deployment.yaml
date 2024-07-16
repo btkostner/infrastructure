@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: sonarr
-      annotations:
-        backup.velero.io/backup-volumes-excludes: download,media
     spec:
       containers:
         - name: sonarr

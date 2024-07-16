@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: abraxis-tv
-      annotations:
-        backup.velero.io/backup-volumes-excludes: config
     spec:
       containers:
         - name: ddns

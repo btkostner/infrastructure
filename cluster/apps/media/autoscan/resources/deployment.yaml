@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: autoscan
-      annotations:
-        backup.velero.io/backup-volumes-excludes: config,media
     spec:
       containers:
         - name: autoscan

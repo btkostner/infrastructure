@@ -48,6 +48,7 @@ configuration:
         name: backblaze-credentials
         key: cloud
       config:
+        checksumAlgorithm: ""
         region: us-west-004
         s3ForcePathStyle: "true"
         s3Url: https://s3.us-west-004.backblazeb2.com
@@ -58,8 +59,8 @@ configuration:
   defaultBackupStorageLocation: default
   defaultVolumeSnapshotLocations: csi:default
   logFormat: json
-  defaultSnapshotMoveData: false
-  defaultVolumesToFsBackup: false
+  defaultSnapshotMoveData: true
+  defaultVolumesToFsBackup: true
   extraEnvVars:
     TZ: America/Los_Angeles
 nodeAgent:
@@ -69,12 +70,20 @@ credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"
 backupsEnabled: true
-snapshotsEnabled: false
-deployNodeAgent: false
+snapshotsEnabled: true
+deployNodeAgent: true
 schedules:
   cluster-full-backup:
     disabled: false
     schedule: "0 3 * * *"
     useOwnerReferencesInBackup: false
     template:
+      datamover: velero
+      resourcePolicy:
+        kind: configmap
+        name: resource-policy
+      snapshotMoveData: true
+      snapshotVolumes: true
       ttl: "720h0m0s"
+      uploaderConfig:
+        parallelFilesUpload: 10

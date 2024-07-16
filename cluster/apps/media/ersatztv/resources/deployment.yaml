@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: ersatztv
-      annotations:
-        backup.velero.io/backup-volumes-excludes: gpu,media
     spec:
       containers:
         - name: ersatztv

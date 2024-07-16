@@ -17,8 +17,6 @@ spec:
     metadata:
       labels:
         app: sabnzbd
-      annotations:
-        backup.velero.io/backup-volumes-excludes: download,incomplete
     spec:
       initContainers:
         - name: gluetun

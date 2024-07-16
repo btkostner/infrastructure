@@ -17,4 +17,5 @@ helmCharts:
 resources:
   - ./resources/namespace.yaml
   - ./resources/secret-behemoth-credentials.yaml
-  - ./resources/storage-class-synology-iscsi.yaml
+  - ./resources/storage-class.yaml
+  - ./resources/volume-snapshot-class.yaml
