@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: csi-snapshot-webhook
+  namespace: kube-system
+spec:
+  selector:
+    app: csi-snapshot-webhook
+  ports:
+    - name: webhook
+      protocol: TCP
+      port: 443
+      targetPort: 8443

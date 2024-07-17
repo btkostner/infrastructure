@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: csi-snapshot-webhook-certificate
+  namespace: kube-system
+spec:
+  secretName: snapshot-webhook-certificate
+  dnsNames:
+    - csi-snapshot-webhook.kube-system
+  issuerRef:
+    name: snapshot-selfsigned-issuer
