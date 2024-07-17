@@ -11,11 +11,13 @@ data:
       - action:
           type: fs-backup
         conditions:
-          csi: driver.longhorn.io
+          csi:
+            driver: driver.longhorn.io
       - action:
           type: fs-backup
         conditions:
-          csi: csi.san.synology.com
+          csi:
+            driver: csi.san.synology.com
       - action:
           type: skip
         conditions:
