@@ -21,7 +21,7 @@ spec:
       imageName: download-sabnzbd-config
       journalPool: safe-block-pool
       pool: safe-block-pool
-      staticVolume: true
+      staticVolume: "true"
     nodeStageSecretRef:
       name: rook-csi-rbd-node
       namespace: rook-ceph
