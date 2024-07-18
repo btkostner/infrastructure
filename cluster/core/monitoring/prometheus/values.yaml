@@ -4,10 +4,21 @@ kubeProxy:
   enabled: false
 
 prometheus:
+  retention: 5y
   server:
     persistentVolume:
       enabled: true
   prometheusSpec:
+    podMonitorNamespaceSelector: {}
+    podMonitorSelector: {}
+    probeNamespaceSelector: {}
+    probeSelector: {}
+    ruleNamespaceSelector: {}
+    ruleSelector: {}
+    scrapeConfigNamespaceSelector: {}
+    scrapeConfigSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelector: {}
     storageSpec:
       volumeClaimTemplate:
         spec:
