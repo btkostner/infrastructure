@@ -11,9 +11,6 @@ spec:
     name: n8n-config
     namespace: home
   csi:
-    driver: driver.longhorn.io
     volumeHandle: home-n8n-config
-    fsType: ext4
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: longhorn
+  storageClassName: ceph-safe-block
   volumeMode: Filesystem

@@ -11,3 +11,17 @@ spec:
   resources:
     requests:
       storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sabnzbd-config-ceph
+  namespace: download
+spec:
+  volumeMode: Filesystem
+  storageClassName: ceph-safe-block
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

@@ -17,3 +17,20 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: longhorn
   volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: download-radarr-config-ceph
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  claimRef:
+    name: radarr-config-ceph
+    namespace: download
+  csi:
+    volumeHandle: download-radarr-config
+  storageClassName: ceph-safe-block
+  volumeMode: Filesystem

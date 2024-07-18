@@ -17,3 +17,20 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: longhorn
   volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: download-sabnzbd-config-ceph
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  claimRef:
+    name: sabnzbd-config-ceph
+    namespace: download
+  csi:
+    volumeHandle: download-sabnzbd-config
+  storageClassName: ceph-safe-block
+  volumeMode: Filesystem

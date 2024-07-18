@@ -98,7 +98,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-ceph
+              mountPath: /config-ceph
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
+        - name: config-ceph
+          persistentVolumeClaim:
+            claimName: prowlarr-config-ceph

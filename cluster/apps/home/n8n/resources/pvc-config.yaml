@@ -5,7 +5,7 @@ metadata:
   namespace: home
 spec:
   volumeMode: Filesystem
-  storageClassName: longhorn
+  storageClassName: ceph-safe-block
   accessModes:
     - ReadWriteOnce
   resources:

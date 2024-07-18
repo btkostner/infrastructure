@@ -51,6 +51,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-ceph
+              mountPath: /config-ceph
             - name: config-file
               mountPath: /config/config.xml
               subPath: config.xml
@@ -65,6 +67,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: sonarr-config
+        - name: config-ceph
+          persistentVolumeClaim:
+            claimName: sonarr-config-ceph
         - name: config-file
           secret:
             secretName: sonarr-config
