@@ -7,7 +7,7 @@ namespace: home
 
 helmCharts:
   - name: n8n
-    repo: oci://8gears.container-registry.com
+    repo: oci://8gears.container-registry.com/library/n8n
     releaseName: n8n
     namespace: home
     version: 0.23.1
