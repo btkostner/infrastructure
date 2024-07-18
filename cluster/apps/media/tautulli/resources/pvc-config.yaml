@@ -5,9 +5,10 @@ metadata:
   namespace: media
 spec:
   volumeMode: Filesystem
-  storageClassName: longhorn
+  storageClassName: ceph-safe-block
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
+  volumeName: tautulli-config

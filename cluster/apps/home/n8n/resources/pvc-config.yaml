@@ -11,4 +11,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  volumeName: home-n8n-config
+  volumeName: n8n-config

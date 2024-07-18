@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: home-n8n-config
+  name: n8n-config
   annotations:
     argocd.argoproj.io/sync-options: Delete=false
     argocd.argoproj.io/sync-wave: "-1"
@@ -15,13 +15,13 @@ spec:
     namespace: home
   csi:
     driver: rook-ceph.rbd.csi.ceph.com
-    volumeHandle: home-n8n-config
+    volumeHandle: home/n8n-config
     fsType: ext4
     volumeAttributes:
       clusterID: rook-ceph
       imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
       imageFormat: "2"
-      imageName: home-n8n-config
+      imageName: home/n8n-config
       journalPool: safe-block-pool
       pool: safe-block-pool
       staticVolume: "true"

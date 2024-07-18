@@ -4,6 +4,7 @@ metadata:
   name: safe-block-pool
   namespace: rook-ceph
 spec:
+  enableRBDStats: true
   failureDomain: host
   replicated:
     size: 3
