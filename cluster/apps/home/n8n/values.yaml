@@ -1,0 +1,8 @@
+image:
+  pullPolicy: Always
+  tag: latest
+
+persistence:
+  enabled: true
+  type: existing
+  existingClaim: n8n-config

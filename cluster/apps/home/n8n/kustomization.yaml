@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: n8n
+
+namespace: home
+
+helmCharts:
+  - name: n8n
+    repo: oci://8gears.container-registry.com
+    releaseName: n8n
+    namespace: home
+    version: 0.23.1
+    valuesFile: values.yaml
+
+resources:
+  - ./resources/http-route.yaml
+  - ./resources/namespace.yaml
+  - ./resources/pv-config.yaml
+  - ./resources/pvc-config.yaml

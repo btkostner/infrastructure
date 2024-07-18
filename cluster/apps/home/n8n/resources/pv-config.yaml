@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: home-n8n-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  claimRef:
+    name: n8n-config
+    namespace: home
+  csi:
+    driver: driver.longhorn.io
+    volumeHandle: home-n8n-config
+    fsType: ext4
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: longhorn
+  volumeMode: Filesystem
