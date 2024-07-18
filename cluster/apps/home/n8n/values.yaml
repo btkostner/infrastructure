@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: latest
+  tag: 1.51.0
 
 persistence:
   enabled: true
