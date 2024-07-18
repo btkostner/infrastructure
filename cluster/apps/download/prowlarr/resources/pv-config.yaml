@@ -21,6 +21,7 @@ spec:
       imageName: download-prowlarr-config
       journalPool: safe-block-pool
       pool: safe-block-pool
+      staticVolume: true
     nodeStageSecretRef:
       name: rook-csi-rbd-node
       namespace: rook-ceph
