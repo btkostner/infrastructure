@@ -11,30 +11,21 @@ spec:
     name: sabnzbd-config
     namespace: download
   csi:
-    driver: driver.longhorn.io
-    volumeHandle: download-sabnzbd-config
-    fsType: ext4
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: longhorn
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: download-sabnzbd-config-ceph
-spec:
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 10Gi
-  claimRef:
-    name: sabnzbd-config-ceph
-    namespace: download
-  csi:
     driver: rook-ceph.rbd.csi.ceph.com
     volumeHandle: download-sabnzbd-config
     fsType: ext4
     volumeAttributes:
+      clusterID: rook-ceph
+      imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
+      imageFormat: "2"
       imageName: download-sabnzbd-config
+      journalPool: safe-block-pool
+      pool: safe-block-pool
+    nodeStageSecretRef:
+      name: rook-csi-rbd-node
+      namespace: rook-ceph
+    controllerExpandSecretRef:
+      name: rook-csi-rbd-provisioner
+      namespace: rook-ceph
   storageClassName: ceph-safe-block
   volumeMode: Filesystem

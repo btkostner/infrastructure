@@ -101,8 +101,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: config-ceph
-              mountPath: /config-ceph
             - name: download
               mountPath: /download
             - name: incomplete
@@ -111,9 +109,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: sabnzbd-config
-        - name: config-ceph
-          persistentVolumeClaim:
-            claimName: sabnzbd-config-ceph
         - name: download
           persistentVolumeClaim:
             claimName: sabnzbd-download
