@@ -11,6 +11,10 @@ spec:
     name: n8n-config
     namespace: home
   csi:
+    driver: rook-ceph.rbd.csi.ceph.com
     volumeHandle: home-n8n-config
+    fsType: ext4
+    volumeAttributes:
+      imageName: home-n8n-config
   storageClassName: ceph-safe-block
   volumeMode: Filesystem

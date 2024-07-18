@@ -31,6 +31,10 @@ spec:
     name: radarr-config-ceph
     namespace: download
   csi:
+    driver: rook-ceph.rbd.csi.ceph.com
     volumeHandle: download-radarr-config
+    fsType: ext4
+    volumeAttributes:
+      imageName: download-radarr-config
   storageClassName: ceph-safe-block
   volumeMode: Filesystem

@@ -30,7 +30,10 @@ spec:
   claimRef:
     name: sonarr-config-ceph
     namespace: download
-  csi:
+    driver: rook-ceph.rbd.csi.ceph.com
     volumeHandle: download-sonarr-config
+    fsType: ext4
+    volumeAttributes:
+      imageName: download-sonarr-config
   storageClassName: ceph-safe-block
   volumeMode: Filesystem
