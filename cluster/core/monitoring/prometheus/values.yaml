@@ -9,16 +9,6 @@ prometheus:
     persistentVolume:
       enabled: true
   prometheusSpec:
-    podMonitorNamespaceSelector: {}
-    podMonitorSelector: {}
-    probeNamespaceSelector: {}
-    probeSelector: {}
-    ruleNamespaceSelector: {}
-    ruleSelector: {}
-    scrapeConfigNamespaceSelector: {}
-    scrapeConfigSelector: {}
-    serviceMonitorNamespaceSelector: {}
-    serviceMonitorSelector: {}
     storageSpec:
       volumeClaimTemplate:
         spec:

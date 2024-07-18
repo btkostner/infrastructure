@@ -4,7 +4,7 @@ metadata:
   name: rook-ceph-exporter
   namespace: rook-ceph
   labels:
-    team: rook
+    release: kube-prometheus-stack
 spec:
   namespaceSelector:
     matchNames:

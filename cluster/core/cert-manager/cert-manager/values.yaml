@@ -3,6 +3,8 @@ prometheus:
   enabled: true
   servicemonitor:
     enabled: true
+    labels:
+      release: kube-prometheus-stack
 leaderElection:
   namespace: cert-manager
 clusterResourceNamespace: cert-manager
