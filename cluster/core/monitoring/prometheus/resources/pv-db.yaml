@@ -1,24 +1,35 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: monitoring-prometheus-db
+  name: prometheus-db
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
-  capacity:
-    storage: 250Gi
-  csi:
-    driver: driver.longhorn.io
-    volumeHandle: monitoring-prometheus-db
-    fsType: ext4
-    volumeAttributes:
-      dataLocality: best-effort
-      fsType: ext4
-      numberOfReplicas: "3"
-      staleReplicaTimeout: "30"
   accessModes:
     - ReadWriteOnce
+  capacity:
+    storage: 250Gi
   claimRef:
     name: prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0
     namespace: monitoring
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: longhorn
+  csi:
+    driver: rook-ceph.rbd.csi.ceph.com
+    volumeHandle: prometheus-db
+    fsType: ext4
+    volumeAttributes:
+      clusterID: rook-ceph
+      imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
+      imageFormat: "2"
+      imageName: prometheus-db
+      journalPool: safe-block-pool
+      pool: safe-block-pool
+      staticVolume: "true"
+    nodeStageSecretRef:
+      name: rook-csi-rbd-node
+      namespace: rook-ceph
+    controllerExpandSecretRef:
+      name: rook-csi-rbd-provisioner
+      namespace: rook-ceph
+  storageClassName: ceph-safe-block
   volumeMode: Filesystem
