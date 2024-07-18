@@ -20,5 +20,9 @@ resources:
   - ./resources/ceph-filesystem.yaml
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
+  - ./resources/prometheus-rule.yaml
+  - ./resources/service-monitor-csi.yaml
+  - ./resources/service-monitor-exporter.yaml
+  - ./resources/service-monitor-mgr.yaml
   - ./resources/storage-class-block.yaml
   - ./resources/storage-class-filesystem.yaml
