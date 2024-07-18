@@ -15,13 +15,13 @@ spec:
     namespace: download
   csi:
     driver: rook-ceph.rbd.csi.ceph.com
-    volumeHandle: download/radarr-config
+    volumeHandle: radarr-config
     fsType: ext4
     volumeAttributes:
       clusterID: rook-ceph
       imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
       imageFormat: "2"
-      imageName: download/radarr-config
+      imageName: radarr-config
       journalPool: safe-block-pool
       pool: safe-block-pool
       staticVolume: "true"

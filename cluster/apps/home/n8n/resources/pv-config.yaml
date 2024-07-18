@@ -15,13 +15,13 @@ spec:
     namespace: home
   csi:
     driver: rook-ceph.rbd.csi.ceph.com
-    volumeHandle: home/n8n-config
+    volumeHandle: n8n-config
     fsType: ext4
     volumeAttributes:
       clusterID: rook-ceph
       imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
       imageFormat: "2"
-      imageName: home/n8n-config
+      imageName: n8n-config
       journalPool: safe-block-pool
       pool: safe-block-pool
       staticVolume: "true"
