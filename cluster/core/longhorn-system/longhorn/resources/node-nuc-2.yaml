@@ -9,13 +9,13 @@ spec:
   allowScheduling: true
   disks:
     CT1000MX500SSD1:
-      allowScheduling: true
+      allowScheduling: false
       diskType: filesystem
       evictionRequested: false
       path: /var/lib/longhorn/
       storageReserved: 26843545600
       tags: []
-  evictionRequested: false
+  evictionRequested: true
   instanceManagerCPURequest: 0
   name: nuc-2
   tags: []
