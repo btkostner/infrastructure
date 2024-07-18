@@ -8,7 +8,7 @@ spec:
     readAffinity:
       enabled: true
   cephVersion:
-    image: quay.io/ceph/ceph:v18.2.1
+    image: quay.io/ceph/ceph:v19.1.0
   dataDirHostPath: /var/lib/rook
   mon:
     allowMultiplePerNode: false

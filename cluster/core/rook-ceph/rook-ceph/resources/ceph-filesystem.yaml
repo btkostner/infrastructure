@@ -1,14 +1,14 @@
 apiVersion: ceph.rook.io/v1
 kind: CephFilesystem
 metadata:
-  name: distributed
+  name: safe-filesystem
   namespace: rook-ceph
 spec:
   metadataPool:
     replicated:
       size: 3
   dataPools:
-    - name: distributedpool
+    - name: safe-filesystem-pool
       replicated:
         size: 3
   preserveFilesystemOnDelete: true
