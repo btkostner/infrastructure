@@ -9,6 +9,10 @@ spec:
       enabled: true
   cephVersion:
     image: quay.io/ceph/ceph:v18.2.2
+  dashboard:
+    enabled: true
+    prometheusEndpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+    prometheusEndpointSSLVerify: false
   dataDirHostPath: /var/lib/rook
   mon:
     allowMultiplePerNode: false
@@ -16,15 +20,19 @@ spec:
   mgr:
     count: 2
     modules:
+      - name: dashboard
+        enabled: true
+      - name: diskprediction_local
+        enabled: true
       - name: nfs
+        enabled: true
+      - name: pg_autoscaler
         enabled: true
       - name: rook
         enabled: true
-  removeOSDsIfOutAndSafeToRemove: true
-  dashboard:
-    enabled: true
   monitoring:
     enabled: true
+  removeOSDsIfOutAndSafeToRemove: true
   storage:
     useAllNodes: true
     useAllDevices: true

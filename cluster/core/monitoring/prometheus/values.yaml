@@ -1,7 +1,81 @@
-namespaceOverride: monitoring
+grafana:
+  env:
+    GF_AUTH_ANONYMOUS_ENABLED: true
+    GF_SECURITY_ALLOW_EMBEDDING: true
+    GF_SERVER_ROOT_URL: https://grafana.btkostner.network
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: default
+          orgId: 1
+          folder: ""
+          type: file
+          disableDeletion: false
+          allowUiUpdates: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+
+  dashboards:
+    default:
+      ceph-cluster:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/ceph-cluster.json
+        datasource: Prometheus
+      cephfs-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/cephfs-overview.json
+        datasource: Prometheus
+      host-details:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/host-details.json
+        datasource: Prometheus
+      hosts-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
+        datasource: Prometheus
+      osd-device-details:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/osd-device-details.json
+        datasource: Prometheus
+      osds-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/osds-overview.json
+        datasource: Prometheus
+      pool-details:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/pool-detail.json
+        datasource: Prometheus
+      pool-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/pool-overview.json
+        datasource: Prometheus
+      radosgw-detail:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-detail.json
+        datasource: Prometheus
+      radosgw-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-overview.json
+        datasource: Prometheus
+      radosgw-sync-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-sync-overview.json
+        datasource: Prometheus
+      rbd-details:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/rbd-details.json
+        datasource: Prometheus
+      rbd-overview:
+        url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/rbd-overview.json
+        datasource: Prometheus
+
+  plugins:
+    - grafana-piechart-panel
+    - vonage-status-panel
+
+  sidecar:
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
 
 kubeProxy:
   enabled: false
+
+namespaceOverride: monitoring
 
 prometheus:
   retention: 5y
