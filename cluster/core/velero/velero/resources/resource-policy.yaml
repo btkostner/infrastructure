@@ -12,7 +12,7 @@ data:
           type: fs-backup
         conditions:
           csi:
-            driver: driver.longhorn.io
+            driver: rook-ceph.rbd.csi.ceph.com
       - action:
           type: fs-backup
         conditions:
