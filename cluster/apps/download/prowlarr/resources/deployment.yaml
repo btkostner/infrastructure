@@ -98,7 +98,19 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-file
+              mountPath: /config/config.xml
+              subPath: config.xml
+              readOnly: true
+      securityContext:
+        fsGroup: 1000
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
+        - name: config-file
+          secret:
+            secretName: prowlarr-config
+            items:
+              - key: config.xml
+                path: config.xml
