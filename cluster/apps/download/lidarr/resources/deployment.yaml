@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  namespace: download
+  labels:
+    app: lidarr
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: lidarr
+  template:
+    metadata:
+      labels:
+        app: lidarr
+    spec:
+      containers:
+        - name: lidarr
+          image: lscr.io/linuxserver/lidarr:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8686
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8686
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8686
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128M
+            limits:
+              cpu: 4
+              memory: 4Gi
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: config-file
+              mountPath: /config/config.xml
+              subPath: config.xml
+              readOnly: true
+            - name: download
+              mountPath: /download
+            - name: media
+              mountPath: /media
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: lidarr-config
+        - name: config-file
+          secret:
+            secretName: lidarr-config
+            items:
+              - key: config.xml
+                path: config.xml
+        - name: download
+          persistentVolumeClaim:
+            claimName: lidarr-download
+        - name: media
+          persistentVolumeClaim:
+            claimName: lidarr-media

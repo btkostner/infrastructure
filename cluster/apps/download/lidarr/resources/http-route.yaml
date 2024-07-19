@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: lidarr-http
+  namespace: download
+spec:
+  hostnames:
+    - lidarr.btkostner.network
+  parentRefs:
+    - name: internal-gateway
+      namespace: networking
+  rules:
+    - backendRefs:
+        - name: lidarr
+          port: 80
