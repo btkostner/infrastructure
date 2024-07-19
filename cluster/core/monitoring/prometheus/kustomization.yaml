@@ -15,6 +15,8 @@ helmCharts:
     version: 61.3.2
 
 resources:
+  - ./resources/http-route-grafana.yaml
+  - ./resources/http-route-prometheus.yaml
   - ./resources/pv-db.yaml
 
 patches:
