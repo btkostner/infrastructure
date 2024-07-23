@@ -53,8 +53,8 @@ spec:
                 - /gluetun-entrypoint
                 - healthcheck
             periodSeconds: 30
-            successThreshold: 2
-            failureThreshold: 5
+            successThreshold: 1
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
