@@ -17,7 +17,6 @@ helmCharts:
 resources:
   - ./resources/http-route-grafana.yaml
   - ./resources/http-route-prometheus.yaml
-  - ./resources/pv-db.yaml
 
 patches:
   - patch: |-

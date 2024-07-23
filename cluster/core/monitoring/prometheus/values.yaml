@@ -92,4 +92,3 @@ prometheus:
           resources:
             requests:
               storage: 250Gi
-          volumeName: prometheus-db
