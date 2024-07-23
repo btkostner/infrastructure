@@ -15,6 +15,8 @@ spec:
       app: sabnzbd
   template:
     metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: incomplete
       labels:
         app: sabnzbd
     spec:
