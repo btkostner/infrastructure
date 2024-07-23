@@ -8,7 +8,9 @@ namespace: media
 resources:
   - ./resources/deployment.yaml
   - ./resources/http-route.yaml
+  - ./resources/pv-config-old.yaml
   - ./resources/pv-media.yaml
+  - ./resources/pvc-config-old.yaml
   - ./resources/pvc-config.yaml
   - ./resources/pvc-media.yaml
   - ./resources/service.yaml

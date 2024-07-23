@@ -20,26 +20,30 @@ spec:
     spec:
       containers:
         - name: plex
-          image: docker.io/plexinc/pms-docker:plexpass
+          image: ubuntu
+          command:
+            - "sleep"
+            - "604800"
+          #image: docker.io/plexinc/pms-docker:plexpass
           imagePullPolicy: Always
-          ports:
-            - containerPort: 32400
-              name: http
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /identity
-              port: 32400
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /identity
-              port: 32400
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
+          #ports:
+          #  - containerPort: 32400
+          #    name: http
+          #    protocol: TCP
+          #readinessProbe:
+          #  httpGet:
+          #    path: /identity
+          #    port: 32400
+          #  failureThreshold: 3
+          #  initialDelaySeconds: 15
+          #  timeoutSeconds: 10
+          #livenessProbe:
+          #  httpGet:
+          #    path: /identity
+          #    port: 32400
+          #  failureThreshold: 3
+          #  initialDelaySeconds: 15
+          #  timeoutSeconds: 10
           resources:
             requests:
               cpu: 2000m
@@ -59,6 +63,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: config-old
+              mountPath: /config-old
             - name: gpu
               mountPath: /dev/dri
             - name: media
@@ -69,6 +75,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: plex-config
+        - name: config-old
+          persistentVolumeClaim:
+            claimName: plex-config-old
         - name: gpu
           hostPath:
             path: /dev/dri
