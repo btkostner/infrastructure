@@ -16,5 +16,4 @@ helmCharts:
 resources:
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
-  - ./resources/pv-config.yaml
   - ./resources/pvc-config.yaml

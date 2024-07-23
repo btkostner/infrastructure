@@ -8,7 +8,6 @@ namespace: download
 resources:
   - ./resources/deployment.yaml
   - ./resources/http-route.yaml
-  - ./resources/pv-config.yaml
   - ./resources/pvc-config.yaml
   - ./resources/secret-config.yaml
   - ./resources/service.yaml
