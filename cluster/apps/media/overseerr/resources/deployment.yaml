@@ -20,20 +20,24 @@ spec:
     spec:
       containers:
         - name: overseerr
-          image: docker.io/sctx/overseerr:1.33.2
+          image: ubuntu
+          command:
+            - "sleep"
+            - "604800"
+          #image: docker.io/sctx/overseerr:1.33.2
           imagePullPolicy: Always
-          ports:
-            - containerPort: 5055
-              name: http
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /api/v1/status
-              port: 5055
-          livenessProbe:
-            httpGet:
-              path: /api/v1/status
-              port: 5055
+          #ports:
+          #  - containerPort: 5055
+          #    name: http
+          #    protocol: TCP
+          #readinessProbe:
+          #  httpGet:
+          #    path: /api/v1/status
+          #    port: 5055
+          #livenessProbe:
+          #  httpGet:
+          #    path: /api/v1/status
+          #    port: 5055
           resources:
             requests:
               cpu: 1000m
@@ -47,7 +51,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /app/config
+            - name: config-old
+              mountPath: /app/config-old
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: overseerr-config
+        - name: config-old
+          persistentVolumeClaim:
+            claimName: overseerr-config-old

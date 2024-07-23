@@ -4,10 +4,10 @@ metadata:
   name: overseerr-config
   namespace: media
 spec:
-  volumeMode: Filesystem
-  storageClassName: ceph-safe-block
+  storageClassName: synology-iscsi
   accessModes:
     - ReadWriteOnce
+  volumeName: media-overseerr-config
   resources:
     requests:
       storage: 10Gi

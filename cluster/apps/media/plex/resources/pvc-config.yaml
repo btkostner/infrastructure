@@ -4,10 +4,10 @@ metadata:
   name: plex-config
   namespace: media
 spec:
-  storageClassName: synology-iscsi
+  volumeMode: Filesystem
+  storageClassName: ceph-safe-block
   accessModes:
     - ReadWriteOnce
-  volumeName: media-plex-config
   resources:
     requests:
-      storage: 200Gi
+      storage: 150Gi
