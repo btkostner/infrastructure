@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-config
+  name: plex-config-old
   namespace: media
 spec:
   storageClassName: synology-iscsi

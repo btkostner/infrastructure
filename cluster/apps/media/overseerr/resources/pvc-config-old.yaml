@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: overseerr-config
+  name: overseerr-config-old
   namespace: media
 spec:
   storageClassName: synology-iscsi
