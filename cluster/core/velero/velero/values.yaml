@@ -76,7 +76,7 @@ deployNodeAgent: true
 schedules:
   cluster-full-backup:
     disabled: false
-    schedule: "0 3 * * *"
+    schedule: "24 7,13,22 * * *"
     useOwnerReferencesInBackup: false
     template:
       datamover: velero
