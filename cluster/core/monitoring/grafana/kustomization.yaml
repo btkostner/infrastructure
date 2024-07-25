@@ -16,4 +16,4 @@ helmCharts:
 
 resources:
   - ./resources/external-secret.yaml
-  - ./resources/http-route-grafana.yaml
+  - ./resources/http-route.yaml

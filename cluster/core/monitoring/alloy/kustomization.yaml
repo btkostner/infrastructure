@@ -16,3 +16,4 @@ helmCharts:
 
 resources:
   - ./resources/config-map.yaml
+  - ./resources/http-route.yaml
