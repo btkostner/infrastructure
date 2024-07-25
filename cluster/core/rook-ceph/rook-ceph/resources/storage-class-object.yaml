@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: safe-ceph-object
+provisioner: rook-ceph.ceph.rook.io/bucket
+parameters:
+  objectStoreName: safe-object-store
+  objectStoreNamespace: rook-ceph
+reclaimPolicy: retain

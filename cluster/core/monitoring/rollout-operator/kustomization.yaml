@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: rollout-operator
+
+namespace: monitoring
+
+helmCharts:
+  - includeCRDs: true
+    name: rollout-operator
+    namespace: monitoring
+    releaseName: rollout-operator
+    repo: https://grafana.github.io/helm-charts
+    valuesFile: ./values.yaml
+    version: 0.16.0

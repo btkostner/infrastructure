@@ -1,0 +1,13 @@
+alloy:
+  configMap:
+    create: true
+    content: |
+  clustering:
+    enabled: true
+  mounts:
+    varlog: true
+    dockercontainers: true
+controller:
+  type: daemonset
+serviceMonitor:
+  enabled: true
