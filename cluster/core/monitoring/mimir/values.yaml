@@ -54,7 +54,7 @@ global:
       valueFrom:
         configMapKeyRef:
           name: mimir-blocks
-          key: BUCKET_BUCKET_NAME
+          key: BUCKET_NAME
     - name: BLOCKS_AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
@@ -79,7 +79,7 @@ global:
       valueFrom:
         configMapKeyRef:
           name: mimir-ruler
-          key: BUCKET_BUCKET_NAME
+          key: BUCKET_NAME
     - name: RULER_AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
