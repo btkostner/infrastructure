@@ -6,4 +6,4 @@ provisioner: rook-ceph.ceph.rook.io/bucket
 parameters:
   objectStoreName: safe-object-store
   objectStoreNamespace: rook-ceph
-reclaimPolicy: retain
+reclaimPolicy: Retain
