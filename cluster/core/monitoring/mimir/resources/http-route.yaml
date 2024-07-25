@@ -11,5 +11,5 @@ spec:
       namespace: networking
   rules:
     - backendRefs:
-        - name: mimir
+        - name: mimir-gateway
           port: 80

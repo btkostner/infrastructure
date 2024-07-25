@@ -15,8 +15,26 @@ data:
       format = "logfmt"
     }
 
+    prometheus.exporter.self "default" {}
+
+    prometheus.scrape "metamonitoring" {
+      targets    = prometheus.exporter.self.default.targets
+      forward_to = [prometheus.remote_write.default.receiver]
+    }
+
+    prometheus.remote_write "default" {
+      endpoint {
+        url = "http://mimir-gateway/api/v1/push"
+      }
+    }
+
     discovery.kubernetes "pods" {
       role = "pod"
+    }
+
+    prometheus.scrape "pods" {
+      targets    = discovery.kubernetes.pods.targets
+      forward_to = [prometheus.remote_write.default.receiver]
     }
 
     discovery.kubernetes "nodes" {
@@ -25,6 +43,11 @@ data:
 
     discovery.kubernetes "services" {
       role = "service"
+    }
+
+    prometheus.scrape "services" {
+      targets    = discovery.kubernetes.services.targets
+      forward_to = [prometheus.remote_write.default.receiver]
     }
 
     discovery.kubernetes "endpoints" {
