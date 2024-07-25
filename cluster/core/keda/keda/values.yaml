@@ -1,3 +1,5 @@
 certificates:
   certManager:
     enabled: true
+crds:
+  install: true
