@@ -13,3 +13,6 @@ helmCharts:
     repo: https://kedacore.github.io/charts
     valuesFile: ./values.yaml
     version: 2.14.2
+
+resources:
+  - ./resources/namespace.yaml

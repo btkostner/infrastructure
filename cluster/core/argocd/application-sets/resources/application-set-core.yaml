@@ -39,6 +39,7 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true
       ignoreDifferences:
         - group: ""
           kind: ConfigMap
