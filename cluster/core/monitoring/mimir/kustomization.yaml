@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: mimir
+
+namespace: monitoring
+
+helmCharts:
+  - includeCRDs: true
+    name: mimir-distributed
+    namespace: monitoring
+    releaseName: mimir
+    repo: https://grafana.github.io/helm-charts
+    valuesFile: ./values.yaml
+    version: 5.4.0
+
+resources:
+  - ./resources/http-route.yaml
+  - ./resources/object-bucket-claim-blocks.yaml
+  - ./resources/object-bucket-claim-ruler.yaml

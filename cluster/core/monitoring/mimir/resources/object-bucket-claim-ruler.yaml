@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: mimir-ruler
+  namespace: monitoring
+spec:
+  generateBucketName: mimir-ruler
+  storageClassName: safe-ceph-object

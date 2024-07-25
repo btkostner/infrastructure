@@ -1,0 +1,202 @@
+alertmanager:
+  enabled: false
+
+compactor:
+  replicas: 2
+  persistentVolume:
+    enabled: false
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 2.1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+distributor:
+  replicas: 2
+  resources:
+    limits:
+      cpu: 3.5
+      memory: 5.7Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  kedaAutoscaling:
+    enabled: true
+    preserveReplicas: false
+    minReplicaCount: 2
+    maxReplicaCount: 6
+    targetCPUUtilizationPercentage: 100
+    targetMemoryUtilizationPercentage: 100
+
+gateway:
+  enabledNonEnterprise: true
+  replicas: 2
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 731Mi
+
+global:
+  extraEnv:
+    - name: BLOCKS_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-blocks
+          key: BUCKET_HOST
+    - name: BLOCKS_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-blocks
+          key: BUCKET_PORT
+    - name: BLOCKS_BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-blocks
+          key: BUCKET_BUCKET_NAME
+    - name: BLOCKS_AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mimir-blocks
+          key: AWS_ACCESS_KEY_ID
+    - name: BLOCKS_AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mimir-blocks
+          key: AWS_SECRET_ACCESS_KEY
+    - name: RULER_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-ruler
+          key: BUCKET_HOST
+    - name: RULER_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-ruler
+          key: BUCKET_PORT
+    - name: RULER_BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-ruler
+          key: BUCKET_BUCKET_NAME
+    - name: RULER_AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mimir-ruler
+          key: AWS_ACCESS_KEY_ID
+    - name: RULER_AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mimir-ruler
+          key: AWS_SECRET_ACCESS_KEY
+
+ingester:
+  persistentVolume:
+    enabled: false
+  replicas: 2
+  resources:
+    limits:
+      cpu: 4
+      memory: 12Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  zoneAwareReplication:
+    enabled: false
+
+metaMonitoring:
+  dashboards:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+
+mimir:
+  structuredConfig:
+    blocks_storage:
+      backend: s3
+      s3:
+        access_key_id: ${BLOCKS_AWS_ACCESS_KEY_ID}
+        bucket_name: "${BLOCKS_BUCKET_NAME}"
+        endpoint: "${BLOCKS_HOST}:${BLOCKS_PORT}"
+        secret_access_key: "${BLOCKS_AWS_SECRET_ACCESS_KEY}"
+        http:
+          insecure_skip_verify: true
+    ruler_storage:
+      s3:
+        access_key_id: ${RULER_AWS_ACCESS_KEY_ID}
+        bucket_name: "${RULER_BUCKET_NAME}"
+        endpoint: "${RULER_HOST}:${RULER_PORT}"
+        secret_access_key: "${RULER_AWS_SECRET_ACCESS_KEY}"
+        http:
+          insecure_skip_verify: true
+
+minio:
+  enabled: false
+
+nginx:
+  enabled: false
+
+overrides_exporter:
+  enabled: false
+
+querier:
+  replicas: 2
+  resources:
+    limits:
+      cpu: 2.8
+      memory: 5.6Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  kedaAutoscaling:
+    enabled: true
+    preserveReplicas: false
+    minReplicaCount: 1
+    maxReplicaCount: 6
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 100
+
+query_frontend:
+  replicas: 2
+  resources:
+    limits:
+      cpu: 2.8
+      memory: 2.8Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  kedaAutoscaling:
+    enabled: true
+    preserveReplicas: false
+    minReplicaCount: 2
+    maxReplicaCount: 6
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 100
+
+query_scheduler:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+ruler:
+  enabled: false
+
+rollout_operator:
+  enabled: false
+
+store_gateway:
+  persistentVolume:
+    enabled: false
+  replicas: 2
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 2.1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  zoneAwareReplication:
+    enabled: false
