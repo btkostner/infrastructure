@@ -1,18 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: alloy
+  name: grafana
 
 namespace: monitoring
 
 helmCharts:
   - includeCRDs: true
-    name: alloy
+    name: grafana
     namespace: monitoring
-    releaseName: alloy
+    releaseName: grafana
     repo: https://grafana.github.io/helm-charts
     valuesFile: ./values.yaml
-    version: 0.5.1
+    version: 8.3.6
 
 resources:
-  - ./resources/config-map.yaml
+  - ./resources/external-secret.yaml
+  - ./resources/http-route-grafana.yaml

@@ -11,5 +11,5 @@ spec:
       namespace: networking
   rules:
     - backendRefs:
-        - name: kube-prometheus-stack-grafana
+        - name: grafana
           port: 80

@@ -1,7 +1,8 @@
 alloy:
   configMap:
-    create: true
-    content: |
+    create: false
+    name: alloy-config
+    key: config.alloy
   clustering:
     enabled: true
   mounts:

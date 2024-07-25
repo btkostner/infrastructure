@@ -1,0 +1,222 @@
+replicas: 1
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPU: "60"
+
+createConfigmap: true
+
+configMapAnnotations:
+  argocd.argoproj.io/sync-options: Replace=true
+
+service:
+  enabled: true
+  type: ClusterIP
+
+serviceMonitor:
+  enabled: true
+
+persistence:
+  enabled: false
+  inMemory:
+    enabled: true
+    sizeLimit: 300Mi
+
+initChownData:
+  enabled: true
+
+admin:
+  existingSecret: grafana-credentials
+  userKey: admin-user
+  passwordKey: admin-password
+
+plugins:
+  - grafana-piechart-panel
+  - vonage-status-panel
+
+## Configure grafana datasources
+## ref: http://docs.grafana.org/administration/provisioning/#datasources
+##
+datasources: {}
+#  datasources.yaml:
+#    apiVersion: 1
+#    datasources:
+#    - name: Prometheus
+#      type: prometheus
+#      url: http://prometheus-prometheus-server
+#      access: proxy
+#      isDefault: true
+#    - name: CloudWatch
+#      type: cloudwatch
+#      access: proxy
+#      uid: cloudwatch
+#      editable: false
+#      jsonData:
+#        authType: default
+#        defaultRegion: us-east-1
+#    deleteDatasources: []
+#    - name: Prometheus
+
+## Configure grafana alerting (can be templated)
+## ref: http://docs.grafana.org/administration/provisioning/#alerting
+##
+alerting:
+  {}
+  # rules.yaml:
+  #   apiVersion: 1
+  #   groups:
+  #     - orgId: 1
+  #       name: '{{ .Chart.Name }}_my_rule_group'
+  #       folder: my_first_folder
+  #       interval: 60s
+  #       rules:
+  #         - uid: my_id_1
+  #           title: my_first_rule
+  #           condition: A
+  #           data:
+  #             - refId: A
+  #               datasourceUid: '-100'
+  #               model:
+  #                 conditions:
+  #                   - evaluator:
+  #                       params:
+  #                         - 3
+  #                       type: gt
+  #                     operator:
+  #                       type: and
+  #                     query:
+  #                       params:
+  #                         - A
+  #                     reducer:
+  #                       type: last
+  #                     type: query
+  #                 datasource:
+  #                   type: __expr__
+  #                   uid: '-100'
+  #                 expression: 1==0
+  #                 intervalMs: 1000
+  #                 maxDataPoints: 43200
+  #                 refId: A
+  #                 type: math
+  #           dashboardUid: my_dashboard
+  #           panelId: 123
+  #           noDataState: Alerting
+  #           for: 60s
+  #           annotations:
+  #             some_key: some_value
+  #           labels:
+  #             team: sre_team_1
+  # contactpoints.yaml:
+  #   secret:
+  #     apiVersion: 1
+  #     contactPoints:
+  #       - orgId: 1
+  #         name: cp_1
+  #         receivers:
+  #           - uid: first_uid
+  #             type: pagerduty
+  #             settings:
+  #               integrationKey: XXX
+  #               severity: critical
+  #               class: ping failure
+  #               component: Grafana
+  #               group: app-stack
+  #               summary: |
+  #                 {{ `{{ include "default.message" . }}` }}
+
+## Configure notifiers
+## ref: http://docs.grafana.org/administration/provisioning/#alert-notification-channels
+##
+notifiers: {}
+#  notifiers.yaml:
+#    notifiers:
+#    - name: email-notifier
+#      type: email
+#      uid: email1
+#      # either:
+#      org_id: 1
+#      # or
+#      org_name: Main Org.
+#      is_default: true
+#      settings:
+#        addresses: an_email_address@example.com
+#    delete_notifiers:
+
+dashboards:
+  default:
+    ceph-cluster:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/ceph-cluster.json
+      datasource: Prometheus
+    cephfs-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/cephfs-overview.json
+      datasource: Prometheus
+    host-details:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/host-details.json
+      datasource: Prometheus
+    hosts-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
+      datasource: Prometheus
+    osd-device-details:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/osd-device-details.json
+      datasource: Prometheus
+    osds-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/osds-overview.json
+      datasource: Prometheus
+    pool-details:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/pool-detail.json
+      datasource: Prometheus
+    pool-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/pool-overview.json
+      datasource: Prometheus
+    radosgw-detail:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-detail.json
+      datasource: Prometheus
+    radosgw-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-overview.json
+      datasource: Prometheus
+    radosgw-sync-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/radosgw-sync-overview.json
+      datasource: Prometheus
+    rbd-details:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/rbd-details.json
+      datasource: Prometheus
+    rbd-overview:
+      url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/rbd-overview.json
+      datasource: Prometheus
+
+  sidecar:
+    alerts:
+      enabled: true
+      searchNamespace: ALL
+    datasources:
+      enabled: true
+      searchNamespace: ALL
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+    notifiers:
+      enabled: true
+      searchNamespace: ALL
+
+grafana.ini:
+  auth:
+    anonymous:
+      enabled: true
+  security:
+    allow_embedding: true
+  server:
+    domain: grafana.btkostner.network
+    root_url: https://grafana.btkostner.network
+
+imageRenderer:
+  enabled: true
+  replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPU: "60"
+  serviceMonitor:
+    enabled: true
