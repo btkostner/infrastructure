@@ -118,7 +118,7 @@ mimir:
       s3:
         access_key_id: ${BLOCKS_AWS_ACCESS_KEY_ID}
         bucket_name: "${BLOCKS_BUCKET_NAME}"
-        endpoint: "${BLOCKS_HOST}:${BLOCKS_PORT}"
+        endpoint: "http://${BLOCKS_HOST}:${BLOCKS_PORT}"
         secret_access_key: "${BLOCKS_AWS_SECRET_ACCESS_KEY}"
         http:
           insecure_skip_verify: true
@@ -126,7 +126,7 @@ mimir:
       s3:
         access_key_id: ${RULER_AWS_ACCESS_KEY_ID}
         bucket_name: "${RULER_BUCKET_NAME}"
-        endpoint: "${RULER_HOST}:${RULER_PORT}"
+        endpoint: "http://${RULER_HOST}:${RULER_PORT}"
         secret_access_key: "${RULER_AWS_SECRET_ACCESS_KEY}"
         http:
           insecure_skip_verify: true
