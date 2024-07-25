@@ -22,6 +22,14 @@ data:
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
+    prometheus.operator.podmonitors "default" {
+      forward_to = [prometheus.remote_write.default.receiver]
+    }
+
+    prometheus.operator.servicemonitors "default" {
+      forward_to = [prometheus.remote_write.default.receiver]
+    }
+
     prometheus.remote_write "default" {
       endpoint {
         url = "http://mimir-gateway/api/v1/push"
@@ -32,22 +40,12 @@ data:
       role = "pod"
     }
 
-    prometheus.scrape "pods" {
-      targets    = discovery.kubernetes.pods.targets
-      forward_to = [prometheus.remote_write.default.receiver]
-    }
-
     discovery.kubernetes "nodes" {
       role = "node"
     }
 
     discovery.kubernetes "services" {
       role = "service"
-    }
-
-    prometheus.scrape "services" {
-      targets    = discovery.kubernetes.services.targets
-      forward_to = [prometheus.remote_write.default.receiver]
     }
 
     discovery.kubernetes "endpoints" {
