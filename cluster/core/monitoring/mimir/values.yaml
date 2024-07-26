@@ -51,16 +51,6 @@ gateway:
 
 global:
   extraEnv:
-    - name: ALERTMANAGER_HOST
-      valueFrom:
-        configMapKeyRef:
-          name: mimir-alertmanager
-          key: BUCKET_HOST
-    - name: ALERTMANAGER_PORT
-      valueFrom:
-        configMapKeyRef:
-          name: mimir-alertmanager
-          key: BUCKET_PORT
     - name: ALERTMANAGER_BUCKET_NAME
       valueFrom:
         configMapKeyRef:
@@ -76,15 +66,15 @@ global:
         secretKeyRef:
           name: mimir-alertmanager
           key: AWS_SECRET_ACCESS_KEY
-    - name: BLOCKS_HOST
+    - name: BUCKET_HOST
       valueFrom:
         configMapKeyRef:
-          name: mimir-blocks
+          name: mimir-alertmanager
           key: BUCKET_HOST
-    - name: BLOCKS_PORT
+    - name: BUCKET_PORT
       valueFrom:
         configMapKeyRef:
-          name: mimir-blocks
+          name: mimir-alertmanager
           key: BUCKET_PORT
     - name: BLOCKS_BUCKET_NAME
       valueFrom:
@@ -101,16 +91,6 @@ global:
         secretKeyRef:
           name: mimir-blocks
           key: AWS_SECRET_ACCESS_KEY
-    - name: RULER_HOST
-      valueFrom:
-        configMapKeyRef:
-          name: mimir-ruler
-          key: BUCKET_HOST
-    - name: RULER_PORT
-      valueFrom:
-        configMapKeyRef:
-          name: mimir-ruler
-          key: BUCKET_PORT
     - name: RULER_BUCKET_NAME
       valueFrom:
         configMapKeyRef:
@@ -149,28 +129,26 @@ metaMonitoring:
 
 mimir:
   structuredConfig:
+    common:
+      storage:
+        backend: s3
+        s3:
+          endpoint: "${BUCKET_HOST}:${BUCKET_PORT}"
+          insecure: true
     alertmanager_storage:
-      backend: s3
       s3:
         access_key_id: ${ALERTMANAGER_AWS_ACCESS_KEY_ID}
         bucket_name: "${ALERTMANAGER_BUCKET_NAME}"
-        endpoint: "${ALERTMANAGER_HOST}:${ALERTMANAGER_PORT}"
-        insecure: true
         secret_access_key: "${ALERTMANAGER_AWS_SECRET_ACCESS_KEY}"
     blocks_storage:
-      backend: s3
       s3:
         access_key_id: ${BLOCKS_AWS_ACCESS_KEY_ID}
         bucket_name: "${BLOCKS_BUCKET_NAME}"
-        endpoint: "${BLOCKS_HOST}:${BLOCKS_PORT}"
-        insecure: true
         secret_access_key: "${BLOCKS_AWS_SECRET_ACCESS_KEY}"
     ruler_storage:
       s3:
         access_key_id: ${RULER_AWS_ACCESS_KEY_ID}
         bucket_name: "${RULER_BUCKET_NAME}"
-        endpoint: "http://${RULER_HOST}:${RULER_PORT}"
-        insecure: true
         secret_access_key: "${RULER_AWS_SECRET_ACCESS_KEY}"
 
 minio:

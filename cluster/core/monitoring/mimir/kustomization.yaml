@@ -15,6 +15,7 @@ helmCharts:
     version: 5.4.0
 
 resources:
+  - ./resources/grafana-datasource.yaml
   - ./resources/http-route.yaml
   - ./resources/object-bucket-claim-alertmanager.yaml
   - ./resources/object-bucket-claim-blocks.yaml

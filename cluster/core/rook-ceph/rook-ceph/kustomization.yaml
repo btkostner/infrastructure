@@ -18,6 +18,7 @@ resources:
   - ./resources/ceph-block-pool.yaml
   - ./resources/ceph-cluster.yaml
   - ./resources/ceph-object-store.yaml
+  - ./resources/grafana-dashboard.yaml
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
   - ./resources/prometheus-rule.yaml
