@@ -15,18 +15,31 @@ data:
       format = "logfmt"
     }
 
+    prometheus.exporter.unix "default" {}
+
+    prometheus.scrape "node" {
+      targets    = prometheus.exporter.unix.default.targets
+      forward_to = [prometheus.remote_write.default.receiver]
+    }
+
     prometheus.exporter.self "default" {}
 
-    prometheus.scrape "metamonitoring" {
+    prometheus.scrape "alloy" {
       targets    = prometheus.exporter.self.default.targets
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
     prometheus.operator.podmonitors "default" {
+      clustering {
+        enabled = true
+      }
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
     prometheus.operator.servicemonitors "default" {
+      clustering {
+        enabled = true
+      }
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
