@@ -16,5 +16,6 @@ helmCharts:
 
 resources:
   - ./resources/http-route.yaml
+  - ./resources/object-bucket-claim-alertmanager.yaml
   - ./resources/object-bucket-claim-blocks.yaml
   - ./resources/object-bucket-claim-ruler.yaml

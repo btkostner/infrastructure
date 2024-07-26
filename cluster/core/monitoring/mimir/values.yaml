@@ -1,5 +1,16 @@
 alertmanager:
-  enabled: false
+  replicas: 2
+  persistentVolume:
+    enabled: false
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 1.4Gi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  zoneAwareReplication:
+    enabled: false
 
 compactor:
   replicas: 2
@@ -40,6 +51,31 @@ gateway:
 
 global:
   extraEnv:
+    - name: ALERTMANAGER_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-alertmanager
+          key: BUCKET_HOST
+    - name: ALERTMANAGER_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-alertmanager
+          key: BUCKET_PORT
+    - name: ALERTMANAGER_BUCKET_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-alertmanager
+          key: BUCKET_NAME
+    - name: ALERTMANAGER_AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mimir-alertmanager
+          key: AWS_ACCESS_KEY_ID
+    - name: ALERTMANAGER_AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mimir-alertmanager
+          key: AWS_SECRET_ACCESS_KEY
     - name: BLOCKS_HOST
       valueFrom:
         configMapKeyRef:
@@ -113,6 +149,14 @@ metaMonitoring:
 
 mimir:
   structuredConfig:
+    alertmanager_storage:
+      backend: s3
+      s3:
+        access_key_id: ${ALERTMANAGER_AWS_ACCESS_KEY_ID}
+        bucket_name: "${ALERTMANAGER_BUCKET_NAME}"
+        endpoint: "${ALERTMANAGER_HOST}:${ALERTMANAGER_PORT}"
+        insecure: true
+        secret_access_key: "${ALERTMANAGER_AWS_SECRET_ACCESS_KEY}"
     blocks_storage:
       backend: s3
       s3:
@@ -180,7 +224,21 @@ query_scheduler:
       memory: 128Mi
 
 ruler:
-  enabled: false
+  replicas: 2
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 2.8Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  kedaAutoscaling:
+    enabled: true
+    preserveReplicas: false
+    minReplicaCount: 2
+    maxReplicaCount: 6
+    targetCPUUtilizationPercentage: 100
+    targetMemoryUtilizationPercentage: 100
 
 rollout_operator:
   enabled: false

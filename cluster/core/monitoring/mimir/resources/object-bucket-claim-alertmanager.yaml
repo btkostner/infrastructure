@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: mimir-alertmanager
+  namespace: monitoring
+spec:
+  generateBucketName: mimir-alertmanager
+  storageClassName: safe-ceph-object
