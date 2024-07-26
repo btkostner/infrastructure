@@ -36,28 +36,15 @@ plugins:
   - grafana-piechart-panel
   - vonage-status-panel
 
-## Configure grafana datasources
-## ref: http://docs.grafana.org/administration/provisioning/#datasources
-##
-datasources: {}
-#  datasources.yaml:
-#    apiVersion: 1
-#    datasources:
-#    - name: Prometheus
-#      type: prometheus
-#      url: http://prometheus-prometheus-server
-#      access: proxy
-#      isDefault: true
-#    - name: CloudWatch
-#      type: cloudwatch
-#      access: proxy
-#      uid: cloudwatch
-#      editable: false
-#      jsonData:
-#        authType: default
-#        defaultRegion: us-east-1
-#    deleteDatasources: []
-#    - name: Prometheus
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Mimir
+        type: prometheus
+        url: http://mimir-gateway/prometheus
+        access: proxy
+        isDefault: true
 
 ## Configure grafana alerting (can be templated)
 ## ref: http://docs.grafana.org/administration/provisioning/#alerting
@@ -186,21 +173,23 @@ dashboards:
       url: https://raw.githubusercontent.com/ceph/ceph/v18.2.2/monitoring/ceph-mixin/dashboards_out/rbd-overview.json
       datasource: Prometheus
 
-  sidecar:
-    alerts:
-      enabled: true
-      searchNamespace: ALL
-    datasources:
-      enabled: true
-      searchNamespace: ALL
-    dashboards:
-      enabled: true
-      searchNamespace: ALL
-    notifiers:
-      enabled: true
-      searchNamespace: ALL
+sidecar:
+  alerts:
+    enabled: true
+    searchNamespace: ALL
+  datasources:
+    enabled: true
+    searchNamespace: ALL
+  dashboards:
+    enabled: true
+    searchNamespace: ALL
+  notifiers:
+    enabled: true
+    searchNamespace: ALL
 
 grafana.ini:
+  alerting:
+    enabled: false
   auth:
     anonymous:
       enabled: true
@@ -209,6 +198,13 @@ grafana.ini:
   server:
     domain: grafana.btkostner.network
     root_url: https://grafana.btkostner.network
+  unified_alerting:
+    enabled: true
+    ha_peers: "grafana-headless:9094"
+    ha_listen_address: "${POD_IP}:9094"
+    ha_advertise_address: "${POD_IP}:9094"
+
+headlessService: true
 
 imageRenderer:
   enabled: true
