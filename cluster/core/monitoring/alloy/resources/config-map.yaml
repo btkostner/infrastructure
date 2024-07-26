@@ -15,6 +15,12 @@ data:
       format = "logfmt"
     }
 
+    prometheus.remote_write "default" {
+      endpoint {
+        url = "http://mimir-gateway/api/v1/push"
+      }
+    }
+
     prometheus.exporter.unix "default" {}
 
     prometheus.scrape "node" {
@@ -30,23 +36,11 @@ data:
     }
 
     prometheus.operator.podmonitors "default" {
-      clustering {
-        enabled = true
-      }
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
     prometheus.operator.servicemonitors "default" {
-      clustering {
-        enabled = true
-      }
       forward_to = [prometheus.remote_write.default.receiver]
-    }
-
-    prometheus.remote_write "default" {
-      endpoint {
-        url = "http://mimir-gateway/api/v1/push"
-      }
     }
 
     discovery.kubernetes "pods" {
