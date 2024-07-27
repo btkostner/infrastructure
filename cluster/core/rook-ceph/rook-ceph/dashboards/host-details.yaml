@@ -8,1437 +8,1391 @@ metadata:
 data:
   host-details.json: |-
     {
-       "__inputs": [ ],
-       "__requires": [
+      "annotations": {
+        "list": [
           {
-             "id": "grafana",
-             "name": "Grafana",
-             "type": "grafana",
-             "version": "5.3.2"
-          },
-          {
-             "id": "graph",
-             "name": "Graph",
-             "type": "panel",
-             "version": "5.0.0"
-          },
-          {
-             "id": "singlestat",
-             "name": "Singlestat",
-             "type": "panel",
-             "version": "5.0.0"
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "showIn": 0,
+            "tags": [],
+            "type": "dashboard"
           }
-       ],
-       "annotations": {
-          "list": [
-             {
-                "builtIn": 1,
-                "datasource": "-- Grafana --",
-                "enable": true,
-                "hide": true,
-                "iconColor": "rgba(0, 211, 255, 1)",
-                "name": "Annotations & Alerts",
-                "showIn": 0,
-                "tags": [ ],
-                "type": "dashboard"
-             }
-          ]
-       },
-       "description": "Ceph host details",
-       "editable": false,
-       "gnetId": null,
-       "graphTooltip": 0,
-       "hideControls": false,
-       "id": null,
-       "links": [ ],
-       "panels": [
-          {
-             "collapse": false,
-             "collapsed": false,
-             "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 0
-             },
-             "id": 2,
-             "panels": [ ],
-             "repeat": null,
-             "repeatIteration": null,
-             "repeatRowId": null,
-             "showTitle": true,
-             "title": "$ceph_hosts System Overview",
-             "titleSize": "h6",
-             "type": "row"
+        ]
+      },
+      "description": "Ceph - OSD Host Details",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "links": [],
+      "panels": [
+        {
+          "collapse": false,
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
           },
-          {
-             "cacheTimeout": null,
-             "colorBackground": false,
-             "colorValue": false,
-             "colors": [
-                "#299c46",
-                "rgba(237, 129, 40, 0.89)",
-                "#d44a3a"
-             ],
-             "datasource": "${prometheusds}",
-             "format": "none",
-             "gauge": {
-                "maxValue": 100,
-                "minValue": 0,
-                "show": false,
-                "thresholdLabels": false,
-                "thresholdMarkers": true
-             },
-             "gridPos": {
-                "h": 5,
-                "w": 3,
-                "x": 0,
-                "y": 1
-             },
-             "id": 3,
-             "interval": null,
-             "links": [ ],
-             "mappingType": 1,
-             "mappingTypes": [
-                {
-                   "name": "value to text",
-                   "value": 1
+          "id": 2,
+          "panels": [],
+          "showTitle": true,
+          "title": "$ceph_hosts System Overview",
+          "titleSize": "h6",
+          "type": "row"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "Shows the CPU breakdown. When multiple servers are selected, only the first host's cpu data is shown",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "% Utilization",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
                 },
-                {
-                   "name": "range to text",
-                   "value": 2
-                }
-             ],
-             "maxDataPoints": 100,
-             "nullPointMode": "connected",
-             "nullText": null,
-             "postfix": "",
-             "postfixFontSize": "50%",
-             "prefix": "",
-             "prefixFontSize": "50%",
-             "rangeMaps": [
-                {
-                   "from": "null",
-                   "text": "N/A",
-                   "to": "null"
-                }
-             ],
-             "sparkline": {
-                "fillColor": "rgba(31, 118, 189, 0.18)",
-                "full": false,
-                "lineColor": "rgb(31, 120, 193)",
-                "show": false
-             },
-             "tableColumn": "",
-             "targets": [
-                {
-                   "expr": "count(sum by (ceph_daemon) (ceph_osd_metadata{job=~\"$job\", instance='$ceph_hosts'}))",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "",
-                   "refId": "A"
-                }
-             ],
-             "thresholds": "",
-             "title": "OSDs",
-             "type": "singlestat",
-             "valueFontSize": "80%",
-             "valueMaps": [
-                {
-                   "op": "=",
-                   "text": "N/A",
-                   "value": "null"
-                }
-             ],
-             "valueName": "current"
-          },
-          {
-             "aliasColors": {
-                "interrupt": "#447EBC",
-                "steal": "#6D1F62",
-                "system": "#890F02",
-                "user": "#3F6833",
-                "wait": "#C15C17"
-             },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "Shows the CPU breakdown. When multiple servers are selected, only the first host's cpu data is shown",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 10,
-                "w": 6,
-                "x": 3,
-                "y": 1
-             },
-             "id": 4,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [ ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "sum by (mode) (\n  rate(node_cpu{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\", mode=~\"(irq|nice|softirq|steal|system|user|iowait)\"}[$__rate_interval]) or\n  rate(node_cpu_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\", mode=~\"(irq|nice|softirq|steal|system|user|iowait)\"}[$__rate_interval])\n) / (\n  scalar(\n    sum(rate(node_cpu{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_cpu_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]))\n  ) * 100\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{mode}}",
-                   "refId": "A"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "CPU Utilization",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "percent",
-                   "label": "% Utilization",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
                 },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": {
-                "Available": "#508642",
-                "Free": "#508642",
-                "Total": "#bf1b00",
-                "Used": "#bf1b00",
-                "total": "#bf1b00",
-                "used": "#0a50a1"
-             },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 10,
-                "w": 6,
-                "x": 9,
-                "y": 1
-             },
-             "id": 5,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "total",
-                   "color": "#bf1b00",
-                   "fill": 0,
-                   "linewidth": 2,
-                   "stack": false
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "node_memory_MemFree{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemFree_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "Free",
-                   "refId": "A"
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
                 },
-                {
-                   "expr": "node_memory_MemTotal{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemTotal_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "total",
-                   "refId": "B"
-                },
-                {
-                   "expr": "(\n  node_memory_Cached{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Cached_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) + (\n  node_memory_Buffers{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Buffers_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) + (\n  node_memory_Slab{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Slab_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "buffers/cache",
-                   "refId": "C"
-                },
-                {
-                   "expr": "(\n  node_memory_MemTotal{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemTotal_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) - (\n  (\n    node_memory_MemFree{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_MemFree_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) + (\n    node_memory_Cached{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Cached_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) + (\n    node_memory_Buffers{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Buffers_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) +\n  (\n    node_memory_Slab{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Slab_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  )\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "used",
-                   "refId": "D"
+                "thresholdsStyle": {
+                  "mode": "off"
                 }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "RAM Usage",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "bytes",
-                   "label": "RAM used",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "Show the network load (rx,tx) across all interfaces (excluding loopback 'lo')",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 10,
-                "w": 6,
-                "x": 15,
-                "y": 1
-             },
-             "id": 6,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "/.*tx/",
-                   "transform": "negative-Y"
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "sum by (device) (\n  rate(\n    node_network_receive_bytes{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]) or\n    rate(node_network_receive_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]\n  )\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.rx",
-                   "refId": "A"
-                },
-                {
-                   "expr": "sum by (device) (\n  rate(node_network_transmit_bytes{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]) or\n  rate(node_network_transmit_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval])\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.tx",
-                   "refId": "B"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "Network Load",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "decbytes",
-                   "label": "Send (-) / Receive (+)",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 5,
-                "w": 3,
-                "x": 21,
-                "y": 1
-             },
-             "id": 7,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "/.*tx/",
-                   "transform": "negative-Y"
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "rate(node_network_receive_drop{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_receive_drop_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
-                   "format": "time_series",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.rx",
-                   "refId": "A"
-                },
-                {
-                   "expr": "rate(node_network_transmit_drop{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_transmit_drop_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
-                   "format": "time_series",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.tx",
-                   "refId": "B"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "Network drop rate",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "pps",
-                   "label": "Send (-) / Receive (+)",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "cacheTimeout": null,
-             "colorBackground": false,
-             "colorValue": false,
-             "colors": [
-                "#299c46",
-                "rgba(237, 129, 40, 0.89)",
-                "#d44a3a"
-             ],
-             "datasource": "${prometheusds}",
-             "description": "Each OSD consists of a Journal/WAL partition and a data partition. The RAW Capacity shown is the sum of the data partitions across all OSDs on the selected OSD hosts.",
-             "format": "bytes",
-             "gauge": {
-                "maxValue": 100,
-                "minValue": 0,
-                "show": false,
-                "thresholdLabels": false,
-                "thresholdMarkers": true
-             },
-             "gridPos": {
-                "h": 5,
-                "w": 3,
-                "x": 0,
-                "y": 6
-             },
-             "id": 8,
-             "interval": null,
-             "links": [ ],
-             "mappingType": 1,
-             "mappingTypes": [
-                {
-                   "name": "value to text",
-                   "value": 1
-                },
-                {
-                   "name": "range to text",
-                   "value": 2
-                }
-             ],
-             "maxDataPoints": 100,
-             "nullPointMode": "connected",
-             "nullText": null,
-             "postfix": "",
-             "postfixFontSize": "50%",
-             "prefix": "",
-             "prefixFontSize": "50%",
-             "rangeMaps": [
-                {
-                   "from": "null",
-                   "text": "N/A",
-                   "to": "null"
-                }
-             ],
-             "sparkline": {
-                "fillColor": "rgba(31, 118, 189, 0.18)",
-                "full": false,
-                "lineColor": "rgb(31, 120, 193)",
-                "show": false
-             },
-             "tableColumn": "",
-             "targets": [
-                {
-                   "expr": "sum(\n  ceph_osd_stat_bytes{job=~\"$job\"} and\n    on (ceph_daemon) ceph_disk_occupation{job=~\"$job\", instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "",
-                   "refId": "A"
-                }
-             ],
-             "thresholds": "",
-             "title": "Raw Capacity",
-             "type": "singlestat",
-             "valueFontSize": "80%",
-             "valueMaps": [
-                {
-                   "op": "=",
-                   "text": "N/A",
-                   "value": "null"
-                }
-             ],
-             "valueName": "current"
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 5,
-                "w": 3,
-                "x": 21,
-                "y": 6
-             },
-             "id": 9,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "/.*tx/",
-                   "transform": "negative-Y"
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "rate(node_network_receive_errs{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_receive_errs_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.rx",
-                   "refId": "A"
-                },
-                {
-                   "expr": "rate(node_network_transmit_errs{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_transmit_errs_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}.tx",
-                   "refId": "B"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "Network error rate",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "pps",
-                   "label": "Send (-) / Receive (+)",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "collapse": false,
-             "collapsed": false,
-             "gridPos": {
-                "h": 1,
-                "w": 24,
-                "x": 0,
-                "y": 11
-             },
-             "id": 10,
-             "panels": [ ],
-             "repeat": null,
-             "repeatIteration": null,
-             "repeatRowId": null,
-             "showTitle": true,
-             "title": "OSD Disk Performance Statistics",
-             "titleSize": "h6",
-             "type": "row"
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "For any OSD devices on the host, this chart shows the iops per physical device. Each device is shown by it's name and corresponding OSD id value",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 9,
-                "w": 11,
-                "x": 0,
-                "y": 12
-             },
-             "id": 11,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "/.*reads/",
-                   "transform": "negative-Y"
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "label_replace(\n  (\n    rate(node_disk_writes_completed{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_writes_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}}) writes",
-                   "refId": "A"
-                },
-                {
-                   "expr": "label_replace(\n  (\n    rate(node_disk_reads_completed{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_reads_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{job=~\"$job\"},\"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}}) reads",
-                   "refId": "B"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "$ceph_hosts Disk IOPS",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "ops",
-                   "label": "Read (-) / Write (+)",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "For OSD hosts, this chart shows the disk bandwidth (read bytes/sec + write bytes/sec) of the physical OSD device. Each device is shown by device name, and corresponding OSD id",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 9,
-                "w": 11,
-                "x": 12,
-                "y": 12
-             },
-             "id": 12,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [
-                {
-                   "alias": "/.*read/",
-                   "transform": "negative-Y"
-                }
-             ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "label_replace(\n  (\n    rate(node_disk_bytes_written{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_written_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\") * on(instance, device)\n  group_left(ceph_daemon) label_replace(\n    label_replace(ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"),\n    \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n  )\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}}) write",
-                   "refId": "A"
-                },
-                {
-                   "expr": "label_replace(\n  (\n    rate(node_disk_bytes_read{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_read_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ),\n  \"instance\", \"$1\", \"instance\", \"([^:.]*).*\") * on(instance, device)\n  group_left(ceph_daemon) label_replace(\n    label_replace(ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"),\n    \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n  )\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}}) read",
-                   "refId": "B"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "$ceph_hosts Throughput by Disk",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "Bps",
-                   "label": "Read (-) / Write (+)",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "For OSD hosts, this chart shows the latency at the physical drive. Each drive is shown by device name, with it's corresponding OSD id",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 9,
-                "w": 11,
-                "x": 0,
-                "y": 21
-             },
-             "id": 13,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [ ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "max by(instance, device) (label_replace(\n  (rate(node_disk_write_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])) /\n    clamp_min(rate(node_disk_writes_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]), 0.001) or\n    (rate(node_disk_read_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])) /\n      clamp_min(rate(node_disk_reads_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]), 0.001),\n  \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"},\n    \"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}})",
-                   "refId": "A"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "$ceph_hosts Disk Latency",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "s",
-                   "label": "",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "aliasColors": { },
-             "bars": false,
-             "dashLength": 10,
-             "dashes": false,
-             "datasource": "${prometheusds}",
-             "description": "Show disk utilization % (util) of any OSD devices on the host by the physical device name and associated OSD id.",
-             "fill": 1,
-             "fillGradient": 0,
-             "gridPos": {
-                "h": 9,
-                "w": 11,
-                "x": 12,
-                "y": 21
-             },
-             "id": 14,
-             "legend": {
-                "alignAsTable": false,
-                "avg": false,
-                "current": false,
-                "max": false,
-                "min": false,
-                "rightSide": false,
-                "show": true,
-                "sideWidth": null,
-                "total": false,
-                "values": false
-             },
-             "lines": true,
-             "linewidth": 1,
-             "links": [ ],
-             "nullPointMode": "null",
-             "percentage": false,
-             "pointradius": 5,
-             "points": false,
-             "renderer": "flot",
-             "repeat": null,
-             "seriesOverrides": [ ],
-             "spaceLength": 10,
-             "stack": false,
-             "steppedLine": false,
-             "targets": [
-                {
-                   "expr": "label_replace(\n  (\n    (rate(node_disk_io_time_ms{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) / 10) or\n    rate(node_disk_io_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) * 100\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(ceph_disk_occupation_human{job=~\"$job\", instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"},\n  \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
-                   "format": "time_series",
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "{{device}}({{ceph_daemon}})",
-                   "refId": "A"
-                }
-             ],
-             "thresholds": [ ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "$ceph_hosts Disk utilization",
-             "tooltip": {
-                "shared": true,
-                "sort": 0,
-                "value_type": "individual"
-             },
-             "type": "graph",
-             "xaxis": {
-                "buckets": null,
-                "mode": "time",
-                "name": null,
-                "show": true,
-                "values": [ ]
-             },
-             "yaxes": [
-                {
-                   "format": "percent",
-                   "label": "%Util",
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                },
-                {
-                   "format": "short",
-                   "label": null,
-                   "logBase": 1,
-                   "max": null,
-                   "min": null,
-                   "show": true
-                }
-             ]
-          },
-          {
-             "columns": [ ],
-             "datasource": "${prometheusds}",
-             "description": "This table shows the 10 hosts with the highest number of slow ops",
-             "gridPos": {
-                "h": 8,
-                "w": 4,
-                "x": 0,
-                "y": 40
-             },
-             "id": 15,
-             "links": [ ],
-             "sort": {
-                "col": 2,
-                "desc": true
-             },
-             "styles": [
-                {
-                   "alias": "Instance",
-                   "colorMode": null,
-                   "colors": [
-                      "rgba(245, 54, 54, 0.9)",
-                      "rgba(237, 129, 40, 0.89)",
-                      "rgba(50, 172, 45, 0.97)"
-                   ],
-                   "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                   "decimals": 2,
-                   "mappingType": 1,
-                   "pattern": "instance",
-                   "thresholds": [ ],
-                   "type": "string",
-                   "unit": "short",
-                   "valueMaps": [ ]
-                },
-                {
-                   "alias": "Slow Ops",
-                   "colorMode": null,
-                   "colors": [
-                      "rgba(245, 54, 54, 0.9)",
-                      "rgba(237, 129, 40, 0.89)",
-                      "rgba(50, 172, 45, 0.97)"
-                   ],
-                   "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                   "decimals": 2,
-                   "mappingType": 1,
-                   "pattern": "Value",
-                   "thresholds": [ ],
-                   "type": "number",
-                   "unit": "none",
-                   "valueMaps": [ ]
-                },
-                {
-                   "alias": "",
-                   "colorMode": null,
-                   "colors": [
-                      "rgba(245, 54, 54, 0.9)",
-                      "rgba(237, 129, 40, 0.89)",
-                      "rgba(50, 172, 45, 0.97)"
-                   ],
-                   "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                   "decimals": 2,
-                   "mappingType": 1,
-                   "pattern": "/.*/",
-                   "thresholds": [ ],
-                   "type": "hidden",
-                   "unit": "short",
-                   "valueMaps": [ ]
-                }
-             ],
-             "targets": [
-                {
-                   "expr": "topk(10,\n  (sum by (instance)(ceph_daemon_health_metrics{type=\"SLOW_OPS\", ceph_daemon=~\"osd.*\"}))\n)\n",
-                   "format": "table",
-                   "instant": true,
-                   "interval": "$interval",
-                   "intervalFactor": 1,
-                   "legendFormat": "",
-                   "refId": "A"
-                }
-             ],
-             "timeFrom": null,
-             "timeShift": null,
-             "title": "Top Slow Ops per Host",
-             "transform": "table",
-             "type": "table"
-          }
-       ],
-       "refresh": "30s",
-       "rows": [ ],
-       "schemaVersion": 38,
-       "style": "dark",
-       "tags": [
-          "ceph",
-          "host",
-          "overview"
-       ],
-       "templating": {
-          "list": [
-            {
-                "current": {
-                  "text": "Prometheus",
-                  "value": "Prometheus"
-                },
-                "hide": 0,
-                "label": "Data Source",
-                "name": "prometheusds",
-                "options": [ ],
-                "query": "prometheus",
-                "refresh": 1,
-                "regex": "",
-                "type": "datasource"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
             },
-             {
-                "allValue": ".+",
-                "current": { },
-                "datasource": "${prometheusds}",
-                "hide": 2,
-                "includeAll": true,
-                "label": "cluster",
-                "multi": true,
-                "name": "cluster",
-                "options": [ ],
-                "query": "label_values(ceph_osd_metadata, cluster)",
-                "refresh": 1,
-                "regex": "(.*)",
-                "sort": 1,
-                "tagValuesQuery": "",
-                "tags": [ ],
-                "tagsQuery": "",
-                "type": "query",
-                "useTags": false
-             },
-             {
-                "allValue": ".+",
-                "current": { },
-                "datasource": "${prometheusds}",
-                "hide": 0,
-                "includeAll": true,
-                "label": "job",
-                "multi": true,
-                "name": "job",
-                "options": [ ],
-                "query": "label_values(ceph_osd_metadata{}, job)",
-                "refresh": 1,
-                "regex": "(.*)",
-                "sort": 1,
-                "tagValuesQuery": "",
-                "tags": [ ],
-                "tagsQuery": "",
-                "type": "query",
-                "useTags": false
-             },
-             {
-                "allValue": null,
-                "current": { },
-                "datasource": "${prometheusds}",
-                "hide": 0,
-                "includeAll": false,
-                "label": "Hostname",
-                "multi": false,
-                "name": "ceph_hosts",
-                "options": [ ],
-                "query": "label_values(ceph_disk_occupation, instance)",
-                "refresh": 1,
-                "regex": "(.*)",
-                "sort": 3,
-                "tagValuesQuery": "",
-                "tags": [ ],
-                "tagsQuery": "",
-                "type": "query",
-                "useTags": false
-             },
-             {
-                 "auto": true,
-                 "auto_count": 10,
-                 "auto_min": "1m",
-                 "current": {
-                   "text": "$__auto_interval_interval",
-                   "value": "$__auto_interval_interval"
-                 },
-                 "hide": 0,
-                 "label": "Interval",
-                 "name": "interval",
-                 "options": [
-                   {
-                       "selected": true,
-                       "text": "auto",
-                       "value": "$__auto_interval_interval"
-                   },
-                   {
-                       "selected": false,
-                       "text": "5s",
-                       "value": "5s"
-                   },
-                   {
-                       "selected": false,
-                       "text": "10s",
-                       "value": "10s"
-                   },
-                   {
-                       "selected": false,
-                       "text": "30s",
-                       "value": "30s"
-                   },
-                   {
-                       "selected": false,
-                       "text": "1m",
-                       "value": "1m"
-                   },
-                   {
-                       "selected": false,
-                       "text": "10m",
-                       "value": "10m"
-                   },
-                   {
-                       "selected": false,
-                       "text": "30m",
-                       "value": "30m"
-                   },
-                   {
-                       "selected": false,
-                       "text": "1h",
-                       "value": "1h"
-                   },
-                   {
-                       "selected": false,
-                       "text": "6h",
-                       "value": "6h"
-                   },
-                   {
-                       "selected": false,
-                       "text": "12h",
-                       "value": "12h"
-                   },
-                   {
-                       "selected": false,
-                       "text": "1d",
-                       "value": "1d"
-                   },
-                   {
-                       "selected": false,
-                       "text": "7d",
-                       "value": "7d"
-                   },
-                   {
-                       "selected": false,
-                       "text": "14d",
-                       "value": "14d"
-                   },
-                   {
-                       "selected": false,
-                       "text": "30d",
-                       "value": "30d"
-                   }
-                 ],
-                 "query": "5s,10s,30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
-                 "refresh": 2,
-                 "type": "interval",
-                 "valuelabels": { }
-             }
-          ]
-       },
-       "time": {
-          "from": "now-6h",
-          "to": "now"
-       },
-       "timepicker": {
-          "refresh_intervals": [
-             "5s",
-             "10s",
-             "30s",
-             "1m",
-             "5m",
-             "15m",
-             "30m",
-             "1h",
-             "2h",
-             "1d"
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "interrupt"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#447EBC",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "steal"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#6D1F62",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "system"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#890F02",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "user"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#3F6833",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "wait"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#C15C17",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum by (mode) (\n  rate(node_cpu{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\", mode=~\"(irq|nice|softirq|steal|system|user|iowait)\"}[$__rate_interval]) or\n  rate(node_cpu_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\", mode=~\"(irq|nice|softirq|steal|system|user|iowait)\"}[$__rate_interval])\n) / (\n  scalar(\n    sum(rate(node_cpu{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_cpu_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]))\n  ) * 100\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{mode}}",
+              "refId": "A"
+            }
           ],
-          "time_options": [
-             "5m",
-             "15m",
-             "1h",
-             "6h",
-             "12h",
-             "24h",
-             "2d",
-             "7d",
-             "30d"
-          ]
-       },
-       "timezone": "",
-       "title": "Ceph - OSD Host Details",
-       "uid": "rtOg0AiWz",
-       "version": 0
+          "title": "CPU Utilization",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "RAM used",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Available"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#508642",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Free"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#508642",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#bf1b00",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Used"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#bf1b00",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "total"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#bf1b00",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "used"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#0a50a1",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "total"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#bf1b00",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 6,
+            "x": 6,
+            "y": 1
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "node_memory_MemFree{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemFree_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "Free",
+              "refId": "A"
+            },
+            {
+              "expr": "node_memory_MemTotal{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemTotal_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "total",
+              "refId": "B"
+            },
+            {
+              "expr": "(\n  node_memory_Cached{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Cached_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) + (\n  node_memory_Buffers{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Buffers_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) + (\n  node_memory_Slab{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_Slab_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "buffers/cache",
+              "refId": "C"
+            },
+            {
+              "expr": "(\n  node_memory_MemTotal{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n  node_memory_MemTotal_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n) - (\n  (\n    node_memory_MemFree{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_MemFree_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) + (\n    node_memory_Cached{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Cached_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) + (\n    node_memory_Buffers{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Buffers_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  ) +\n  (\n    node_memory_Slab{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"} or\n    node_memory_Slab_bytes{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}\n  )\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "used",
+              "refId": "D"
+            }
+          ],
+          "title": "RAM Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "Show the network load (rx,tx) across all interfaces (excluding loopback 'lo')",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Send (-) / Receive (+)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*tx/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 6,
+            "x": 12,
+            "y": 1
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum by (device) (\n  rate(\n    node_network_receive_bytes{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]) or\n    rate(node_network_receive_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]\n  )\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.rx",
+              "refId": "A"
+            },
+            {
+              "expr": "sum by (device) (\n  rate(node_network_transmit_bytes{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval]) or\n  rate(node_network_transmit_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\",device!=\"lo\"}[$__rate_interval])\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.tx",
+              "refId": "B"
+            }
+          ],
+          "title": "Network Load",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Send (-) / Receive (+)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "pps"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*tx/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 1
+          },
+          "id": 7,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "rate(node_network_receive_drop{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_receive_drop_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.rx",
+              "refId": "A"
+            },
+            {
+              "expr": "rate(node_network_transmit_drop{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_transmit_drop_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.tx",
+              "refId": "B"
+            }
+          ],
+          "title": "Network drop rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Send (-) / Receive (+)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "pps"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*tx/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 6
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "rate(node_network_receive_errs{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_receive_errs_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.rx",
+              "refId": "A"
+            },
+            {
+              "expr": "rate(node_network_transmit_errs{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n  rate(node_network_transmit_errs_total{instance=~\"$ceph_hosts([\\\\\\\\.:].*)?\"}[$__rate_interval])\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}.tx",
+              "refId": "B"
+            }
+          ],
+          "title": "Network error rate",
+          "type": "timeseries"
+        },
+        {
+          "collapse": false,
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 11
+          },
+          "id": 10,
+          "panels": [],
+          "showTitle": true,
+          "title": "OSD Disk Performance Statistics",
+          "titleSize": "h6",
+          "type": "row"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "For any OSD devices on the host, this chart shows the iops per physical device. Each device is shown by it's name and corresponding OSD id value",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Read (-) / Write (+)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ops"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*reads/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 12
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "label_replace(\n  (\n    rate(node_disk_writes_completed{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_writes_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}}) writes",
+              "refId": "A"
+            },
+            {
+              "expr": "label_replace(\n  (\n    rate(node_disk_reads_completed{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_reads_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{job=~\"$job\"},\"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}}) reads",
+              "refId": "B"
+            }
+          ],
+          "title": "$ceph_hosts Disk IOPS",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "For OSD hosts, this chart shows the disk bandwidth (read bytes/sec + write bytes/sec) of the physical OSD device. Each device is shown by device name, and corresponding OSD id",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Read (-) / Write (+)",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "Bps"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*read/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.transform",
+                    "value": "negative-Y"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 12
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "label_replace(\n  (\n    rate(node_disk_bytes_written{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_written_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\") * on(instance, device)\n  group_left(ceph_daemon) label_replace(\n    label_replace(ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"),\n    \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n  )\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}}) write",
+              "refId": "A"
+            },
+            {
+              "expr": "label_replace(\n  (\n    rate(node_disk_bytes_read{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) or\n    rate(node_disk_read_bytes_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])\n  ),\n  \"instance\", \"$1\", \"instance\", \"([^:.]*).*\") * on(instance, device)\n  group_left(ceph_daemon) label_replace(\n    label_replace(ceph_disk_occupation_human{job=~\"$job\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"),\n    \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n  )\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}}) read",
+              "refId": "B"
+            }
+          ],
+          "title": "$ceph_hosts Throughput by Disk",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "For OSD hosts, this chart shows the latency at the physical drive. Each drive is shown by device name, with it's corresponding OSD id",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 21
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "max by(instance, device) (label_replace(\n  (rate(node_disk_write_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])) /\n    clamp_min(rate(node_disk_writes_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]), 0.001) or\n    (rate(node_disk_read_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval])) /\n      clamp_min(rate(node_disk_reads_completed_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]), 0.001),\n  \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(\n    ceph_disk_occupation_human{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"},\n    \"device\", \"$1\", \"device\", \"/dev/(.*)\"\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}})",
+              "refId": "A"
+            }
+          ],
+          "title": "$ceph_hosts Disk Latency",
+          "type": "timeseries"
+        },
+        {
+          "datasource": "${prometheusds}",
+          "description": "Show disk utilization % (util) of any OSD devices on the host by the physical device name and associated OSD id.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "%Util",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 21
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "expr": "label_replace(\n  (\n    (rate(node_disk_io_time_ms{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) / 10) or\n    rate(node_disk_io_time_seconds_total{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"}[$__rate_interval]) * 100\n  ), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n) * on(instance, device) group_left(ceph_daemon) label_replace(\n  label_replace(ceph_disk_occupation_human{job=~\"$job\", instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\"},\n  \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1\", \"instance\", \"([^:.]*).*\"\n)\n",
+              "format": "time_series",
+              "interval": "$interval",
+              "intervalFactor": 1,
+              "legendFormat": "{{device}}({{ceph_daemon}})",
+              "refId": "A"
+            }
+          ],
+          "title": "$ceph_hosts Disk utilization",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 39,
+      "tags": [
+        "ceph",
+        "host",
+        "overview"
+      ],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "selected": false,
+              "text": "Mimir",
+              "value": "PAE45454D0EDB9216"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": "Data Source",
+            "multi": false,
+            "name": "prometheusds",
+            "options": [],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "allValue": ".+",
+            "current": { },
+            "datasource": {
+              "uid": "${prometheusds}"
+            },
+            "definition": "",
+            "hide": 0,
+            "includeAll": true,
+            "label": "job",
+            "multi": true,
+            "name": "job",
+            "options": [],
+            "query": "label_values(ceph_osd_metadata{}, job)",
+            "refresh": 1,
+            "regex": "(.*)",
+            "skipUrlSync": false,
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "current": { },
+            "datasource": {
+              "uid": "${prometheusds}"
+            },
+            "definition": "",
+            "hide": 0,
+            "includeAll": false,
+            "label": "Hostname",
+            "multi": false,
+            "name": "ceph_hosts",
+            "options": [],
+            "query": "label_values(ceph_disk_occupation, instance)",
+            "refresh": 1,
+            "regex": "(.*)",
+            "skipUrlSync": false,
+            "sort": 3,
+            "tagValuesQuery": "",
+            "tags": [],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "auto": true,
+            "auto_count": 10,
+            "auto_min": "1m",
+            "current": {
+              "selected": false,
+              "text": "1m",
+              "value": "1m"
+            },
+            "hide": 0,
+            "label": "Interval",
+            "name": "interval",
+            "options": [
+              {
+                "selected": false,
+                "text": "auto",
+                "value": "$__auto_interval_interval"
+              },
+              {
+                "selected": false,
+                "text": "5s",
+                "value": "5s"
+              },
+              {
+                "selected": false,
+                "text": "10s",
+                "value": "10s"
+              },
+              {
+                "selected": false,
+                "text": "30s",
+                "value": "30s"
+              },
+              {
+                "selected": true,
+                "text": "1m",
+                "value": "1m"
+              },
+              {
+                "selected": false,
+                "text": "10m",
+                "value": "10m"
+              },
+              {
+                "selected": false,
+                "text": "30m",
+                "value": "30m"
+              },
+              {
+                "selected": false,
+                "text": "1h",
+                "value": "1h"
+              },
+              {
+                "selected": false,
+                "text": "6h",
+                "value": "6h"
+              },
+              {
+                "selected": false,
+                "text": "12h",
+                "value": "12h"
+              },
+              {
+                "selected": false,
+                "text": "1d",
+                "value": "1d"
+              },
+              {
+                "selected": false,
+                "text": "7d",
+                "value": "7d"
+              },
+              {
+                "selected": false,
+                "text": "14d",
+                "value": "14d"
+              },
+              {
+                "selected": false,
+                "text": "30d",
+                "value": "30d"
+              }
+            ],
+            "query": "5s,10s,30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+            "queryValue": "",
+            "refresh": 2,
+            "skipUrlSync": false,
+            "type": "interval",
+            "valuelabels": {}
+          }
+        ]
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ],
+        "time_options": [
+          "5m",
+          "15m",
+          "1h",
+          "6h",
+          "12h",
+          "24h",
+          "2d",
+          "7d",
+          "30d"
+        ]
+      },
+      "timezone": "",
+      "title": "Ceph - OSD Host Details",
+      "uid": "y0KGL0iZz"
     }

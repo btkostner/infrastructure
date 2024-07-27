@@ -30,3 +30,4 @@ resources:
   - ./dashboards/ceph-cluster-advanced.yaml
   - ./dashboards/ceph-cluster.yaml
   - ./dashboards/host-details.yaml
+  - ./dashboards/host-overview.yaml
