@@ -206,6 +206,23 @@ loki:
           server_address: dns+loki-index-gateway-headless.monitoring.svc.cluster.local:9095
     tracing:
       enabled: true
+  # All of these values are to just fix helm
+  # requirements, they are overwritten set above
+  schemaConfig:
+    configs:
+      - from: 2024-04-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+  tracing:
+    enabled: true
+  querier:
+    max_concurrent: 4
 
 minio:
   enabled: false
