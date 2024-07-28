@@ -10,6 +10,7 @@ bloomGateway:
 compactor:
   replicas: 2
   maxUnavailable: 1
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 deploymentMode: Distributed
@@ -23,6 +24,7 @@ distributor:
     maxReplicas: 4
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 gateway:
@@ -79,6 +81,7 @@ global:
 indexGateway:
   replicas: 2
   maxUnavailable: 1
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 ingester:
@@ -89,6 +92,7 @@ ingester:
     maxReplicas: 4
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
   zoneAwareReplication:
     enabled: false
@@ -217,6 +221,7 @@ querier:
     targetMemoryUtilizationPercentage: 80
   zoneAwareReplication:
     enabled: false
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 queryFrontend:
@@ -228,11 +233,13 @@ queryFrontend:
     maxReplicas: 4
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 queryScheduler:
   replicas: 2
   maxUnavailable: 1
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 read:
@@ -245,6 +252,7 @@ ruler:
   enabled: true
   replicas: 2
   maxUnavailable: 1
+  extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 singleBinary:
