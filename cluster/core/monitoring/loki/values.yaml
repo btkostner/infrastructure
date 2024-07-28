@@ -127,7 +127,7 @@ loki:
           bucketnames: ${CHUNKS_BUCKET_NAME}
           endpoint: ${BUCKET_HOST}:${BUCKET_PORT}
           insecure: true
-          s3forcepathstyle: false
+          s3forcepathstyle: true
           secret_access_key: ${CHUNKS_AWS_SECRET_ACCESS_KEY}
     frontend:
       scheduler_address: loki-query-scheduler.monitoring.svc.cluster.local:9095
@@ -174,7 +174,7 @@ loki:
           bucketnames: ${RULER_BUCKET_NAME}
           endpoint: ${BUCKET_HOST}:${BUCKET_PORT}
           insecure: true
-          s3forcepathstyle: false
+          s3forcepathstyle: true
           secret_access_key: ${RULER_AWS_SECRET_ACCESS_KEY}
         type: s3
     runtime_config:
