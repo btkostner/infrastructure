@@ -120,7 +120,7 @@ loki:
     common:
       compactor_address: 'http://loki-compactor:3100'
       path_prefix: /var/loki
-      replication_factor: 3
+      replication_factor: 1
       storage:
         s3:
           access_key_id: ${CHUNKS_AWS_ACCESS_KEY_ID}
@@ -129,7 +129,6 @@ loki:
           insecure: true
           s3forcepathstyle: true
           secret_access_key: ${CHUNKS_AWS_SECRET_ACCESS_KEY}
-        type: s3
     frontend:
       scheduler_address: loki-query-scheduler.monitoring.svc.cluster.local:9095
       tail_proxy_url: http://loki-querier.monitoring.svc.cluster.local:3100
