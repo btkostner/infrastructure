@@ -1,40 +1,3 @@
-backend:
-  replicas: 0
-
-bloomCompactor:
-  replicas: 0
-
-bloomGateway:
-  replicas: 0
-
-compactor:
-  replicas: 2
-  maxUnavailable: 1
-  extraArgs: ["-config.expand-env=true"]
-  extraEnv: *globalExtraEnv
-
-deploymentMode: Distributed
-
-distributor:
-  replicas: 2
-  maxUnavailable: 1
-  autoscaling:
-    enabled: true
-    minReplicas: 2
-    maxReplicas: 4
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-  extraArgs: ["-config.expand-env=true"]
-  extraEnv: *globalExtraEnv
-
-gateway:
-  enabled: true
-  replicas: 2
-  resources:
-    limits:
-      cpu: 1.4
-      memory: 731Mi
-
 global:
   extraEnv: &globalExtraEnv
     - name: BUCKET_HOST
@@ -77,6 +40,43 @@ global:
         secretKeyRef:
           name: loki-ruler
           key: AWS_SECRET_ACCESS_KEY
+
+backend:
+  replicas: 0
+
+bloomCompactor:
+  replicas: 0
+
+bloomGateway:
+  replicas: 0
+
+compactor:
+  replicas: 2
+  maxUnavailable: 1
+  extraArgs: ["-config.expand-env=true"]
+  extraEnv: *globalExtraEnv
+
+deploymentMode: Distributed
+
+distributor:
+  replicas: 2
+  maxUnavailable: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  extraArgs: ["-config.expand-env=true"]
+  extraEnv: *globalExtraEnv
+
+gateway:
+  enabled: true
+  replicas: 2
+  resources:
+    limits:
+      cpu: 1.4
+      memory: 731Mi
 
 indexGateway:
   replicas: 2
