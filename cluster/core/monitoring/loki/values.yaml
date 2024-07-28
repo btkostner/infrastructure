@@ -122,13 +122,8 @@ loki:
       path_prefix: /var/loki
       replication_factor: 3
       storage:
-        s3:
-          access_key_id: ${CHUNKS_AWS_ACCESS_KEY_ID}
-          bucketnames: ${CHUNKS_BUCKET_NAME}
-          endpoint: ${BUCKET_HOST}:${BUCKET_PORT}
-          insecure: true
-          s3forcepathstyle: true
-          secret_access_key: ${CHUNKS_AWS_SECRET_ACCESS_KEY}
+        s3: http://${CHUNKS_AWS_ACCESS_KEY_ID}:${CHUNKS_AWS_SECRET_ACCESS_KEY}@${BUCKET_HOST}:${BUCKET_PORT}/${CHUNKS_BUCKET_NAME}
+        type: s3
     frontend:
       scheduler_address: loki-query-scheduler.monitoring.svc.cluster.local:9095
       tail_proxy_url: http://loki-querier.monitoring.svc.cluster.local:3100
@@ -169,13 +164,7 @@ loki:
             update_interval: 1m
     ruler:
       storage:
-        s3:
-          access_key_id: ${RULER_AWS_ACCESS_KEY_ID}
-          bucketnames: ${RULER_BUCKET_NAME}
-          endpoint: ${BUCKET_HOST}:${BUCKET_PORT}
-          insecure: true
-          s3forcepathstyle: true
-          secret_access_key: ${RULER_AWS_SECRET_ACCESS_KEY}
+        s3: http://${RULER_AWS_ACCESS_KEY_ID}:${RULER_AWS_SECRET_ACCESS_KEY}@${BUCKET_HOST}:${BUCKET_PORT}/${RULER_BUCKET_NAME}
         type: s3
     runtime_config:
       file: /etc/loki/runtime-config/runtime-config.yaml
