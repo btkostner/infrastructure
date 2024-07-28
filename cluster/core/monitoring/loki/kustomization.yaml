@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: loki
+
+namespace: monitoring
+
+helmCharts:
+  - includeCRDs: true
+    name: loki
+    namespace: monitoring
+    releaseName: loki
+    repo: https://grafana.github.io/helm-charts
+    valuesFile: ./values.yaml
+    version: 6.7.3
+
+resources:
+  - ./resources/grafana-datasource.yaml
+  - ./resources/http-route.yaml
+  - ./resources/object-bucket-claim-chunks.yaml
+  - ./resources/object-bucket-claim-ruler.yaml

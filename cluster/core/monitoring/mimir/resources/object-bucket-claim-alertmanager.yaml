@@ -4,5 +4,5 @@ metadata:
   name: mimir-alertmanager
   namespace: monitoring
 spec:
-  generateBucketName: mimir-alertmanager
+  bucketName: mimir-alertmanager
   storageClassName: safe-ceph-object

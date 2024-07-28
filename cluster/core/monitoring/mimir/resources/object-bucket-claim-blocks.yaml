@@ -4,5 +4,5 @@ metadata:
   name: mimir-blocks
   namespace: monitoring
 spec:
-  generateBucketName: mimir-blocks
+  bucketName: mimir-blocks
   storageClassName: safe-ceph-object

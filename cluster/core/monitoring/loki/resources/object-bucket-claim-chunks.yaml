@@ -1,8 +1,8 @@
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
-  name: mimir-ruler
+  name: loki-chunks
   namespace: monitoring
 spec:
-  bucketName: mimir-ruler
+  bucketName: loki-chunks
   storageClassName: safe-ceph-object
