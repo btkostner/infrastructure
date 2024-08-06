@@ -39,6 +39,12 @@ configMapGenerator:
 patches:
   - target:
       kind: Deployment
+      name: argocd-redis-ha-haproxy
+    patch: |-
+      - op: remove
+        path: "/spec/template/spec/initContainers/0"
+  - target:
+      kind: Deployment
       name: argocd-server
     patch: |-
       - op: add
