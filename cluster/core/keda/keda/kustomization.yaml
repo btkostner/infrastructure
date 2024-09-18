@@ -12,7 +12,7 @@ helmCharts:
     releaseName: keda
     repo: https://kedacore.github.io/charts
     valuesFile: ./values.yaml
-    version: 2.14.2
+    version: 2.15.1
 
 resources:
   - ./resources/namespace.yaml
