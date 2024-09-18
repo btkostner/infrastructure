@@ -35,8 +35,8 @@ spec:
       syncPolicy:
         automated:
           allowEmpty: false
-          prune: true
-          selfHeal: true
+          prune: false
+          selfHeal: false
         syncOptions:
           - CreateNamespace=true
       ignoreDifferences:
