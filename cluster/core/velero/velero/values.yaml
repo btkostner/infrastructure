@@ -85,6 +85,6 @@ schedules:
         name: resource-policy
       snapshotMoveData: true
       snapshotVolumes: true
-      ttl: "720h0m0s"
+      ttl: "2160h0m0s"
       uploaderConfig:
         parallelFilesUpload: 10
