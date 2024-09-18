@@ -30,7 +30,7 @@ spec:
               value: "on"
             - name: DOT
               value: "off"
-            - name: FIREWALL
+            - name: FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT
               value: "off"
             - name: FIREWALL_OUTBOUND_SUBNETS
               value: "10.0.0.0/8"
