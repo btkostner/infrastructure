@@ -15,5 +15,16 @@ helmCharts:
     version: 2.15.1
 
 resources:
-  - ./resources/auth-reader-role-binding.yaml
   - ./resources/namespace.yaml
+
+patches:
+  - target:
+      kind: RoleBinding
+      name: keda-operator-auth-reader
+    patch: |-
+      - op: add
+        path: "/subjects/-"
+        value:
+          kind: ServiceAccount
+          name: keda-operator
+          namespace: keda
