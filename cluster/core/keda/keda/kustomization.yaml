@@ -15,4 +15,5 @@ helmCharts:
     version: 2.15.1
 
 resources:
+  - ./resources/auth-reader-role-binding.yaml
   - ./resources/namespace.yaml

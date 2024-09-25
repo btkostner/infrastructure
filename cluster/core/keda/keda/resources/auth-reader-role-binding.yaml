@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: keda-operator-auth-reader
+    app.kubernetes.io/part-of: keda-operator
+    app.kubernetes.io/managed-by: Argo
+    app.kubernetes.io/instance: keda
+  name: keda-operator-auth-reader
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+  - kind: ServiceAccount
+    name: keda-operator
+    namespace: keda
