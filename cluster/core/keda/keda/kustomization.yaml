@@ -3,8 +3,6 @@ kind: Kustomization
 metadata:
   name: keda
 
-namespace: keda
-
 helmCharts:
   - includeCRDs: true
     name: keda
@@ -16,15 +14,3 @@ helmCharts:
 
 resources:
   - ./resources/namespace.yaml
-
-patches:
-  - target:
-      kind: RoleBinding
-      name: keda-operator-auth-reader
-    patch: |-
-      - op: add
-        path: "/subjects/-"
-        value:
-          kind: ServiceAccount
-          name: keda-operator
-          namespace: keda
