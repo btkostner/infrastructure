@@ -8,7 +8,7 @@ spec:
     readAffinity:
       enabled: true
   cephVersion:
-    image: quay.io/ceph/ceph:v18.2.2
+    image: quay.io/ceph/ceph:v19.2.0-20240927
   continueUpgradeAfterChecksEvenIfNotHealthy: true
   dashboard:
     enabled: true
