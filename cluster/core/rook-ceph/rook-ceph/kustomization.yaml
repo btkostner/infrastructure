@@ -10,11 +10,11 @@ helmCharts:
     repo: https://charts.rook.io/release
     releaseName: rook-ceph
     namespace: rook-ceph
-    version: 1.14.8
+    version: 1.15.2
     valuesFile: ./values.yaml
 
 resources:
-  - https://github.com/rook/rook/raw/v1.14.8/deploy/examples/toolbox-operator-image.yaml
+  - https://github.com/rook/rook/raw/v1.15.2/deploy/examples/toolbox-operator-image.yaml
   - ./resources/ceph-block-pool.yaml
   - ./resources/ceph-cluster.yaml
   - ./resources/ceph-object-store.yaml
