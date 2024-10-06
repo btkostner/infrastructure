@@ -71,6 +71,9 @@ distributor:
   extraEnv: *globalExtraEnv
 
 gateway:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: []
   enabled: true
   replicas: 2
   resources:
