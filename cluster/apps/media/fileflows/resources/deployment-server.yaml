@@ -6,7 +6,7 @@ metadata:
   labels:
     app: fileflows-server
 spec:
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 1
   strategy:
     type: Recreate

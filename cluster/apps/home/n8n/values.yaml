@@ -2,6 +2,8 @@ image:
   pullPolicy: Always
   tag: 1.51.0
 
+replicaCount: 0
+
 persistence:
   enabled: true
   type: existing
