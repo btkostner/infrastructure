@@ -14,3 +14,9 @@ data:
         url: http://mimir-gateway/prometheus
         access: proxy
         isDefault: true
+      # Required for Ceph web view
+      - name: Dashboard1
+        type: prometheus
+        url: http://mimir-gateway/prometheus
+        access: proxy
+        isDefault: false
