@@ -15,6 +15,10 @@ data:
       format = "logfmt"
     }
 
+    livedebugging {
+      enabled = true
+    }
+
     prometheus.remote_write "default" {
       endpoint {
         url = "http://mimir-gateway/api/v1/push"
@@ -27,11 +31,14 @@ data:
       }
     }
 
-    prometheus.exporter.unix "default" {}
+    prometheus.exporter.unix "default" {
+      include_exporter_metrics = true
+    }
 
     prometheus.scrape "node" {
-      targets    = prometheus.exporter.unix.default.targets
-      forward_to = [prometheus.remote_write.default.receiver]
+      targets         = prometheus.exporter.unix.default.targets
+      forward_to      = [prometheus.remote_write.default.receiver]
+      scrape_interval = "15s"
     }
 
     prometheus.exporter.self "default" {}
