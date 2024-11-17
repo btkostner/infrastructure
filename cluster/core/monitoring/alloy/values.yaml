@@ -8,6 +8,7 @@ alloy:
   mounts:
     varlog: true
     dockercontainers: true
+  stabilityLevel: experimental
 controller:
   type: daemonset
 serviceMonitor:
