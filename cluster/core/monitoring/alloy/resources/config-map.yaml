@@ -96,6 +96,11 @@ data:
 
     discovery.kubernetes "pod" {
       role = "pod"
+      // limit to pods on this node to reduce the amount you need to filter
+      selectors {
+        role  = "pod"
+        field = "spec.nodeName=" + env("HOSTNAME")
+      }
     }
 
     discovery.relabel "pod_logs" {
@@ -167,20 +172,35 @@ data:
 
     discovery.kubernetes "nodes" {
       role = "node"
+      clustering {
+        enabled = true
+      }
     }
 
     discovery.kubernetes "service" {
       role = "service"
+      clustering {
+        enabled = true
+      }
     }
 
     discovery.kubernetes "endpoint" {
       role = "endpoints"
+      clustering {
+        enabled = true
+      }
     }
 
     discovery.kubernetes "endpointslice" {
       role = "endpointslice"
+      clustering {
+        enabled = true
+      }
     }
 
     discovery.kubernetes "ingress" {
       role = "ingress"
+      clustering {
+        enabled = true
+      }
     }
