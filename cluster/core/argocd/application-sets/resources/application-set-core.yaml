@@ -39,7 +39,13 @@ spec:
           selfHeal: false
         syncOptions:
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
       ignoreDifferences:
+        - group: ""
+          kind: PersistentVolumeClaim
+          jsonPointers:
+            - /metadata/uid
+            - /spec/volumeName
         - group: ""
           kind: ConfigMap
           jsonPointers:
