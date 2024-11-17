@@ -33,6 +33,7 @@ spec:
         enabled: true
   monitoring:
     enabled: true
+    createPrometheusRules: true
   removeOSDsIfOutAndSafeToRemove: true
   resources:
     api:
