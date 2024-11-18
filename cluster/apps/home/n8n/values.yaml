@@ -1,3 +1,5 @@
+config: {}
+
 image:
   pullPolicy: Always
   tag: 1.67.1
