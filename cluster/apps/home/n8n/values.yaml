@@ -1,9 +1,9 @@
 config:
-  executions:
-    dataMaxAge: 3760
-    dataPrune: true
-    pruneData: null
-    pruneDataMaxAge: null
+  executions: null
+  pruning:
+    isEnabled: true
+    maxAge: 3760
+    maxCount: 10_000
 
 image:
   pullPolicy: Always
