@@ -121,6 +121,11 @@ ingester:
   zoneAwareReplication:
     enabled: false
 
+kedaAutoscaling:
+  prometheusAddress: "http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus"
+  customHeaders:
+    X-Scope-OrgID: anonymous
+
 metaMonitoring:
   dashboards:
     enabled: true
