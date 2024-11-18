@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-nginx
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: prometheus
+data:
+  nginx.conf: |
+    worker_processes  1;
+    error_log  /dev/stderr error;
+    pid        /tmp/nginx.pid;
+    worker_rlimit_nofile 8192;
+
+    events {
+      worker_connections  4096;
+    }
+
+    http {
+      client_body_temp_path /tmp/client_temp;
+      proxy_temp_path       /tmp/proxy_temp_path;
+      fastcgi_temp_path     /tmp/fastcgi_temp;
+      uwsgi_temp_path       /tmp/uwsgi_temp;
+      scgi_temp_path        /tmp/scgi_temp;
+
+      default_type application/octet-stream;
+      log_format   main '$remote_addr - $remote_user [$time_local]  $status '
+            '"$request" $body_bytes_sent "$http_referer" '
+            '"$http_user_agent" "$http_x_forwarded_for"';
+      access_log   /dev/stderr  main;
+
+      sendfile           on;
+      tcp_nopush         on;
+      proxy_http_version 1.1;
+      resolver kube-dns.kube-system.svc.cluster.local.;
+
+      proxy_read_timeout 300;
+
+      server {
+        listen 8080;
+        listen [::]:8080;
+        client_max_body_size 540M;
+
+        location = /ready {
+          return 200 'OK';
+          auth_basic off;
+        }
+
+        location / {
+          set $mimir mimir-gateway.monitoring.svc.cluster.local.;
+          proxy_pass      http://$distributor:8080/prometheus$request_uri;
+        }
+      }
+    }
