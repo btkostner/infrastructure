@@ -51,7 +51,7 @@ data:
 
         location / {
           set $mimir mimir-gateway.monitoring.svc.cluster.local.;
-          proxy_pass      http://$distributor:8080/prometheus$request_uri;
+          proxy_pass      http://$mimir:8080/prometheus$request_uri;
         }
       }
     }
