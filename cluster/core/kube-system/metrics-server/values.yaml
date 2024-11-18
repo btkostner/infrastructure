@@ -1,0 +1,15 @@
+metrics:
+  enabled: true
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+  maxUnavailable: 1
+
+replicas: 2
+
+serviceMonitor:
+  enabled: true
+
+tls:
+  type: cert-manager
