@@ -34,9 +34,6 @@ data:
     mimir.rules.kubernetes "default" {
       address = "http://mimir-gateway"
       tenant_id = "anonymous"
-      clustering {
-        enabled = true
-      }
     }
 
     prometheus.exporter.unix "default" {
@@ -47,6 +44,9 @@ data:
       targets         = prometheus.exporter.unix.default.targets
       forward_to      = [prometheus.remote_write.default.receiver]
       scrape_interval = "15s"
+      clustering {
+        enabled = true
+      }
     }
 
     prometheus.exporter.self "default" {}
@@ -54,6 +54,9 @@ data:
     prometheus.scrape "alloy" {
       targets    = prometheus.exporter.self.default.targets
       forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
     }
 
     prometheus.operator.podmonitors "default" {
@@ -180,35 +183,20 @@ data:
 
     discovery.kubernetes "nodes" {
       role = "node"
-      clustering {
-        enabled = true
-      }
     }
 
     discovery.kubernetes "service" {
       role = "service"
-      clustering {
-        enabled = true
-      }
     }
 
     discovery.kubernetes "endpoint" {
       role = "endpoints"
-      clustering {
-        enabled = true
-      }
     }
 
     discovery.kubernetes "endpointslice" {
       role = "endpointslice"
-      clustering {
-        enabled = true
-      }
     }
 
     discovery.kubernetes "ingress" {
       role = "ingress"
-      clustering {
-        enabled = true
-      }
     }
