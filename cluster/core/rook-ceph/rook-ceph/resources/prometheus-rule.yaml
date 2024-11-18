@@ -4,8 +4,6 @@ kind: PrometheusRule
 metadata:
   name: prometheus-ceph-rules
   namespace: rook-ceph
-  labels:
-    release: kube-prometheus-stack
 spec:
   groups:
     - name: persistent-volume-alert.rules
