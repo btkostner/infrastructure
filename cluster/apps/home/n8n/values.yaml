@@ -1,8 +1,8 @@
-config: {}
+config: false
 
 image:
   pullPolicy: Always
-  tag: 1.67.1
+  tag: 1.68.0
 
 replicaCount: 1
 
