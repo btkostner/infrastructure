@@ -1,6 +1,6 @@
 image:
   pullPolicy: Always
-  tag: 1.51.0
+  tag: 1.67.1
 
 replicaCount: 1
 
