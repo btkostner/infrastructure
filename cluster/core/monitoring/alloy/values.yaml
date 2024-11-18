@@ -6,10 +6,37 @@ alloy:
   clustering:
     enabled: true
   mounts:
-    varlog: true
     dockercontainers: true
+    extra:
+      - name: host_rootfs
+        mountPath: /host/fs
+        readOnly: true
+      - name: host_procfs
+        mountPath: /host/proc
+        readOnly: true
+      - name: host_sysfs
+        mountPath: /host/sys
+        readOnly: true
+      - name: host_udev
+        mountPath: /host/udev
+        readOnly: true
+    varlog: true
   stabilityLevel: experimental
 controller:
   type: daemonset
+  volumes:
+    extra:
+      - name: host_rootfs
+        hostPath:
+          path: /
+      - name: host_procfs
+        hostPath:
+          path: /proc
+      - name: host_sysfs
+        hostPath:
+          path: /sys
+      - name: host_udev
+        hostPath:
+          path: /run/udev/data
 serviceMonitor:
   enabled: true
