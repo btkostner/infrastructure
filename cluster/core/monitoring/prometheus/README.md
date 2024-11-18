@@ -1,6 +1,7 @@
 # Prometheus
 
 The cluster runs mimir for all of the Prometheus like needs, however not
-everything is updated to work with it. As such, we have a very simple nginx
-reverse proxy that redirects everything to the `mimir-gateway:80/prometheus`
-route.
+everything is updated to work with it. As such, we run a very light
+prometheus install that just reads from upstream mimir.
+
+See this comment for more details: https://github.com/lensapp/lens/issues/909#issuecomment-2402819075

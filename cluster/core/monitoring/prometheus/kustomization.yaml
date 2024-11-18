@@ -5,7 +5,11 @@ metadata:
 
 namespace: monitoring
 
-resources:
-  - ./resources/config-map.yaml
-  - ./resources/deployment.yaml
-  - ./resources/service.yaml
+helmCharts:
+  - includeCRDs: false
+    name: prometheus
+    namespace: monitoring
+    releaseName: prometheus
+    repo: https://prometheus-community.github.io/helm-charts
+    valuesFile: ./values.yaml
+    version: 25.30.1
