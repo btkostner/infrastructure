@@ -8,16 +8,16 @@ alloy:
   mounts:
     dockercontainers: true
     extra:
-      - name: host_rootfs
+      - name: host-rootfs
         mountPath: /host/fs
         readOnly: true
-      - name: host_procfs
+      - name: host-procfs
         mountPath: /host/proc
         readOnly: true
-      - name: host_sysfs
+      - name: host-sysfs
         mountPath: /host/sys
         readOnly: true
-      - name: host_udev
+      - name: host-udev
         mountPath: /host/udev
         readOnly: true
     varlog: true
@@ -26,16 +26,16 @@ controller:
   type: daemonset
   volumes:
     extra:
-      - name: host_rootfs
+      - name: host-rootfs
         hostPath:
           path: /
-      - name: host_procfs
+      - name: host-procfs
         hostPath:
           path: /proc
-      - name: host_sysfs
+      - name: host-sysfs
         hostPath:
           path: /sys
-      - name: host_udev
+      - name: host-udev
         hostPath:
           path: /run/udev/data
 serviceMonitor:
