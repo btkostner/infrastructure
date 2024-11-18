@@ -31,6 +31,14 @@ data:
       }
     }
 
+    mimir.rules.kubernetes "default" {
+      address = "http://mimir-gateway"
+      tenant_id = "anonymous"
+      clustering {
+        enabled = true
+      }
+    }
+
     prometheus.exporter.unix "default" {
       include_exporter_metrics = true
     }
