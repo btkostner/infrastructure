@@ -14,9 +14,10 @@ data:
         url: http://mimir-gateway/prometheus
         access: proxy
         isDefault: true
-      # Required for Ceph web view
-      - name: Dashboard1
-        type: prometheus
-        url: http://mimir-gateway/prometheus
+      - name: Alertmanager
+        type: alertmanager
+        url: http://mimir-gateway/alertmanager
         access: proxy
-        isDefault: false
+        jsonData:
+          implementation: mimir
+          handleGrafanaManagedAlerts: true
