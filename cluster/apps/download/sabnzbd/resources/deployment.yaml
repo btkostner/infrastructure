@@ -64,6 +64,14 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             failureThreshold: 4
+          livenessProbe:
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            failureThreshold: 10
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
@@ -76,14 +84,13 @@ spec:
             - containerPort: 8080
               name: http
               protocol: TCP
-          #readinessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: 8080
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            failureThreshold: 10
           resources:
             requests:
               cpu: 100m
