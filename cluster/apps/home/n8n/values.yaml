@@ -1,4 +1,9 @@
-config: false
+config:
+  executions:
+    dataMaxAge: 3760
+    dataPrune: true
+    pruneData: null
+    pruneDataMaxAge: null
 
 image:
   pullPolicy: Always
