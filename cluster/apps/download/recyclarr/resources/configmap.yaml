@@ -218,6 +218,7 @@ data:
                   - WEBRip-720p
                   - HDTV-720p
               - name: 480p
+                qualities:
                   - WEBDL-480p
                   - WEBRip-480p
                   - SDTV
