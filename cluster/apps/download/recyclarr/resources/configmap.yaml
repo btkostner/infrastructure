@@ -201,7 +201,7 @@ data:
               allowed: true
               until_score: 10000
               until_quality: 2160p
-            min_format_score: 10
+            min_format_score: 0
             quality_sort: top
             qualities:
               - name: 2160p
