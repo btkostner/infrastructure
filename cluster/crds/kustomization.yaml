@@ -33,7 +33,7 @@ resources:
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.1.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 
   # Cert Manager
-  # - https://github.com/cert-manager/cert-manager/releases/download/v1.16.0/cert-manager.crds.yaml
+  # - https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.crds.yaml
 
   # Velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_backuprepositories.yaml
