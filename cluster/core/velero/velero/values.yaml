@@ -55,7 +55,7 @@ configuration:
   volumeSnapshotLocation:
     - name: default
       provider: csi
-  uploaderType: restic
+  uploaderType: kopia
   features: EnableCSI
   defaultBackupStorageLocation: default
   defaultVolumeSnapshotLocations: csi:default
