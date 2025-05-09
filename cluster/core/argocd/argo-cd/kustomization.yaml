@@ -16,10 +16,17 @@ configMapGenerator:
   - name: argocd-cm
     behavior: merge
     literals:
-      - "accounts.btkostner=apiKey, login"
       - "kustomize.buildOptions=--enable-helm"
       - "server.insecure=true"
       - "timeout.reconciliation=15s"
+      - |
+        resource.customizations.ignoreResourceUpdates.all=
+          jqPathExpressions:
+            # Ignore the Velio related backup and restore labels
+            - '.metadata.labels."velero.io/backup-name"'
+            - '.metadata.labels."velero.io/restore-name"'
+            # Ignore all k8s lens related editing labels
+            - '.metadata.labels."k8slens-edit-resource-version"'
       - |
         resource.exclusions=
           - apiGroups:
