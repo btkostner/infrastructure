@@ -21,6 +21,8 @@ configMapGenerator:
       - "timeout.reconciliation=15s"
       - |
         resource.customizations.ignoreResourceUpdates.all=
+          jsonPointers:
+            - /status
           jqPathExpressions:
             # Ignore the Velio related backup and restore labels
             - '.metadata.labels."velero.io/backup-name"'
