@@ -56,6 +56,12 @@ grafana.ini:
   auth:
     anonymous:
       enabled: true
+  feature_toggles:
+    grafanaAPIServerEnsureKubectlAccess: true
+    kubernetesClientDashboardsFolders: true
+    kubernetesDashboards: true
+    provisioning: true
+  instance_name: grafana-btkostner
   security:
     allow_embedding: true
   server:
