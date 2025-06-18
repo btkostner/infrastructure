@@ -6,9 +6,7 @@ data:
   admin.enabled: "true"
   application.resourceTrackingMethod: annotation
   kustomize.buildOptions: "--enable-helm"
-  resource.customizations.ignoreResourceUpdates.ConfigMap: |
-    jqPathExpressions:
-  resource.customizations.ignoreResourceUpdates.all: |
+  resource.customizations.ignoreDifferences.all: |
     jsonPointers:
       - /endpoints
       # - /metadata
