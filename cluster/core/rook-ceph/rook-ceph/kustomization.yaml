@@ -26,8 +26,3 @@ resources:
   - ./resources/service-monitor-mgr.yaml
   - ./resources/storage-class-block.yaml
   - ./resources/storage-class-object.yaml
-
-  - ./dashboards/ceph-cluster-advanced.yaml
-  - ./dashboards/ceph-cluster.yaml
-  - ./dashboards/host-details.yaml
-  - ./dashboards/host-overview.yaml

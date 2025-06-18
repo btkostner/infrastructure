@@ -121,6 +121,11 @@ ingester:
   zoneAwareReplication:
     enabled: false
 
+kedaAutoscaling:
+  prometheusAddress: "http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus"
+  customHeaders:
+    X-Scope-OrgID: anonymous
+
 metaMonitoring:
   dashboards:
     enabled: true
@@ -145,6 +150,7 @@ mimir:
         access_key_id: ${BLOCKS_AWS_ACCESS_KEY_ID}
         bucket_name: "${BLOCKS_BUCKET_NAME}"
         secret_access_key: "${BLOCKS_AWS_SECRET_ACCESS_KEY}"
+    multitenancy_enabled: false
     ruler_storage:
       s3:
         access_key_id: ${RULER_AWS_ACCESS_KEY_ID}

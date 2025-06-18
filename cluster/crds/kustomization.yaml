@@ -6,7 +6,7 @@ resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_backendtlspolicies.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
-  - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_tcproutes.yaml
@@ -28,25 +28,25 @@ resources:
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
 
   # Volume Snapshots
-  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.0.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
-  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.0.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
-  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.0.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.2.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.2.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.2.1/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 
   # Cert Manager
-  # - https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.crds.yaml
+  # - https://github.com/cert-manager/cert-manager/releases/download/v1.18.0/cert-manager.crds.yaml
 
   # Velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_backuprepositories.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_backups.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_downloadrequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_podvolumebackups.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_podvolumerestores.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_restores.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_schedules.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.14.0/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_backuprepositories.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_backups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_downloadrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_podvolumebackups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_podvolumerestores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_restores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_schedules.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.16.0/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
 
   # Prometheus Operator
   #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml

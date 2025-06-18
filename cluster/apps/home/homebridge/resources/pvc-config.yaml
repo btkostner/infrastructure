@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fileflows-config
-  namespace: media
+  name: homebridge-config
+  namespace: home
 spec:
   volumeMode: Filesystem
   storageClassName: ceph-safe-block
@@ -10,4 +10,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 25Gi

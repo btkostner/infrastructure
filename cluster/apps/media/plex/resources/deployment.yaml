@@ -30,16 +30,16 @@ spec:
             httpGet:
               path: /identity
               port: 32400
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
+            failureThreshold: 15
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
           livenessProbe:
             httpGet:
               path: /identity
               port: 32400
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
+            failureThreshold: 15
+            initialDelaySeconds: 30
+            timeoutSeconds: 15
           resources:
             requests:
               cpu: 2000m

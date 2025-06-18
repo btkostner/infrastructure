@@ -12,7 +12,7 @@ spec:
   continueUpgradeAfterChecksEvenIfNotHealthy: true
   dashboard:
     enabled: true
-    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local:8080
+    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus
     prometheusEndpointSSLVerify: false
   dataDirHostPath: /var/lib/rook
   mon:
@@ -33,7 +33,25 @@ spec:
         enabled: true
   monitoring:
     enabled: true
+    createPrometheusRules: true
   removeOSDsIfOutAndSafeToRemove: true
+  resources:
+    api:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+    mgr:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+    mon:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+    osd:
+      requests:
+        cpu: "1000m"
+        memory: "1024Mi"
   storage:
     useAllNodes: true
     useAllDevices: true

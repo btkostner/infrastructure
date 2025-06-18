@@ -6,18 +6,20 @@ This page covers networking for individual nodes, our private internal DNS and g
 
 My Intel NUC cluster runs on a separate vlan powered by [Ubiquiti](https://www.ui.com).
 
-| Kind                         | Name                            | IP           |
-| ---------------------------- | ------------------------------- | ------------ |
-| PiKVM                        | kvm                             | 192.168.3.2  |
-| SnapAV WB-800VPS-IPVM-18     | WattBox                         | 192.168.3.3  |
-| Synology RS1221+             | Behemoth                        | 192.168.3.4  |
-| Kubernetes control plane VIP |                                 | 192.168.3.10 |
-| Intel NUC11PAHI5             | NUC 1                           | 192.168.3.11 |
-| Intel NUC11PAHI5             | NUC 2                           | 192.168.3.12 |
-| Intel NUC11PAHI5             | NUC 3                           | 192.168.3.13 |
-| Intel NUC11PAHI5             | NUC 4                           | 192.168.3.14 |
-| Kubernetes ingress VIP       | cilium-ingress                  | 192.168.3.50 |
-| Kubernetes ingress VIP       | cilium-gateway-external-gateway | 192.168.3.51 |
+| Kind                                    | Name                            | IP           |
+| --------------------------------------- | ------------------------------- | ------------ |
+| PiKVM                                   | PiKVM                           | 192.168.3.2  |
+| SnapAV WB-800VPS-IPVM-18                | WattBox                         | 192.168.3.3  |
+| Synology RS1221+                        | Behemoth                        | 192.168.3.4  |
+| TESmart 4K UHD 16 Ports HDMI KVM Switch | KVM                             | 192.168.3.5  |
+| Kubernetes control plane VIP            |                                 | 192.168.3.10 |
+| Intel NUC11PAHI5                        | NUC 1                           | 192.168.3.11 |
+| Intel NUC11PAHI5                        | NUC 2                           | 192.168.3.12 |
+| Intel NUC11PAHI5                        | NUC 3                           | 192.168.3.13 |
+| Intel NUC11PAHI5                        | NUC 4                           | 192.168.3.14 |
+| Intel NUC11PAHI&                        | NUC 5                           | 192.168.3.15 |
+| Kubernetes ingress VIP                  | cilium-ingress                  | 192.168.3.50 |
+| Kubernetes ingress VIP                  | cilium-gateway-external-gateway | 192.168.3.51 |
 
 ## Private Network
 

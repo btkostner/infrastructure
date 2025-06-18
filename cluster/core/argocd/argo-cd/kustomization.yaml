@@ -7,46 +7,19 @@ namespace: argocd
 
 resources:
   - ./resources/namespace.yaml
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.0/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.0/manifests/ha/install.yaml
   - ./resources/http-route.yaml
   - ./resources/secret-repository.yaml
   - ./resources/secret-repo-creds.yaml
 
-configMapGenerator:
-  - name: argocd-cm
-    behavior: merge
-    literals:
-      - "accounts.btkostner=apiKey, login"
-      - "kustomize.buildOptions=--enable-helm"
-      - "server.insecure=true"
-      - "timeout.reconciliation=15s"
-      - |
-        resource.exclusions=
-          - apiGroups:
-              - cilium.io
-            kinds:
-              - CiliumIdentity
-            clusters:
-              - "*"
-          - apiGroups:
-              - velero.io
-            kinds:
-              - PodVolumeBackup
-              - Backup
-            clusters:
-              - "*"
+  - ./resources/application.yaml
 
 patches:
+  - path: ./overlays/config-argocd-cm.yaml
+  - path: ./overlays/config-argocd-cmd-params-cm.yaml
   - target:
       kind: Deployment
       name: argocd-redis-ha-haproxy
     patch: |-
       - op: remove
         path: "/spec/template/spec/initContainers/0"
-  - target:
-      kind: Deployment
-      name: argocd-server
-    patch: |-
-      - op: add
-        path: "/spec/template/spec/containers/0/args/-"
-        value: "--insecure"

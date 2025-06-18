@@ -14,3 +14,10 @@ data:
         url: http://mimir-gateway/prometheus
         access: proxy
         isDefault: true
+      - name: Alertmanager
+        type: alertmanager
+        url: http://mimir-gateway/alertmanager
+        access: proxy
+        jsonData:
+          implementation: mimir
+          handleGrafanaManagedAlerts: true

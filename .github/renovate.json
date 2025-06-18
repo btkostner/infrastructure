@@ -1,29 +1,50 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "additionalReviewers": ["btkostner"],
+  "additionalReviewers": [
+    "btkostner"
+  ],
   "branchPrefix": "renovate/",
   "dependencyDashboard": true,
-  "extends": ["config:recommended", ":semanticCommits"],
+  "extends": [
+    "config:recommended",
+    ":semanticCommits"
+  ],
   "gitAuthor": "Blake Kostner <git@btkostner.io>",
-  "labels": ["dependencies"],
+  "ignorePresets": [
+    "group:monorepos",
+    "group:recommended"
+  ],
+  "labels": [
+    "dependencies"
+  ],
   "lockFileMaintenance": {
     "enabled": true
   },
   "packageRules": [
     {
-      "extends": ["helpers:pinGitHubActionDigests"],
+      "extends": [
+        "helpers:pinGitHubActionDigests"
+      ],
       "groupName": "CI",
-      "matchCategories": ["ci"],
+      "matchCategories": [
+        "ci"
+      ],
       "minimumReleaseAge": "7 days"
     },
     {
       "groupName": "Kubernetes",
-      "matchCategories": ["helm", "kubernetes", "cd"],
+      "matchCategories": [
+        "helm",
+        "kubernetes",
+        "cd"
+      ],
       "minimumReleaseAge": "14 days"
     },
     {
       "groupName": "Tools",
-      "matchCategories": ["asdf"],
+      "matchCategories": [
+        "asdf"
+      ],
       "minimumReleaseAge": "14 days"
     }
   ],
@@ -31,21 +52,32 @@
     "enabled": false
   },
   "prHourlyLimit": 0,
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [".*y[a]?ml$"],
-      "matchStrings": ["image: (?<depName>.*?):(?<currentValue>.*?)"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/.*y[a]?ml$/"
+      ],
+      "matchStrings": [
+        "image: (?<depName>.*?):(?<currentValue>.*?)"
+      ],
       "datasourceTemplate": "docker"
     },
     {
-      "fileMatch": "kustomization.yaml",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/kustomization.yaml/"
+      ],
       "matchStrings": [
         "https://github.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
       ],
       "datasourceTemplate": "github-releases"
     },
     {
-      "fileMatch": "kustomization.yaml",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/kustomization.yaml/"
+      ],
       "matchStrings": [
         "https://raw.githubusercontent.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
       ],

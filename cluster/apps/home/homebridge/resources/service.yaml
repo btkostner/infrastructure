@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fileflows
-  namespace: media
+  name: homebridge
+  namespace: home
 spec:
   selector:
-    app: fileflows-server
+    app: homebridge
+  type: LoadBalancer
   ports:
     - name: http
       port: 80
       protocol: TCP
-      targetPort: 5000
+      targetPort: 8581

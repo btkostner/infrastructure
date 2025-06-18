@@ -1,0 +1,28 @@
+alertmanager:
+  enabled: false
+kube-state-metrics:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+prometheus-pushgateway:
+  enabled: false
+server:
+  ingress:
+    enabled: false
+  persistentVolume:
+    enabled: false
+  podLabels:
+    # Required for Lens autodetect
+    app: prometheus
+    component: server
+    heritage: Helm
+  remoteRead:
+    - filter_external_labels: false
+      headers:
+        X-Scope-OrgID: anonymous
+      read_recent: true
+      url: http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus/api/v1/read
+serverFiles:
+  prometheus.yml:
+    rule_files: []
+    scrape_configs: []

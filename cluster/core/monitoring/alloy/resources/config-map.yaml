@@ -15,6 +15,10 @@ data:
       format = "logfmt"
     }
 
+    livedebugging {
+      enabled = true
+    }
+
     prometheus.remote_write "default" {
       endpoint {
         url = "http://mimir-gateway/api/v1/push"
@@ -27,11 +31,26 @@ data:
       }
     }
 
-    prometheus.exporter.unix "default" {}
+    mimir.rules.kubernetes "default" {
+      address = "http://mimir-gateway"
+      tenant_id = "anonymous"
+    }
+
+    prometheus.exporter.unix "default" {
+      include_exporter_metrics = true
+      procfs_path              = "/host/proc"
+      sysfs_path	             = "/host/sys"
+      rootfs_path	             = "/host/fs"
+      udev_data_path           = "/host/udev"
+    }
 
     prometheus.scrape "node" {
-      targets    = prometheus.exporter.unix.default.targets
-      forward_to = [prometheus.remote_write.default.receiver]
+      targets         = prometheus.exporter.unix.default.targets
+      forward_to      = [prometheus.remote_write.default.receiver]
+      scrape_interval = "15s"
+      clustering {
+        enabled = true
+      }
     }
 
     prometheus.exporter.self "default" {}
@@ -39,6 +58,9 @@ data:
     prometheus.scrape "alloy" {
       targets    = prometheus.exporter.self.default.targets
       forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
     }
 
     prometheus.operator.podmonitors "default" {
@@ -89,6 +111,11 @@ data:
 
     discovery.kubernetes "pod" {
       role = "pod"
+      // limit to pods on this node to reduce the amount you need to filter
+      selectors {
+        role  = "pod"
+        field = "spec.nodeName=" + env("HOSTNAME")
+      }
     }
 
     discovery.relabel "pod_logs" {
