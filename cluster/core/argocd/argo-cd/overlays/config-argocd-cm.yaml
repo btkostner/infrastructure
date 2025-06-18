@@ -6,7 +6,6 @@ data:
   admin.enabled: "true"
   application.resourceTrackingMethod: annotation
   kustomize.buildOptions: "--enable-helm"
-  resource: |
   resource.customizations.ignoreResourceUpdates.ConfigMap: |
     jqPathExpressions:
   resource.customizations.ignoreResourceUpdates.all: |
@@ -47,6 +46,7 @@ data:
         - Backup
       clusters:
         - "*"
+  resource.ignoreResourceUpdatesEnabled: "true"
   timeout.reconciliation: 15s
   url: https://argocd.btkostner.io
   users.anonymous.enabled: "true"
