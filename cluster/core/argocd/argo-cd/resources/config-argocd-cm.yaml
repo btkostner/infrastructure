@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  admin.enabled: "false"
+  application.resourceTrackingMethod: annotation
+  kustomize.buildOptions: "--enable-helm"
+  resource: |
+  resource.customizations.ignoreResourceUpdates.ConfigMap: |
+    jqPathExpressions:
+  resource.customizations.ignoreResourceUpdates.all: |
+    jsonPointers:
+      - /endpoints
+      - /metadata
+      - /ports
+      - /status
+      - /subsets
+    jqPathExpressions:
+      - '.metadata.annotations."argocd.argoproj.io/hydrate"'
+      - '.metadata.annotations."argocd.argoproj.io/refresh"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/behavior"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/conditions"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/current-metrics"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/metrics"'
+      - '.metadata.annotations."cluster-autoscaler.kubernetes.io/last-updated"'
+      - '.metadata.annotations."control-plane.alpha.kubernetes.io/leader"'
+      - '.metadata.annotations."deployment.kubernetes.io/desired-replicas"'
+      - '.metadata.annotations."deployment.kubernetes.io/max-replicas"'
+      - '.metadata.annotations."notified.notifications.argoproj.io"'
+      - '.metadata.annotations."rollout.argoproj.io/desired-replicas"'
+      - '.metadata.labels."k8slens-edit-resource-version"'
+      - '.metadata.labels."velero.io/backup-name"'
+      - '.metadata.labels."velero.io/restore-name"'
+      - '.operation'
+  resource.exclusions: |
+    - apiGroups:
+        - cilium.io
+      kinds:
+        - CiliumIdentity
+      clusters:
+        - "*"
+    - apiGroups:
+        - velero.io
+      kinds:
+        - PodVolumeBackup
+        - Backup
+      clusters:
+        - "*"
+  timeout.reconciliation: 15s
+  url: https://argocd.btkostner.io
+  users.anonymous.enabled: "true"

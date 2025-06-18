@@ -12,50 +12,12 @@ resources:
   - ./resources/secret-repository.yaml
   - ./resources/secret-repo-creds.yaml
 
-configMapGenerator:
-  - name: argocd-cm
-    behavior: merge
-    literals:
-      - "kustomize.buildOptions=--enable-helm"
-      - "server.insecure=true"
-      - "timeout.reconciliation=15s"
-      - |
-        resource.customizations.ignoreResourceUpdates.all=
-          jsonPointers:
-            - /status
-          jqPathExpressions:
-            # Ignore the Velio related backup and restore labels
-            - '.metadata.labels."velero.io/backup-name"'
-            - '.metadata.labels."velero.io/restore-name"'
-            # Ignore all k8s lens related editing labels
-            - '.metadata.labels."k8slens-edit-resource-version"'
-      - |
-        resource.exclusions=
-          - apiGroups:
-              - cilium.io
-            kinds:
-              - CiliumIdentity
-            clusters:
-              - "*"
-          - apiGroups:
-              - velero.io
-            kinds:
-              - PodVolumeBackup
-              - Backup
-            clusters:
-              - "*"
-
 patches:
+  - path: ./resources/config-argocd-cm.yaml
+  - path: ./resources/config-argocd-cmd-params-cm.yaml
   - target:
       kind: Deployment
       name: argocd-redis-ha-haproxy
     patch: |-
       - op: remove
         path: "/spec/template/spec/initContainers/0"
-  - target:
-      kind: Deployment
-      name: argocd-server
-    patch: |-
-      - op: add
-        path: "/spec/template/spec/containers/0/args/-"
-        value: "--insecure"
