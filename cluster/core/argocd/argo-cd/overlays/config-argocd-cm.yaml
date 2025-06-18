@@ -9,7 +9,6 @@ data:
   resource.customizations.ignoreDifferences.all: |
     jsonPointers:
       - /endpoints
-      # - /metadata
       - /ports
       - /status
       - /subsets
@@ -26,6 +25,7 @@ data:
       - '.metadata.annotations."deployment.kubernetes.io/max-replicas"'
       - '.metadata.annotations."notified.notifications.argoproj.io"'
       - '.metadata.annotations."rollout.argoproj.io/desired-replicas"'
+      - '.metadata.labels'
       - '.metadata.labels."k8slens-edit-resource-version"'
       - '.metadata.labels."velero.io/backup-name"'
       - '.metadata.labels."velero.io/restore-name"'
