@@ -12,6 +12,8 @@ resources:
   - ./resources/secret-repository.yaml
   - ./resources/secret-repo-creds.yaml
 
+  - ./resources/application.yaml
+
 patches:
   - path: ./overlays/config-argocd-cm.yaml
   - path: ./overlays/config-argocd-cmd-params-cm.yaml
