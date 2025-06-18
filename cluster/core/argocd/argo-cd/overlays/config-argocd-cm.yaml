@@ -4,7 +4,7 @@ metadata:
   name: argocd-cm
 data:
   admin.enabled: "false"
-  application.resourceTrackingMethod: annotation
+  application.resourceTrackingMethod: label
   kustomize.buildOptions: "--enable-helm"
   resource: |
   resource.customizations.ignoreResourceUpdates.ConfigMap: |
