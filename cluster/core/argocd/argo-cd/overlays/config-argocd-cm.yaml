@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  admin.enabled: "false"
-  application.resourceTrackingMethod: label
+  admin.enabled: "true"
+  application.resourceTrackingMethod: annotation
   kustomize.buildOptions: "--enable-helm"
   resource: |
   resource.customizations.ignoreResourceUpdates.ConfigMap: |
@@ -12,7 +12,7 @@ data:
   resource.customizations.ignoreResourceUpdates.all: |
     jsonPointers:
       - /endpoints
-      - /metadata
+      # - /metadata
       - /ports
       - /status
       - /subsets
