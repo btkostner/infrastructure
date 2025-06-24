@@ -50,7 +50,7 @@ spec:
               cpu: 7000m
               gpu.intel.com/i915: 1
               gpu.intel.com/millicores: 1000
-              memory: 8Gi
+              memory: 24Gi
           env:
             - name: TZ
               value: America/Los_Angeles
@@ -78,4 +78,4 @@ spec:
         - name: transcode
           emptyDir:
             medium: Memory
-            sizeLimit: 6Gi
+            sizeLimit: 18Gi
