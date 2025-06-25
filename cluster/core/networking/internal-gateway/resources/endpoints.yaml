@@ -5,11 +5,8 @@ metadata:
   namespace: networking
 subsets:
   - addresses:
-      - ip: 192.168.3.11
-      - ip: 192.168.3.12
-      - ip: 192.168.3.13
-      - ip: 192.168.3.14
+      - ip: 192.168.3.52
     ports:
       - name: gateway
-        port: 9443
+        port: 443
         protocol: TCP
