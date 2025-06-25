@@ -1,0 +1,13 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: TCPRoute
+metadata:
+  name: plex-tcp
+  namespace: media
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: networking
+  rules:
+    - backendRefs:
+        - name: plex
+          port: 32400

@@ -12,3 +12,4 @@ resources:
   - ./resources/pvc-config.yaml
   - ./resources/pvc-media.yaml
   - ./resources/service.yaml
+  - ./resources/tcp-route.yaml

@@ -23,6 +23,13 @@ spec:
         certificateRefs:
           - name: abraxis-tv
 
+    - name: abraxis-tv-tcp
+      port: 32400
+      protocol: TCP
+      allowedRoutes:
+        namespaces:
+          from: All
+
     - hostname: request.abraxis.tv
       name: request-abraxis-tv
       port: 443
