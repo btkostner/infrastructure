@@ -14,5 +14,7 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
-  - ./resources/cilium-l2-announcement-policy.yaml
+  - ./resources/cilium-bgp-advertisement.yaml
+  - ./resources/cilium-bgp-cluster-config.yaml
+  - ./resources/cilium-bgp-peer-config.yaml
   - ./resources/cilium-load-balancer-ip-pool.yaml

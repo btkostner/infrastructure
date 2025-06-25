@@ -9,6 +9,8 @@ machine:
           physical: true
         dhcp: true
         mtu: 9000
+  nodeLabels:
+    bgp: "65020"
   time:
     servers:
       - time.cloudflare.com

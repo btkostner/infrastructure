@@ -1,3 +1,5 @@
+bgpControlPlane:
+  enabled: true
 cgroup:
   autoMount:
     enabled: false
@@ -11,8 +13,8 @@ externalIPs:
   enabled: true
 gatewayAPI:
   enabled: true
-  hostNetwork:
-    enabled: true
+  enableAlpn: true
+  enableAppProtocol: true
   secretsNamespace:
     create: false
     name: kube-system
