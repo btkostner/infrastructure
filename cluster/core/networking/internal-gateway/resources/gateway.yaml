@@ -5,6 +5,7 @@ metadata:
   namespace: networking
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-production
+    tailscale.com/expose: "true"
 spec:
   addresses:
     - type: IPAddress
