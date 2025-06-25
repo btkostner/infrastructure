@@ -6,4 +6,10 @@ spec:
   blocks:
     - start: "192.168.3.50"
       stop: "192.168.3.59"
-  disabled: false
+  serviceSelector:
+    matchExpressions:
+      - {
+          key: gateway.networking.k8s.io/gateway-name,
+          operator: In,
+          values: ["external-gateway", "internal-gateway"],
+        }

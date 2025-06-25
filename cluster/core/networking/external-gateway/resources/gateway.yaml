@@ -13,7 +13,7 @@ spec:
   listeners:
     - hostname: abraxis.tv
       name: abraxis-tv
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -25,7 +25,7 @@ spec:
 
     - hostname: request.abraxis.tv
       name: request-abraxis-tv
-      port: 8443
+      port: 443
       protocol: HTTPS
       allowedRoutes:
         namespaces:
@@ -36,5 +36,5 @@ spec:
           - name: request-abraxis-tv
 
     - name: http-redirect
-      port: 8080
+      port: 80
       protocol: HTTP

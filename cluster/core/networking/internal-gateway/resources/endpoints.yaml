@@ -8,6 +8,7 @@ subsets:
       - ip: 192.168.3.11
       - ip: 192.168.3.12
       - ip: 192.168.3.13
+      - ip: 192.168.3.14
     ports:
       - name: gateway
         port: 9443
