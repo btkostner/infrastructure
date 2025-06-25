@@ -6,6 +6,4 @@ metadata:
 namespace: networking
 
 resources:
-  - ./resources/endpoints.yaml
   - ./resources/gateway.yaml
-  - ./resources/service.yaml
