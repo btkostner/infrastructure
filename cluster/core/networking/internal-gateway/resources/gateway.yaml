@@ -11,6 +11,9 @@ spec:
     - type: IPAddress
       value: 192.168.3.52
   gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      tailscale.com/expose: "true"
   listeners:
     - hostname: "*.btkostner.network"
       name: btkostner-network
