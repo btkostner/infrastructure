@@ -1,6 +1,6 @@
-# This image is based off Talos 1.7.5 with the following configuration:
+# This image is based off Talos 1.10.4 with the following configuration:
 #
-# https://factory.talos.dev/?arch=amd64&board=undefined&cmdline=cpufreq.default_governor%3Dperformance+ipv6.disable%3D1+net.ifnames%3D1&cmdline-set=true&extensions=-&extensions=siderolabs%2Fi915-ucode&extensions=siderolabs%2Fintel-ice-firmware&extensions=siderolabs%2Fintel-ucode&extensions=siderolabs%2Fiscsi-tools&extensions=siderolabs%2Fthunderbolt&extensions=siderolabs%2Futil-linux-tools&platform=metal&secureboot=undefined&target=metal&version=1.7.5
+# https://factory.talos.dev/?arch=amd64&cmdline=cpufreq.default_governor%3Dperformance+ipv6.disable%3D1+net.ifnames%3D1&cmdline-set=true&extensions=-&extensions=siderolabs%2Fi915&extensions=siderolabs%2Fintel-ice-firmware&extensions=siderolabs%2Fintel-ucode&extensions=siderolabs%2Fiscsi-tools&extensions=siderolabs%2Fmei&extensions=siderolabs%2Fthunderbolt&extensions=siderolabs%2Futil-linux-tools&platform=metal&target=metal&version=1.10.4
 #
 # customization:
 #   extraKernelArgs:
@@ -17,4 +17,4 @@
 #       - siderolabs/util-linux-tools
 machine:
   install:
-    image: factory.talos.dev/installer/2af79371e75a12701f0703e6b5fb97cafb9d8e5e6f3544d3f3f568255dcacf69:v1.7.5
+    image: factory.talos.dev/metal-installer/c70ca4b31e8347c8dd0484b6354d20abcce4b1c7964b36a842c0227da2fbfe6d:v1.10.4

@@ -11,6 +11,8 @@ machine:
         mtu: 9000
   nodeLabels:
     bgp: "65020"
+    node.kubernetes.io/exclude-from-external-load-balancers:
+      $patch: delete
   time:
     servers:
       - time.cloudflare.com
