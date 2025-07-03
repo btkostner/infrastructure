@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: plex
-          image: docker.io/plexinc/pms-docker:plexpass
+          image: docker.io/plexinc/pms-docker:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 32400
@@ -52,10 +52,14 @@ spec:
               gpu.intel.com/millicores: 1000
               memory: 24Gi
           env:
+            - name: ADVERTISE_IP
+              value: "https://abraxis.tv:443/"
+            - name: ALLOWED_NETWORKS
+              value: "192.168.0.0/16"
+            - name: HOSTNAME
+              value: "abraxis.tv"
             - name: TZ
-              value: America/Los_Angeles
-            - name: VERSION
-              value: docker
+              value: "America/Los_Angeles"
           volumeMounts:
             - name: config
               mountPath: /config

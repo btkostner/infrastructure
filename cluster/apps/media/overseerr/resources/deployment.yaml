@@ -30,10 +30,16 @@ spec:
             httpGet:
               path: /api/v1/status
               port: 5055
+            failureThreshold: 4
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
           livenessProbe:
             httpGet:
               path: /api/v1/status
               port: 5055
+            failureThreshold: 4
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
           resources:
             requests:
               cpu: 1000m
