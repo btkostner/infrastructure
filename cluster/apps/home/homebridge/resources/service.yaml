@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: homebridge
-  type: LoadBalancer
   ports:
     - name: http
       port: 80
