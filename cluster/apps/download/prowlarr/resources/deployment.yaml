@@ -121,6 +121,7 @@ spec:
             claimName: prowlarr-config
         - name: config-file
           secret:
+            defaultMode: 0644
             secretName: prowlarr-config
             items:
               - key: config.xml
