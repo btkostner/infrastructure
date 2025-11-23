@@ -6,6 +6,7 @@ on:
     paths:
       - .github/renovate-bot.json
       - .github/renovate.json
+      - .github/workflows/renovate.yaml
   schedule:
     - cron: "23 4 * * *"
   workflow_call:
@@ -19,18 +20,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - id: appToken
+      - id: token
         name: Get App Token
-        uses: jnwng/github-app-installation-token-action@c54add4c02866dc41e106745ac6dcf5cdd6339e5 # v2
+        uses: actions/create-github-app-token@8efbf9bf0ff7093c26fd1720e1722fd9cdd30fac # v2.2.0
         with:
-          appId: 779659
-          installationId: 45764102
-          privateKey: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          app-id: 779659
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
 
       - name: Renovate
         uses: renovatebot/github-action@4ebebabcd582dddea1692b05c3d5279f8e372b53 # v44.0.0
         with:
           configurationFile: .github/renovate-bot.json
-          token: ${{ steps.appToken.outputs.token }}
+          token: ${{ steps.token.outputs.token }}
         env:
           LOG_LEVEL: ${{ runner.debug && 'debug' || 'info' }}

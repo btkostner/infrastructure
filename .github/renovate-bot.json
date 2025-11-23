@@ -2,6 +2,5 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "onboarding": false,
   "platform": "github",
-  "repositories": ["btkostner/infrastructure"],
-  "username": "btkostner-infrastructure[bot]"
+  "repositories": ["btkostner/infrastructure"]
 }
