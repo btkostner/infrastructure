@@ -43,6 +43,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - RespectIgnoreDifferences=true
+          - ServerSideApply=true
       ignoreDifferences:
         - group: ""
           kind: ConfigMap
