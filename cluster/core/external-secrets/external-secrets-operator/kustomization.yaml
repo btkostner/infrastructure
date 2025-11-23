@@ -10,7 +10,7 @@ helmCharts:
     repo: https://charts.external-secrets.io
     releaseName: external-secrets
     namespace: external-secrets
-    version: 0.10.2
+    version: 0.20.4
     valuesFile: values.yaml
 
 resources:
