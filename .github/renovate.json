@@ -3,58 +3,27 @@
   "additionalReviewers": ["btkostner"],
   "branchPrefix": "renovate/",
   "dependencyDashboard": true,
-  "extends": ["config:recommended", ":semanticCommits"],
-  "ignorePresets": ["group:monorepos", "group:recommended"],
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    "helpers:pinGitHubActionDigests",
+    "github>btkostner/infrastructure//.github/renovate/auto-merge.json",
+    "github>btkostner/infrastructure//.github/renovate/changelogs.json",
+    "github>btkostner/infrastructure//.github/renovate/custom-managers.json",
+    "github>btkostner/infrastructure//.github/renovate/groups.json",
+    ":automergeBranch",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":timezone(America/Phoenix)"
+  ],
   "labels": ["dependencies"],
   "lockFileMaintenance": {
     "enabled": true
   },
-  "packageRules": [
-    {
-      "extends": ["helpers:pinGitHubActionDigests"],
-      "groupName": "CI",
-      "matchCategories": ["ci"],
-      "minimumReleaseAge": "7 days"
-    },
-    {
-      "groupName": "Kubernetes",
-      "matchCategories": ["helm", "kubernetes", "cd"],
-      "minimumReleaseAge": "14 days"
-    },
-    {
-      "groupName": "Tools",
-      "matchCategories": ["asdf"],
-      "minimumReleaseAge": "14 days"
-    }
-  ],
   "patch": {
     "enabled": false
   },
   "platformCommit": "enabled",
-  "prHourlyLimit": 0,
-  "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/.*y[a]?ml$/"],
-      "matchStrings": ["image: (?<depName>.*?):(?<currentValue>.*?)"],
-      "datasourceTemplate": "docker"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/kustomization.yaml/"],
-      "matchStrings": [
-        "https://github.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
-      ],
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/kustomization.yaml/"],
-      "matchStrings": [
-        "https://raw.githubusercontent.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
-      ],
-      "datasourceTemplate": "github-tags"
-    }
-  ],
-  "timezone": "America/Phoenix"
+  "prHourlyLimit": 0
 }
