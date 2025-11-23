@@ -22,7 +22,7 @@ jobs:
 
       - id: token
         name: Get App Token
-        uses: actions/create-github-app-token@8efbf9bf0ff7093c26fd1720e1722fd9cdd30fac # v2.2.0
+        uses: actions/create-github-app-token@7e473efe3cb98aa54f8d4bac15400b15fad77d94 # v2.2.0
         with:
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           app-id: 779659
