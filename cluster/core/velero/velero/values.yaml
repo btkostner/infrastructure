@@ -15,7 +15,7 @@ resources:
     memory: 2Gi
 initContainers:
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.12.0
+    image: velero/velero-plugin-for-aws:v1.13.1
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
