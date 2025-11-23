@@ -1,0 +1,4 @@
+monioring:
+  serviceMonitor:
+    enabled: true
+replicaCount: 2

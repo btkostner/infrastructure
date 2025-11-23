@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: tuppr
+
+namespace: system-upgrade
+
+helmCharts:
+  - name: tuppr
+    repo: oci://ghcr.io/home-operations/charts/tuppr
+    releaseName: tuppr
+    version: 0.0.43
+    namespace: system-upgrade
+    valuesFile: ./values.yaml
+
+resources:
+  - ./resources/namespace.yaml
+  - ./resources/talos-upgrade.yaml
