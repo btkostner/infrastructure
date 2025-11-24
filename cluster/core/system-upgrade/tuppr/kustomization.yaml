@@ -15,5 +15,6 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
+  - ./resources/kubernetes-upgrade.yaml
   - ./resources/namespace.yaml
   - ./resources/talos-upgrade.yaml
