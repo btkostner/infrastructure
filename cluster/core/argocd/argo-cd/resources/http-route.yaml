@@ -7,9 +7,18 @@ spec:
   hostnames:
     - argocd.btkostner.network
   parentRefs:
-    - name: internal-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
       namespace: networking
   rules:
     - backendRefs:
-        - name: argocd-server
+        - group: ""
+          kind: Service
+          name: argocd-server
           port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

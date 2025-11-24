@@ -5,7 +5,9 @@ metadata:
   namespace: networking
 spec:
   parentRefs:
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
       sectionName: http-redirect
   hostnames:
     - abraxis.tv
@@ -16,3 +18,7 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

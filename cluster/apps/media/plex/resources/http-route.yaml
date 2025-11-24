@@ -7,9 +7,18 @@ spec:
   hostnames:
     - abraxis.tv
   parentRefs:
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
       namespace: networking
   rules:
     - backendRefs:
-        - name: plex
+        - group: ""
+          kind: Service
+          name: plex
           port: 32400
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
