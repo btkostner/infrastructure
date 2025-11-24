@@ -17,16 +17,18 @@ resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
 
   # Intel Device Manager
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dlbdeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dsadeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_fpgadeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_iaadeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_qatdeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_sgxdeviceplugins.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/fpga.intel.com_acceleratorfunctions.yaml
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.29.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dlbdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dsadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_fpgadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_iaadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_npudeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_qatdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_sgxdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/fpga.intel.com_acceleratorfunctions.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.34.1-helm.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
 
+charts/device-plugin-operator/crds/
   # Volume Snapshots
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.4.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.4.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
