@@ -48,6 +48,9 @@ gateway:
     limits:
       cpu: 1.4
       memory: 731Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 global:
   extraEnv:
