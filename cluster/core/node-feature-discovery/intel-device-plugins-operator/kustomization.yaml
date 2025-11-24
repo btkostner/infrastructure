@@ -10,4 +10,4 @@ helmCharts:
     repo: https://intel.github.io/helm-charts
     releaseName: intel-device-plugins-operator
     namespace: node-feature-discovery
-    version: 0.31.0
+    version: 0.34.0
