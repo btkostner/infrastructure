@@ -7,7 +7,7 @@ namespace: system-upgrade
 
 helmCharts:
   - name: tuppr
-    repo: oci://ghcr.io/home-operations/charts/tuppr
+    repo: oci://ghcr.io/home-operations/charts
     releaseName: tuppr
     version: 0.0.43
     namespace: system-upgrade
