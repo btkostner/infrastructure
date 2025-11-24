@@ -25,4 +25,6 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: btkostner-network
+          - group: ""
+            kind: Secret
+            name: btkostner-network

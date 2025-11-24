@@ -21,7 +21,9 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: abraxis-tv
+          - group: ""
+            kind: Secret
+            name: abraxis-tv
 
     - name: abraxis-tv-tcp
       port: 32400
@@ -40,7 +42,9 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: request-abraxis-tv
+          - group: ""
+            kind: Secret
+            name: request-abraxis-tv
 
     - name: http-redirect
       port: 80
