@@ -11,6 +11,7 @@
     "github>btkostner/infrastructure//.github/renovate/changelogs.json",
     "github>btkostner/infrastructure//.github/renovate/custom-managers.json",
     "github>btkostner/infrastructure//.github/renovate/groups.json",
+    "github>btkostner/infrastructure//.github/renovate/overrides.json",
     ":automergeBranch",
     ":disableRateLimiting",
     ":dependencyDashboard",

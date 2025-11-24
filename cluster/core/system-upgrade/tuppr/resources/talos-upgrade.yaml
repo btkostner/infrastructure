@@ -14,7 +14,7 @@ spec:
     - apiVersion: velero.io/v1
       kind: Schedule
       expr: |-
-        status.phase in ['New', 'Completed']
+        status.phase in ['Enabled', 'New', 'Completed']
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
       expr: |-

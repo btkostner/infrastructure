@@ -17,4 +17,5 @@
 #       - siderolabs/util-linux-tools
 machine:
   install:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
     image: factory.talos.dev/metal-installer/c70ca4b31e8347c8dd0484b6354d20abcce4b1c7964b36a842c0227da2fbfe6d:v1.10.4
