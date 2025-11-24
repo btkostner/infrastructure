@@ -160,9 +160,6 @@ mimir:
 minio:
   enabled: false
 
-nginx:
-  enabled: false
-
 overrides_exporter:
   enabled: false
 
