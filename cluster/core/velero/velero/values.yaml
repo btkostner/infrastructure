@@ -1,11 +1,8 @@
 namespace:
   labels:
-    - key: pod-security.kubernetes.io/enforce
-      value: privileged
-    - key: pod-security.kubernetes.io/audit
-      value: privileged
-    - key: pod-security.kubernetes.io/warn
-      value: privileged
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/warn: privileged
 resources:
   requests:
     cpu: 500m
@@ -63,7 +60,8 @@ configuration:
   defaultSnapshotMoveData: true
   defaultVolumesToFsBackup: true
   extraEnvVars:
-    TZ: America/Phoenix
+    - name: TZ
+      value: America/Phoenix
 credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"
