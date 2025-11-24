@@ -63,10 +63,7 @@ configuration:
   defaultSnapshotMoveData: true
   defaultVolumesToFsBackup: true
   extraEnvVars:
-    TZ: America/Los_Angeles
-nodeAgent:
-  extraEnvVars:
-    TZ: America/Los_Angeles
+    TZ: America/Phoenix
 credentials:
   useSecret: true
   existingSecret: "backblaze-credentials"
