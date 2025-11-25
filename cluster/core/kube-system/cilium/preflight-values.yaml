@@ -1,0 +1,5 @@
+agent: false
+operator:
+  enabled: false
+preflight:
+  enabled: true
