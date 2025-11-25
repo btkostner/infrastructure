@@ -44,12 +44,10 @@ spec:
             requests:
               cpu: 2000m
               gpu.intel.com/i915: 1
-              gpu.intel.com/millicores: 1000
               memory: 2Gi
             limits:
               cpu: 7000m
               gpu.intel.com/i915: 1
-              gpu.intel.com/millicores: 1000
               memory: 24Gi
           env:
             - name: ADVERTISE_IP

@@ -44,12 +44,10 @@ spec:
             requests:
               cpu: 1000m
               gpu.intel.com/i915: 1
-              gpu.intel.com/millicores: 500
               memory: 1Gi
             limits:
               cpu: 4000m
               gpu.intel.com/i915: 1
-              gpu.intel.com/millicores: 500
               memory: 8Gi
           env:
             - name: TZ
