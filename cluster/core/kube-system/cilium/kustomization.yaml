@@ -10,7 +10,7 @@ helmCharts:
     repo: https://helm.cilium.io
     releaseName: cilium-preflight
     namespace: kube-system
-    version: 1.17.10
+    version: 1.18.4
     valuesFile: ./preflight-values.yaml
 
   - name: cilium
