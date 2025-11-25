@@ -5,9 +5,13 @@ metadata:
   namespace: media
 spec:
   parentRefs:
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
       namespace: networking
   rules:
     - backendRefs:
-        - name: plex
+        - group: ""
+          kind: Service
+          name: plex
           port: 32400
