@@ -44,8 +44,6 @@ k8sServicePort: 7445
 kubeProxyReplacement: true
 l2announcements:
   enabled: true
-nodePort:
-  enabled: true
 operator:
   rollOutPods: true
   replicas: 2
