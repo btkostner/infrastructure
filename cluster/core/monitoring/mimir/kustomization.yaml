@@ -12,7 +12,7 @@ helmCharts:
     releaseName: mimir
     repo: https://grafana.github.io/helm-charts
     valuesFile: ./values.yaml
-    version: 5.8.0
+    version: 6.0.3
 
 resources:
   - ./resources/grafana-datasource.yaml
