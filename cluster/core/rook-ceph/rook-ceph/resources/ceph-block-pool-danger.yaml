@@ -1,0 +1,13 @@
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: danger-block-pool
+  namespace: rook-ceph
+spec:
+  enableRBDStats: true
+  failureDomain: host
+  replicated:
+    size: 1
+  mirroring:
+    enabled: true
+    mode: image

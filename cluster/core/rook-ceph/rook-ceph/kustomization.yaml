@@ -15,7 +15,8 @@ helmCharts:
 
 resources:
   - https://github.com/rook/rook/raw/v1.15.2/deploy/examples/toolbox-operator-image.yaml
-  - ./resources/ceph-block-pool.yaml
+  - ./resources/ceph-block-pool-danger.yaml
+  - ./resources/ceph-block-pool-safe.yaml
   - ./resources/ceph-cluster.yaml
   - ./resources/ceph-object-store.yaml
   - ./resources/http-route.yaml
@@ -24,5 +25,6 @@ resources:
   - ./resources/service-monitor-csi.yaml
   - ./resources/service-monitor-exporter.yaml
   - ./resources/service-monitor-mgr.yaml
-  - ./resources/storage-class-block.yaml
+  - ./resources/storage-class-block-danger.yaml
+  - ./resources/storage-class-block-safe.yaml
   - ./resources/storage-class-object.yaml
