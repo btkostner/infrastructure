@@ -1,8 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
   labels:
     app.kubernetes.io/managed-by: argocd
     app.kubernetes.io/name: application-sets
@@ -17,6 +15,5 @@ spec:
     repoURL: https://github.com/btkostner/infrastructure.git
   syncPolicy:
     automated:
-      allowEmpty: true
       prune: false
       selfHeal: false
