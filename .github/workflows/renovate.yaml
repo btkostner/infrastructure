@@ -6,6 +6,7 @@ on:
     paths:
       - .github/renovate-bot.json
       - .github/renovate.json
+      - .github/renovate/*.json
       - .github/workflows/renovate.yaml
   schedule:
     - cron: "23 4 * * *"
