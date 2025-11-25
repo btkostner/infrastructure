@@ -15,3 +15,4 @@ spec:
           kind: Service
           name: plex
           port: 32400
+          weight: 1
