@@ -14,7 +14,7 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
-  - https://github.com/rook/rook/raw/v1.15.2/deploy/examples/toolbox-operator-image.yaml
+  - https://github.com/rook/rook/raw/v1.18.7/deploy/examples/toolbox-operator-image.yaml
   - ./resources/ceph-block-pool-danger.yaml
   - ./resources/ceph-block-pool-safe.yaml
   - ./resources/ceph-cluster.yaml
