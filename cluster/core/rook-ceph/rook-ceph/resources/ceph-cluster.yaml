@@ -15,7 +15,7 @@ spec:
       enabled: true
   dashboard:
     enabled: true
-    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local
+    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local/prometheus
     prometheusEndpointSSLVerify: false
   dataDirHostPath: /var/lib/rook
   mon:

@@ -11,13 +11,13 @@ data:
     datasources:
       - name: Mimir
         type: prometheus
-        url: http://mimir-gateway
+        url: http://mimir-gateway/prometheus
         access: proxy
         isDefault: true
       # Used for Ceph dashboards ugh
       - name: Dashboard1
         type: prometheus
-        url: http://mimir-gateway
+        url: http://mimir-gateway/prometheus
         access: proxy
       - name: Alertmanager
         type: alertmanager
