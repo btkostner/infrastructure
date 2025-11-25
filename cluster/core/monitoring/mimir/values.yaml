@@ -142,6 +142,8 @@ metaMonitoring:
 
 mimir:
   structuredConfig:
+    api:
+      prometheus_http_prefix: "/"
     common:
       storage:
         backend: s3
@@ -246,5 +248,11 @@ store_gateway:
     requests:
       cpu: 100m
       memory: 512Mi
+  service:
+    labels:
+      # Used to "fake" a prometheus server for Lens discovery
+      app: prometheus
+      component: service
+      heritage: Helm
   zoneAwareReplication:
     enabled: false

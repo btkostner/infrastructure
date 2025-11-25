@@ -11,7 +11,7 @@ data:
     datasources:
       - name: Mimir
         type: prometheus
-        url: http://mimir-gateway/prometheus
+        url: http://mimir-gateway
         access: proxy
         isDefault: true
       - name: Alertmanager

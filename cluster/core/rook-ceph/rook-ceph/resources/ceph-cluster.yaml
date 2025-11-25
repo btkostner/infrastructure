@@ -12,7 +12,7 @@ spec:
   continueUpgradeAfterChecksEvenIfNotHealthy: true
   dashboard:
     enabled: true
-    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus
+    prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local
     prometheusEndpointSSLVerify: false
   dataDirHostPath: /var/lib/rook
   mon:
