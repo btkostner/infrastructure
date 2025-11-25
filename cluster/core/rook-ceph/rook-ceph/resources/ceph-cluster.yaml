@@ -4,12 +4,15 @@ metadata:
   name: ceph
   namespace: rook-ceph
 spec:
-  csi:
-    readAffinity:
-      enabled: true
+  cephConfig:
+    global:
+      mon_warn_on_pool_no_redundancy: "false"
   cephVersion:
     image: quay.io/ceph/ceph:v19.2.0-20240927
   continueUpgradeAfterChecksEvenIfNotHealthy: true
+  csi:
+    readAffinity:
+      enabled: true
   dashboard:
     enabled: true
     prometheusEndpoint: http://mimir-gateway.monitoring.svc.cluster.local
