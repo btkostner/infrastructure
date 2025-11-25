@@ -6,12 +6,13 @@ metadata:
 namespace: kube-system
 
 helmCharts:
-  - name: cilium
-    repo: https://helm.cilium.io
-    releaseName: cilium-preflight
-    namespace: kube-system
-    version: 1.18.4
-    valuesFile: ./preflight-values.yaml
+  # Used before upgrades
+  # - name: cilium
+  #   repo: https://helm.cilium.io
+  #   releaseName: cilium-preflight
+  #   namespace: kube-system
+  #   version: 1.18.4
+  #   valuesFile: ./preflight-values.yaml
 
   - name: cilium
     repo: https://helm.cilium.io
