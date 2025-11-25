@@ -23,7 +23,8 @@ compactor:
       memory: 512Mi
 
 distributor:
-  replicas: 1
+  maxUnavailable: 1
+  replicas: 2
   resources:
     limits:
       cpu: 1
@@ -34,12 +35,16 @@ distributor:
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 1
+    minReplicaCount: 2
     maxReplicaCount: 6
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 gateway:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 3
   enabledNonEnterprise: true
   replicas: 2
   resources:
@@ -109,6 +114,12 @@ global:
           key: AWS_SECRET_ACCESS_KEY
 
 ingester:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   persistentVolume:
     enabled: false
   replicas: 2
@@ -175,7 +186,8 @@ overrides_exporter:
   enabled: false
 
 querier:
-  replicas: 1
+  maxUnavilable: 1
+  replicas: 2
   resources:
     limits:
       cpu: 2
@@ -186,13 +198,14 @@ querier:
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 1
+    minReplicaCount: 2
     maxReplicaCount: 6
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 query_frontend:
-  replicas: 1
+  maxUnavilable: 1
+  replicas: 2
   resources:
     limits:
       cpu: 2
@@ -203,7 +216,7 @@ query_frontend:
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 1
+    minReplicaCount: 2
     maxReplicaCount: 6
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
@@ -216,7 +229,7 @@ query_scheduler:
       memory: 128Mi
 
 ruler:
-  replicas: 1
+  replicas: 2
   resources:
     limits:
       cpu: 1
@@ -227,7 +240,7 @@ ruler:
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 1
+    minReplicaCount: 2
     maxReplicaCount: 6
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100

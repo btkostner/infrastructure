@@ -50,11 +50,21 @@ bloomCompactor:
 bloomGateway:
   replicas: 0
 
+bloomPlanner:
+  replicas: 0
+
 compactor:
   replicas: 2
   maxUnavailable: 1
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
 
 deploymentMode: Distributed
 
@@ -64,22 +74,36 @@ distributor:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 4
+    maxReplicas: 6
     targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 100
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
 
 gateway:
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution: []
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 3
   enabled: true
   replicas: 2
   resources:
     limits:
-      cpu: 1.4
-      memory: 731Mi
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 indexGateway:
   replicas: 2
@@ -88,7 +112,17 @@ indexGateway:
   extraEnv: *globalExtraEnv
 
 ingester:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: []
   replicas: 2
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -236,23 +270,37 @@ querier:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 4
+    maxReplicas: 6
     targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 100
+  resources:
+    limits:
+      cpu: 2
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
   zoneAwareReplication:
     enabled: false
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
 queryFrontend:
-  replicas: 2
-  maxUnavailable: 1
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 4
+    maxReplicas: 6
     targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 100
+  maxUnavailable: 1
+  replicas: 2
+  resources:
+    limits:
+      cpu: 2
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
 
@@ -261,6 +309,10 @@ queryScheduler:
   maxUnavailable: 1
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 read:
   replicas: 0
@@ -269,11 +321,24 @@ rollout_operator:
   enabled: false
 
 ruler:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 100
   enabled: true
   replicas: 2
   maxUnavailable: 1
   extraArgs: ["-config.expand-env=true"]
   extraEnv: *globalExtraEnv
+  resources:
+    limits:
+      cpu: 1
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 singleBinary:
   replicas: 0
