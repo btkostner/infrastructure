@@ -119,6 +119,8 @@ ingester:
     requests:
       cpu: 100m
       memory: 512Mi
+  zoneAwareReplication:
+    enabled: false
 
 kafka:
   enabled: true
@@ -244,3 +246,5 @@ store_gateway:
     requests:
       cpu: 100m
       memory: 512Mi
+  zoneAwareReplication:
+    enabled: false
