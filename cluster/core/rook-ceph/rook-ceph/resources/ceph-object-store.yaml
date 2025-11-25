@@ -15,6 +15,5 @@ spec:
       codingChunks: 1
   preservePoolsOnDelete: true
   gateway:
-    sslCertificateRef:
     port: 80
     instances: 2
