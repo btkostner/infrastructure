@@ -35,7 +35,7 @@ resources:
 
   # Cert Manager
   # renovate: datasource=github-releases depName=cert-manager/cert-manager
-  - https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.crds.yaml
 
   # Velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backuprepositories.yaml
