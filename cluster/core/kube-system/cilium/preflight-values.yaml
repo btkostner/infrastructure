@@ -1,4 +1,6 @@
 agent: false
+envoy:
+  enabled: false
 operator:
   enabled: false
 preflight:
