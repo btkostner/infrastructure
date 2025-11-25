@@ -1,44 +1,42 @@
 alertmanager:
-  replicas: 2
+  replicas: 1
   persistentVolume:
     enabled: false
   resources:
     limits:
-      cpu: 1.4
-      memory: 1.4Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 10m
       memory: 32Mi
-  zoneAwareReplication:
-    enabled: false
 
 compactor:
-  replicas: 2
+  replicas: 1
   persistentVolume:
     enabled: false
   resources:
     limits:
-      cpu: 1.4
-      memory: 2.1Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 512Mi
 
 distributor:
-  replicas: 2
+  replicas: 1
   resources:
     limits:
-      cpu: 3.5
-      memory: 5.7Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 512Mi
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 2
+    minReplicaCount: 1
     maxReplicaCount: 6
-    targetCPUUtilizationPercentage: 100
+    targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 gateway:
@@ -46,8 +44,8 @@ gateway:
   replicas: 2
   resources:
     limits:
-      cpu: 1.4
-      memory: 731Mi
+      cpu: 1
+      memory: 1024Mi
     requests:
       cpu: 100m
       memory: 128Mi
@@ -116,18 +114,23 @@ ingester:
   replicas: 2
   resources:
     limits:
-      cpu: 4
-      memory: 12Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 512Mi
-  zoneAwareReplication:
-    enabled: false
 
-kedaAutoscaling:
-  prometheusAddress: "http://mimir-gateway.monitoring.svc.cluster.local:8080/prometheus"
-  customHeaders:
-    X-Scope-OrgID: anonymous
+kafka:
+  enabled: true
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 256m
+      memory: 512Mi
+  persistence:
+    enabled: false
 
 metaMonitoring:
   dashboards:
@@ -170,11 +173,11 @@ overrides_exporter:
   enabled: false
 
 querier:
-  replicas: 2
+  replicas: 1
   resources:
     limits:
-      cpu: 2.8
-      memory: 5.6Gi
+      cpu: 2
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 128Mi
@@ -183,24 +186,24 @@ querier:
     preserveReplicas: false
     minReplicaCount: 1
     maxReplicaCount: 6
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 query_frontend:
-  replicas: 2
+  replicas: 1
   resources:
     limits:
-      cpu: 2.8
-      memory: 2.8Gi
+      cpu: 2
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 128Mi
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 2
+    minReplicaCount: 1
     maxReplicaCount: 6
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 query_scheduler:
@@ -211,20 +214,20 @@ query_scheduler:
       memory: 128Mi
 
 ruler:
-  replicas: 2
+  replicas: 1
   resources:
     limits:
-      cpu: 1.4
-      memory: 2.8Gi
+      cpu: 1
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 128Mi
   kedaAutoscaling:
     enabled: true
     preserveReplicas: false
-    minReplicaCount: 2
+    minReplicaCount: 1
     maxReplicaCount: 6
-    targetCPUUtilizationPercentage: 100
+    targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
 
 rollout_operator:
@@ -236,10 +239,8 @@ store_gateway:
   replicas: 2
   resources:
     limits:
-      cpu: 1.4
-      memory: 2.1Gi
+      cpu: 1
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 512Mi
-  zoneAwareReplication:
-    enabled: false
