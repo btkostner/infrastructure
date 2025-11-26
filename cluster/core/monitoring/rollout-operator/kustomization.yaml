@@ -12,4 +12,4 @@ helmCharts:
     releaseName: rollout-operator
     repo: https://grafana.github.io/helm-charts
     valuesFile: ./values.yaml
-    version: 0.37.1
+    version: 0.38.0
