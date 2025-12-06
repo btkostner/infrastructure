@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: download-database
+  namespace: download
+spec:
+  bootstrap:
+    initdb: {}
+  instances: 3
+  storage:
+    storageClass: ceph-danger-block
+    size: 20Gi
