@@ -6,4 +6,4 @@ spec:
   cluster:
     name: download-database
   name: seerr
-  owner: seerr
+  owner: app

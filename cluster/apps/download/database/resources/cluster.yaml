@@ -6,12 +6,6 @@ metadata:
 spec:
   bootstrap:
     initdb: {}
-  managed:
-    roles:
-      - name: seerr
-        ensure: present
-        login: true
-        superuser: false
   monitoring:
     enablePodMonitor: true
   instances: 3
