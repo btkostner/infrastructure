@@ -7,7 +7,7 @@ spec:
   volumeMode: Filesystem
   storageClassName: ceph-safe-block
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
