@@ -61,27 +61,6 @@ spec:
               value: "80"
             - name: LOG_LEVEL
               value: "info"
-            - name: DB_TYPE
-              value: "postgres"
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: download-database-app
-                  key: host
-            - name: DB_PORT
-              value: "5432"
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: download-database-app
-                  key: username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: download-database-app
-                  key: password
-            - name: DB_NAME
-              value: seerr
           volumeMounts:
             - name: config
               mountPath: /app/config

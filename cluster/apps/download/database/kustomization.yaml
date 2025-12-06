@@ -5,5 +5,4 @@ metadata:
 
 namespace: download
 
-resources:
-  - ./resources/cluster.yaml
+resources: []
