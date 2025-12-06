@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: seerr
-          image: ghcr.io/seerr-team/seerr:2.7.3
+          image: ghcr.io/seerr-team/seerr:develop
           imagePullPolicy: Always
           ports:
             - containerPort: 80
