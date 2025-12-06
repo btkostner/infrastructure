@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seerr
+  namespace: download
+  labels:
+    app: seerr
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: seerr
+  template:
+    metadata:
+      labels:
+        app: seerr
+    spec:
+      containers:
+        - name: seerr
+          image: ghcr.io/seerr-team/seerr:v2.7.3
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /api/v1/status
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/v1/status
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PORT
+              value: "80"
+            - name: LOG_LEVEL
+              value: "info"
+            - name: DB_TYPE
+              value: "postgres"
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-seerr-app
+                  key: host
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-seerr-app
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-seerr-app
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-seerr-app
+                  key: dbname
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: seerr-config
