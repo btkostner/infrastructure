@@ -5,8 +5,4 @@ metadata:
 
 namespace: media
 
-resources:
-  - ./resources/deployment.yaml
-  - ./resources/http-route.yaml
-  - ./resources/pvc-config.yaml
-  - ./resources/service.yaml
+resources: []
