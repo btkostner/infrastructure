@@ -9,7 +9,7 @@ helmCharts:
   - name: tailscale-operator
     repo: https://pkgs.tailscale.com/helmcharts
     releaseName: tailscale-operator
-    version: 1.90.8
+    version: 1.92.3
 
 resources:
   - ./resources/namespace.yaml
