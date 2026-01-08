@@ -9,7 +9,7 @@ helmCharts:
   - name: velero
     repo: https://vmware-tanzu.github.io/helm-charts
     releaseName: velero
-    version: 11.2.0
+    version: 11.3.2
     valuesFile: ./values.yaml
 
 resources:
