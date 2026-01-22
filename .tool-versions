@@ -1,4 +1,4 @@
-helm 3.19.2
+helm 3.20.0
 kubectl 1.35.0
 kustomize 5.8.0
 mdbook 0.4.36
