@@ -7,6 +7,8 @@ parent:
         name: netdata-credentials
   database:
     persistence: false
+  alarms:
+    persistence: false
   claiming:
     enabled: true
 
@@ -14,6 +16,8 @@ child:
   envFrom:
     - secretRef:
         name: netdata-credentials
+  persistence:
+    enabled: false
   claiming:
     enabled: true
 
@@ -21,7 +25,7 @@ k8sState:
   envFrom:
     - secretRef:
         name: netdata-credentials
-  database:
-    persistence: false
+  persistence:
+    enabled: false
   claiming:
     enabled: true
