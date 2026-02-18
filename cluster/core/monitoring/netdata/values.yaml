@@ -1,0 +1,27 @@
+ingress:
+  enabled: false
+
+parent:
+  envFrom:
+    - secretRef:
+        name: netdata-credentials
+  database:
+    persistence: false
+  claiming:
+    enabled: true
+
+child:
+  envFrom:
+    - secretRef:
+        name: netdata-credentials
+  claiming:
+    enabled: true
+
+k8sState:
+  envFrom:
+    - secretRef:
+        name: netdata-credentials
+  database:
+    persistence: false
+  claiming:
+    enabled: true
