@@ -4,15 +4,3 @@ metadata:
   name: netdata
 
 namespace: monitoring
-
-helmCharts:
-  - includeCRDs: true
-    name: netdata
-    namespace: monitoring
-    releaseName: netdata
-    repo: https://netdata.github.io/helmchart
-    valuesFile: ./values.yaml
-    version: 3.7.159
-
-resources:
-  - ./resources/external-secret.yaml
