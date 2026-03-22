@@ -4,16 +4,3 @@ metadata:
   name: grafana
 
 namespace: monitoring
-
-helmCharts:
-  - includeCRDs: true
-    name: grafana
-    namespace: monitoring
-    releaseName: grafana
-    repo: https://grafana.github.io/helm-charts
-    valuesFile: ./values.yaml
-    version: 10.5.1
-
-resources:
-  - ./resources/external-secret.yaml
-  - ./resources/http-route.yaml
