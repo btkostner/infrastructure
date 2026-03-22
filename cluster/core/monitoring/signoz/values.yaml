@@ -1,0 +1,94 @@
+global:
+  storageClass: ceph-safe-block
+
+clickhouse:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClass: ceph-safe-block
+  resources:
+    limits:
+      cpu: 2
+      memory: 4Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  serviceMonitor:
+    enabled: true
+
+queryService:
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  serviceMonitor:
+    enabled: true
+  initContainers:
+    init:
+      enabled: true
+      command:
+        - sh
+        - -c
+        - |
+          set -e
+          ./signoz init --admin-email="${SIGNOZ_ADMIN_EMAIL}" --admin-password="${SIGNOZ_ADMIN_PASSWORD}"
+      env:
+        - name: SIGNOZ_ADMIN_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: signoz-credentials
+              key: admin-email
+        - name: SIGNOZ_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: signoz-credentials
+              key: admin-password
+
+frontend:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  service:
+    type: ClusterIP
+    port: 3301
+
+otelCollector:
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  serviceMonitor:
+    enabled: true
+
+otelCollectorMetrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  serviceMonitor:
+    enabled: true
+
+alertmanager:
+  enabled: true
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi

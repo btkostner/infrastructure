@@ -1,8 +1,0 @@
-apiVersion: objectbucket.io/v1alpha1
-kind: ObjectBucketClaim
-metadata:
-  name: mimir-blocks
-  namespace: monitoring
-spec:
-  bucketName: mimir-blocks
-  storageClassName: safe-ceph-object

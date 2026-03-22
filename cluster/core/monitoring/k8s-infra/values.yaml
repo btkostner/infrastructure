@@ -1,0 +1,55 @@
+global:
+  deploymentEnvironment: btkostner
+
+otelCollectorEndpoint: http://signoz-otel-collector:4317
+
+otelInsecure: true
+
+presets:
+  logsCollection:
+    enabled: true
+    include:
+      - /var/log/pods/*/*/*.log
+    startAt: beginning
+    includeFilePath: true
+    includeFileName: false
+    operators:
+      - type: router
+        id: get-format
+        routes:
+          - output: parser-docker
+            expr: 'body matches "^\\{"'
+          - output: parser-crio
+            expr: 'body matches "^[^ Z]+Z"'
+        default: parser-containerd
+  hostMetrics:
+    enabled: true
+    collectionInterval: 30s
+    scrapers:
+      cpu: {}
+      disk: {}
+      load: {}
+      filesystem: {}
+      memory: {}
+      network: {}
+      paging: {}
+      process:
+        mute_process_name_error: true
+        mute_process_exe_error: true
+        mute_process_io_error: true
+  kubernetesAttributes:
+    enabled: true
+  kubeletMetrics:
+    enabled: true
+    collectionInterval: 30s
+  k8sClusterReceiver:
+    enabled: true
+    collectionInterval: 30s
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
