@@ -26,3 +26,4 @@ resources:
   - ./resources/cilium-bgp-cluster-config.yaml
   - ./resources/cilium-bgp-peer-config.yaml
   - ./resources/cilium-load-balancer-ip-pool.yaml
+  - ./resources/cilium-load-balancer-ip-pool-homeassistant.yaml
