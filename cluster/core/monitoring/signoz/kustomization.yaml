@@ -3,8 +3,6 @@ kind: Kustomization
 metadata:
   name: signoz
 
-namespace: monitoring
-
 helmCharts:
   - includeCRDs: true
     name: signoz
