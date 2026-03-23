@@ -24,8 +24,8 @@ spec:
       hostNetwork: true
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:stable
-          imagePullPolicy: Always
+          image: ghcr.io/home-assistant/home-assistant:2026.3.3
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8123
               name: http
