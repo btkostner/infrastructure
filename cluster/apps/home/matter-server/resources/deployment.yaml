@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matter-server
+  namespace: home
+  labels:
+    app: matter-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: matter-server
+  template:
+    metadata:
+      labels:
+        app: matter-server
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/matter-server: unconfined
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
+      containers:
+        - name: matter-server
+          image: ghcr.io/matter-js/python-matter-server:stable
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5580
+              name: ws
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 5580
+            failureThreshold: 3
+            timeoutSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5580
+            failureThreshold: 3
+            timeoutSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 5580
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: dbus
+              mountPath: /run/dbus
+              readOnly: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: matter-server-data
+        - name: dbus
+          hostPath:
+            path: /run/dbus
