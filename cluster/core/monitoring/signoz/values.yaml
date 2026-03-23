@@ -1,74 +1,7 @@
 global:
+  clusterName: btkostner
   storageClass: ceph-safe-block
 
 clickhouse:
-  enabled: true
   persistence:
-    enabled: true
     size: 50Gi
-    storageClass: ceph-safe-block
-  resources:
-    limits:
-      cpu: 2
-      memory: 4Gi
-    requests:
-      cpu: 100m
-      memory: 512Mi
-  serviceMonitor:
-    enabled: true
-
-queryService:
-  resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  serviceMonitor:
-    enabled: true
-
-frontend:
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 50m
-      memory: 64Mi
-  service:
-    type: ClusterIP
-    port: 3301
-
-otelCollector:
-  resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  serviceMonitor:
-    enabled: true
-
-otelCollectorMetrics:
-  enabled: true
-  resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  serviceMonitor:
-    enabled: true
-
-alertmanager:
-  enabled: true
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 10m
-      memory: 32Mi
