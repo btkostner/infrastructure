@@ -12,4 +12,4 @@ helmCharts:
     releaseName: k8s-infra
     repo: https://charts.signoz.io
     valuesFile: ./values.yaml
-    version: 0.12.3
+    version: 0.15.0
