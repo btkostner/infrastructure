@@ -10,7 +10,7 @@ helmCharts:
     releaseName: signoz
     repo: https://charts.signoz.io
     valuesFile: ./values.yaml
-    version: 0.116.2
+    version: 0.117.0
 
 resources:
   - ./resources/http-route.yaml
