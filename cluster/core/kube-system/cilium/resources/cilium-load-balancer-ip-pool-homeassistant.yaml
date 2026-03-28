@@ -4,8 +4,8 @@ metadata:
   name: homeassistant-load-balancer-ip-pool
 spec:
   blocks:
-    - start: "192.168.3.53"
-      stop: "192.168.3.53"
+    - start: "192.168.3.62"
+      stop: "192.168.3.62"
   serviceSelector:
     matchLabels:
       app: homeassistant
