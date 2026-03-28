@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: matter-server
   namespace: home
+  annotations:
+    lbipam.cilium.io/ips: 192.168.3.63
 spec:
   selector:
     app: matter-server
