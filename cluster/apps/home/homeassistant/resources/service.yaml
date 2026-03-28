@@ -14,7 +14,3 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 8123
-    - name: homeassistant
-      port: 8123
-      protocol: TCP
-      targetPort: 8123
