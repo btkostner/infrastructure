@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: homeassistant-load-balancer-ip-pool
+spec:
+  blocks:
+    - start: "192.168.3.53"
+      stop: "192.168.3.53"
+  serviceSelector:
+    matchLabels:
+      app: homeassistant
