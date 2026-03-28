@@ -4,7 +4,7 @@ metadata:
   name: homeassistant
   namespace: home
   annotations:
-    lbipam.cilium.io/ips: 192.168.3.53
+    lbipam.cilium.io/ips: 192.168.3.62
 spec:
   type: LoadBalancer
   selector:
