@@ -5,7 +5,4 @@ metadata:
 spec:
   blocks:
     - start: "192.168.3.62"
-      stop: "192.168.3.62"
-  serviceSelector:
-    matchLabels:
-      app: homeassistant
+      stop: "192.168.3.63"
