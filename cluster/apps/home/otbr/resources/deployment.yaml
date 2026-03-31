@@ -35,12 +35,7 @@ spec:
               value: "6638"
             - name: OTBR_BACKBONE_IF
               value: enp89s0
-            - name: OTBR_WEB_ENABLE
-              value: "1"
           ports:
-            - containerPort: 8080
-              name: http
-              protocol: TCP
             - containerPort: 8081
               name: rest
               protocol: TCP
