@@ -7,6 +7,5 @@ namespace: home
 
 resources:
   - ./resources/deployment.yaml
-  - ./resources/http-route.yaml
   - ./resources/pvc-data.yaml
   - ./resources/service.yaml
