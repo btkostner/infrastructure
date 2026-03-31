@@ -15,8 +15,6 @@ spec:
       enabled: true
   dashboard:
     enabled: true
-    prometheusEndpoint: http://signoz-query-service.monitoring.svc.cluster.local:8080
-    prometheusEndpointSSLVerify: false
   dataDirHostPath: /var/lib/rook
   mon:
     allowMultiplePerNode: false

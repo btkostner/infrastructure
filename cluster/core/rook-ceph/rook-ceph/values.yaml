@@ -4,8 +4,3 @@ csi:
       - kubernetes.io/hostname
     enabled: true
 enableDiscoveryDaemon: true
-monitoring:
-  enabled: true
-  createPrometheusRules: true
-toolbox:
-  enabled: true
