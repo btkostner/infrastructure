@@ -1,11 +1,17 @@
 global:
-  deploymentEnvironment: btkostner
+  cloud: others
+  clusterName: btkostner
+  deploymentEnvironment: production
 
 otelCollectorEndpoint: http://signoz-otel-collector:4317
 
 otelInsecure: true
 
 presets:
+  otlpExporter:
+    enabled: true
+  loggingExporter:
+    enabled: false
   logsCollection:
     enabled: true
     include:
