@@ -6,5 +6,5 @@ clickhouse:
   persistence:
     size: 50Gi
 
-otelColector:
+otelCollector:
   replicaCount: 2
