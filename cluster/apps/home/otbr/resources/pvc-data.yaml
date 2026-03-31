@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: otbr-data
+  namespace: home
+spec:
+  volumeMode: Filesystem
+  storageClassName: ceph-safe-block
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
