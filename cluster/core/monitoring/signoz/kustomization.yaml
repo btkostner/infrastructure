@@ -3,6 +3,8 @@ kind: Kustomization
 metadata:
   name: signoz
 
+namespace: monitoring
+
 helmCharts:
   - includeCRDs: true
     name: signoz
@@ -13,4 +15,5 @@ helmCharts:
     version: 0.117.0
 
 resources:
+  - ./resources/namespace.yaml
   - ./resources/http-route.yaml
