@@ -10,10 +10,6 @@ spec:
   selector:
     app: otbr
   ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 8080
     - name: rest
       port: 8081
       protocol: TCP
