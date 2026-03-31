@@ -32,7 +32,7 @@ spec:
             - name: RCP_HOST
               value: 192.168.3.31
             - name: RCP_PORT
-              value: 6638
+              value: "6638"
             - name: OTBR_BACKBONE_IF
               value: enp89s0
             - name: OTBR_WEB_ENABLE
