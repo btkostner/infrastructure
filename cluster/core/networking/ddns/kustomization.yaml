@@ -7,4 +7,6 @@ namespace: networking
 
 resources:
   - ./resources/deployment-abraxis-tv.yaml
+  - ./resources/deployment-btkostner-network.yaml
   - ./resources/secret-abraxis-tv-config.yaml
+  - ./resources/secret-btkostner-network-config.yaml

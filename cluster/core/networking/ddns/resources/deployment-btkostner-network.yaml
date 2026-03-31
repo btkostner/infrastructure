@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btkostner-network
+  namespace: network
+  labels:
+    app: btkostner-network
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: btkostner-network
+  template:
+    metadata:
+      labels:
+        app: btkostner-network
+    spec:
+      containers:
+        - name: ddns
+          image: lscr.io/linuxserver/ddclient:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 125m
+            limits:
+              memory: 64Mi
+              cpu: 250m
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /defaults/ddclient.conf
+              subPath: ddclient.conf
+              readOnly: false
+      volumes:
+        - name: config
+          secret:
+            secretName: btkostner-network-config
