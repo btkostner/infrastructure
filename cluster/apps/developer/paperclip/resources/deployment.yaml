@@ -52,8 +52,6 @@ spec:
               value: "3100"
             - name: SERVE_UI
               value: "true"
-            - name: PAPERCLIP_PUBLIC_URL
-              value: https://paperclip.btkostner.network
             - name: PAPERCLIP_DEPLOYMENT_MODE
               value: local_trusted
           volumeMounts:
