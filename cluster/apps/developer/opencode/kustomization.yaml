@@ -11,3 +11,4 @@ resources:
   - ./resources/pvc-data.yaml
   - ./resources/secret-config.yaml
   - ./resources/service.yaml
+  - ./resources/startup-script.yaml
