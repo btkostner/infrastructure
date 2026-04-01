@@ -5,6 +5,4 @@ metadata:
 
 namespace: home
 
-resources:
-  - ./resources/configmap.yaml
-  - ./resources/deployment.yaml
+resources: []
