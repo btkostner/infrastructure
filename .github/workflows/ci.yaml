@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  Lint:
+  Validate:
     runs-on: ubuntu-slim
 
     steps:
@@ -19,5 +19,14 @@ jobs:
       - name: Install
         uses: jdx/mise-action@c1ecc8f748cd28cdeabf76dab3cccde4ce692fe4 # v4.0.0
 
-      - name: Lint
+      - name: Check formatting
         run: mise lint
+
+      - name: Lint shell scripts
+        run: mise validate-shell
+
+      - name: Lint YAML
+        run: mise validate-yaml
+
+      - name: Validate Kubernetes manifests
+        run: mise validate-kubernetes

@@ -11,14 +11,14 @@ fi
 if [ ! -f "./talosconfig" ]; then
   echo "=== Generating configuration"
 
-  patch_args=""
+  set --
   for patch in ./patches/*.yaml; do
     echo "Detecting patch file $patch"
-    patch_args+=" --config-patch @$patch"
+    set -- "$@" --config-patch "@$patch"
   done
 
   talosctl gen config btkostner https://talos.btkostner.network:6443 \
-    $patch_args \
+    "$@" \
     --additional-sans 127.0.0.1 \
     --additional-sans 192.168.3.10 \
     --additional-sans 192.168.3.11 \
