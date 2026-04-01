@@ -18,6 +18,8 @@ spec:
       labels:
         app: paperclip
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: paperclip
           image: ghcr.io/paperclipai/paperclip:latest
