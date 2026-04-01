@@ -1,0 +1,257 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homeassistant-mdns-announcer
+  namespace: home
+data:
+  announcer.py: |
+    #!/usr/bin/env python3
+    """
+    Thread Border Router mDNS Announcer
+
+    Queries Thread border router REST APIs and registers them as
+    _meshcop._udp.local services using python-zeroconf inside the
+    Home Assistant pod's network namespace.
+
+    Because this runs as a sidecar sharing the same network namespace
+    as Home Assistant, the multicast mDNS announcements are received
+    by HA's python-zeroconf on the same interface, enabling the Thread
+    integration to discover border routers without hostNetwork.
+    """
+
+    import json
+    import os
+    import signal
+    import socket
+    import struct
+    import sys
+    import time
+    import urllib.request
+
+    BORDER_ROUTERS = json.loads(os.environ.get("BORDER_ROUTERS", "[]"))
+    REFRESH_INTERVAL = int(os.environ.get("REFRESH_INTERVAL", "300"))
+
+    running = True
+
+
+    def fetch_json(url, timeout=10):
+        """Fetch JSON from a URL, returning None on failure."""
+        try:
+            req = urllib.request.Request(url)
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read())
+        except Exception as e:
+            print(f"  Failed to fetch {url}: {e}", flush=True)
+            return None
+
+
+    def get_otbr_data(base_url):
+        """Fetch border router data from an OTBR REST API."""
+        ext_address = fetch_json(f"{base_url}/node/ext-address")
+        if ext_address is None:
+            return None
+
+        ba_id = fetch_json(f"{base_url}/node/ba-id")
+        dataset = fetch_json(f"{base_url}/node/dataset/active")
+        state = fetch_json(f"{base_url}/node/state")
+
+        if dataset is None or state is None:
+            return None
+
+        at = dataset.get("activeTimestamp", {})
+        at_seconds = at.get("seconds", 0) if isinstance(at, dict) else 0
+
+        return {
+            "ext_address": ext_address.strip('"'),
+            "border_agent_id": (ba_id or "").strip('"'),
+            "network_name": dataset.get("networkName", ""),
+            "ext_pan_id": dataset.get("extPanId", ""),
+            "channel": dataset.get("channel", 0),
+            "state": state.strip('"') if isinstance(state, str) else str(state),
+            "active_timestamp_seconds": at_seconds,
+        }
+
+
+    def build_meshcop_txt(data):
+        """Build _meshcop._udp TXT record properties from OTBR data."""
+        state_bitmap = {
+            "disabled": 0x0000,
+            "detached": 0x0001,
+            "child": 0x0402,
+            "router": 0x2CB1,
+            "leader": 0x2CB1,
+        }
+
+        sb = state_bitmap.get(data["state"], 0)
+        at = data["active_timestamp_seconds"]
+
+        properties = {
+            b"rv": b"1",
+            b"tv": b"1.4.0",
+            b"sb": struct.pack(">I", sb),
+            b"nn": data["network_name"].encode("utf-8"),
+            b"xp": bytes.fromhex(data["ext_pan_id"]),
+            b"xa": bytes.fromhex(data["ext_address"]),
+            b"id": bytes.fromhex(data["border_agent_id"]),
+            b"at": struct.pack(">Q", at),
+            b"sq": b"1",
+            b"bb": struct.pack(">H", 61631),
+            b"dn": b"DefaultDomain",
+            b"vn": b"OpenThread",
+            b"mn": b"BorderRouter",
+        }
+
+        return properties
+
+
+    def register_border_router(zc, data, address):
+        """Register a border router as a _meshcop._udp.local service."""
+        from zeroconf import ServiceInfo
+
+        ext = data["ext_address"]
+        service_type = "_meshcop._udp.local."
+        service_name = f"OpenThread Border Router {ext}.{service_type}"
+        host_name = f"ot{ext}.local."
+
+        txt = build_meshcop_txt(data)
+
+        try:
+            addr_bytes = socket.inet_aton(address)
+        except OSError:
+            print(f"  Invalid address: {address}", flush=True)
+            return None
+
+        info = ServiceInfo(
+            type_=service_type,
+            name=service_name,
+            server=host_name,
+            port=49154,
+            properties=txt,
+            addresses=[addr_bytes],
+        )
+
+        try:
+            zc.register_service(info, cooperating_responders=True)
+            print(f"  Registered: {service_name}", flush=True)
+            print(f"    address={address}, ba_id={data['border_agent_id']}", flush=True)
+            return info
+        except Exception as e:
+            print(f"  Failed to register {service_name}: {e}", flush=True)
+            return None
+
+
+    def shutdown(*_):
+        global running
+        print("Shutting down...", flush=True)
+        running = False
+
+
+    def wait_for_zeroconf():
+        """Wait for the zeroconf library to be available (installed by init)."""
+        for attempt in range(60):
+            try:
+                import zeroconf  # noqa: F401
+
+                return True
+            except ImportError:
+                if attempt % 10 == 0:
+                    print(
+                        f"Waiting for zeroconf library (attempt {attempt})...",
+                        flush=True,
+                    )
+                time.sleep(1)
+        return False
+
+
+    def main():
+        signal.signal(signal.SIGTERM, shutdown)
+        signal.signal(signal.SIGINT, shutdown)
+
+        print("Thread Border Router mDNS Announcer starting", flush=True)
+
+        if not BORDER_ROUTERS:
+            print("No border routers configured in BORDER_ROUTERS env", flush=True)
+            print("Expected JSON array: [{\"url\": \"http://...\", \"address\": \"...\"}]", flush=True)
+            while running:
+                time.sleep(60)
+            return
+
+        print(f"  Configured routers: {len(BORDER_ROUTERS)}", flush=True)
+        print(f"  Refresh interval: {REFRESH_INTERVAL}s", flush=True)
+
+        if not wait_for_zeroconf():
+            print("ERROR: zeroconf library not available after 60s", flush=True)
+            sys.exit(1)
+
+        from zeroconf import Zeroconf
+
+        # Small delay to let HA's zeroconf start first
+        print("Waiting 30s for Home Assistant zeroconf to initialize...", flush=True)
+        for _ in range(30):
+            if not running:
+                return
+            time.sleep(1)
+
+        zc = Zeroconf()
+        registered = []
+
+        print("Starting registration loop", flush=True)
+
+        while running:
+            # Unregister old services
+            for info in registered:
+                try:
+                    zc.unregister_service(info)
+                except Exception:
+                    pass
+            registered = []
+
+            # Fetch and register each border router
+            for br in BORDER_ROUTERS:
+                url = br.get("url", "")
+                address = br.get("address", "")
+
+                if not url or not address:
+                    print(f"  Skipping invalid config: {br}", flush=True)
+                    continue
+
+                print(f"  Fetching data from {url}...", flush=True)
+                data = get_otbr_data(url)
+                if data is None:
+                    print(f"  Could not fetch data from {url}", flush=True)
+                    continue
+
+                print(f"  OTBR state={data['state']}, network={data['network_name']}", flush=True)
+                info = register_border_router(zc, data, address)
+                if info:
+                    registered.append(info)
+
+            if registered:
+                print(
+                    f"Registered {len(registered)} border router(s), "
+                    f"refreshing in {REFRESH_INTERVAL}s",
+                    flush=True,
+                )
+            else:
+                print(
+                    f"No border routers registered, retrying in {REFRESH_INTERVAL}s",
+                    flush=True,
+                )
+
+            for _ in range(REFRESH_INTERVAL):
+                if not running:
+                    break
+                time.sleep(1)
+
+        # Cleanup
+        for info in registered:
+            try:
+                zc.unregister_service(info)
+            except Exception:
+                pass
+        zc.close()
+        print("Announcer stopped", flush=True)
+
+
+    if __name__ == "__main__":
+        main()

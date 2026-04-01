@@ -21,6 +21,17 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
       dnsPolicy: ClusterFirst
+      initContainers:
+        - name: install-zeroconf
+          image: docker.io/python:3.13-alpine
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - pip install --target=/zeroconf-lib zeroconf
+          volumeMounts:
+            - name: zeroconf-lib
+              mountPath: /zeroconf-lib
       containers:
         - name: homeassistant
           image: ghcr.io/home-assistant/home-assistant:2026.3.3
@@ -73,7 +84,44 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+        - name: mdns-announcer
+          image: docker.io/python:3.13-alpine
+          imagePullPolicy: IfNotPresent
+          command:
+            - python3
+            - /scripts/announcer.py
+          env:
+            - name: PYTHONPATH
+              value: /zeroconf-lib
+            - name: BORDER_ROUTERS
+              value: '[{"url": "http://otbr:8081", "address": "192.168.3.11"}]'
+            - name: REFRESH_INTERVAL
+              value: "300"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          securityContext:
+            capabilities:
+              add:
+                - NET_RAW
+          volumeMounts:
+            - name: announcer-scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: zeroconf-lib
+              mountPath: /zeroconf-lib
+              readOnly: true
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: homeassistant-config
+        - name: announcer-scripts
+          configMap:
+            name: homeassistant-mdns-announcer
+            defaultMode: 0755
+        - name: zeroconf-lib
+          emptyDir: {}

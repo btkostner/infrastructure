@@ -6,6 +6,7 @@ metadata:
 namespace: home
 
 resources:
+  - ./resources/configmap-mdns-announcer.yaml
   - ./resources/deployment.yaml
   - ./resources/http-route.yaml
   - ./resources/pvc-config.yaml
