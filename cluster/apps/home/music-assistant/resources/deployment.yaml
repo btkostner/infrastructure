@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-assistant
+  namespace: home
+  labels:
+    app: music-assistant
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: music-assistant
+  template:
+    metadata:
+      labels:
+        app: music-assistant
+    spec:
+      hostNetwork: true
+      containers:
+        - name: music-assistant
+          image: ghcr.io/music-assistant/server:2.8.1
+          ports:
+            - containerPort: 8095
+              name: http
+            - containerPort: 8097
+              name: stream
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+                - NET_BROADCAST
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: music-assistant-data
