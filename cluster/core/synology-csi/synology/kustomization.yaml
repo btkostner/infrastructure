@@ -5,17 +5,5 @@ metadata:
 
 namespace: synology-csi
 
-helmCharts:
-  - name: synology-csi
-    # TODO: We should copy this to a local repo or update to official
-    repo: https://zebernst.github.io/synology-csi-talos
-    releaseName: synology-csi
-    version: 0.9.4
-    namespace: synology-csi
-    valuesFile: ./values.yaml
-
-resources:
-  - ./resources/namespace.yaml
-  - ./resources/secret-behemoth-credentials.yaml
-  - ./resources/storage-class.yaml
-  - ./resources/volume-snapshot-class.yaml
+helmCharts: []
+resources: []
