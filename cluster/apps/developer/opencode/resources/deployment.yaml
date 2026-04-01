@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opencode
+  namespace: developer
+  labels:
+    app: opencode
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: opencode
+  template:
+    metadata:
+      labels:
+        app: opencode
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: opencode
+          image: ghcr.io/anomalyco/opencode:latest
+          imagePullPolicy: Always
+          command:
+            - opencode
+            - serve
+            - --hostname
+            - 0.0.0.0
+            - --port
+            - "4096"
+          ports:
+            - containerPort: 4096
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /global/health
+              port: 4096
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /global/health
+              port: 4096
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 2
+              memory: 2Gi
+          env:
+            - name: HOME
+              value: /data
+            - name: OPENCODE_DISABLE_AUTOUPDATE
+              value: "true"
+            - name: OPENCODE_CONFIG_CONTENT
+              valueFrom:
+                secretKeyRef:
+                  name: opencode-config
+                  key: config
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: opencode-data

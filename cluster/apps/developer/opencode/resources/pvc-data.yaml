@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opencode-data
+  namespace: developer
+spec:
+  volumeMode: Filesystem
+  storageClassName: ceph-safe-block
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
