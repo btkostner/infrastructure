@@ -10,5 +10,4 @@ resources:
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
   - ./resources/pvc-data.yaml
-  - ./resources/secret-config.yaml
   - ./resources/service.yaml

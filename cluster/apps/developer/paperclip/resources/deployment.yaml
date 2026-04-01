@@ -53,14 +53,7 @@ spec:
             - name: PAPERCLIP_PUBLIC_URL
               value: https://paperclip.btkostner.network
             - name: PAPERCLIP_DEPLOYMENT_MODE
-              value: authenticated
-            - name: PAPERCLIP_DEPLOYMENT_EXPOSURE
-              value: private
-            - name: BETTER_AUTH_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: paperclip-config
-                  key: better_auth_secret
+              value: local_trusted
           volumeMounts:
             - name: data
               mountPath: /paperclip
