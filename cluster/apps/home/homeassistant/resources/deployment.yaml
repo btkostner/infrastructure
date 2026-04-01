@@ -29,6 +29,15 @@ spec:
             - containerPort: 8123
               name: http
               protocol: TCP
+            - containerPort: 5353
+              name: mdns
+              protocol: UDP
+            - containerPort: 1900
+              name: ssdp
+              protocol: UDP
+            - containerPort: 21064
+              name: homekit
+              protocol: TCP
           readinessProbe:
             httpGet:
               path: /

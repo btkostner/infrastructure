@@ -14,3 +14,15 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 8123
+    - name: mdns
+      port: 5353
+      protocol: UDP
+      targetPort: 5353
+    - name: ssdp
+      port: 1900
+      protocol: UDP
+      targetPort: 1900
+    - name: homekit
+      port: 21064
+      protocol: TCP
+      targetPort: 21064

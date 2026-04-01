@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: discovery-proxy-scripts
+  namespace: home
+data:
+  relay.py: |
+    #!/usr/bin/env python3
+    """
+    Multicast-to-Unicast Discovery Relay
+
+    Joins mDNS (224.0.0.251:5353) and SSDP (239.255.255.250:1900) multicast
+    groups on the host network and forwards received packets to the Home
+    Assistant service L2 IP as unicast UDP.
+
+    This enables Home Assistant running in pod networking to receive device
+    discovery announcements from the physical LAN without requiring
+    hostNetwork on the Home Assistant pod itself.
+    """
+
+    import os
+    import signal
+    import socket
+    import struct
+    import sys
+    import threading
+    import time
+
+    HA_SERVICE_IP = os.environ.get("HA_SERVICE_IP", "192.168.3.62")
+
+    MULTICAST_GROUPS = [
+        {"name": "mDNS", "group": "224.0.0.251", "port": 5353},
+        {"name": "SSDP", "group": "239.255.255.250", "port": 1900},
+    ]
+
+    running = True
+
+
+    def relay_multicast(name, group, port):
+        """Join a multicast group and relay received packets to HA service IP."""
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        except AttributeError:
+            pass
+
+        sock.settimeout(2.0)
+        sock.bind(("", port))
+
+        # Join multicast group on all interfaces
+        mreq = struct.pack("4sL", socket.inet_aton(group), socket.INADDR_ANY)
+        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+
+        sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        print(f"[{name}] Listening on {group}:{port}, relaying to {HA_SERVICE_IP}:{port}", flush=True)
+
+        while running:
+            try:
+                data, addr = sock.recvfrom(65535)
+
+                # Don't relay packets that originated from the HA service IP
+                # to avoid forwarding loops
+                if addr[0] == HA_SERVICE_IP:
+                    continue
+
+                sender.sendto(data, (HA_SERVICE_IP, port))
+            except socket.timeout:
+                continue
+            except Exception as e:
+                print(f"[{name}] Error: {e}", flush=True)
+                time.sleep(1)
+
+        sock.close()
+        sender.close()
+        print(f"[{name}] Stopped", flush=True)
+
+
+    def shutdown(*_):
+        global running
+        print("Shutting down...", flush=True)
+        running = False
+
+
+    def main():
+        signal.signal(signal.SIGTERM, shutdown)
+        signal.signal(signal.SIGINT, shutdown)
+
+        print(f"Starting discovery relay to {HA_SERVICE_IP}", flush=True)
+
+        threads = []
+        for mc in MULTICAST_GROUPS:
+            t = threading.Thread(
+                target=relay_multicast,
+                args=(mc["name"], mc["group"], mc["port"]),
+                daemon=True,
+            )
+            t.start()
+            threads.append(t)
+
+        for t in threads:
+            t.join()
+
+        print("All relays stopped", flush=True)
+
+
+    if __name__ == "__main__":
+        main()
