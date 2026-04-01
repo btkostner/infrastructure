@@ -87,6 +87,7 @@ data:
 
     ensure_installed git git
     ensure_installed gh gh github-cli || true
+    ensure_installed kubectl kubectl || true
 
     if ! command -v mise >/dev/null 2>&1; then
       ensure_installed mise mise || true

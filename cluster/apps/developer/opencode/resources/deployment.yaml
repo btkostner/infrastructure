@@ -18,6 +18,7 @@ spec:
       labels:
         app: opencode
     spec:
+      serviceAccountName: opencode
       securityContext:
         fsGroup: 1000
       containers:
