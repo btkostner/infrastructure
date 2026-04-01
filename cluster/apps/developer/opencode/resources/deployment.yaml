@@ -25,12 +25,114 @@ spec:
           image: ghcr.io/anomalyco/opencode:latest
           imagePullPolicy: Always
           command:
-            - opencode
-            - serve
-            - --hostname
-            - 0.0.0.0
-            - --port
-            - "4096"
+            - /bin/sh
+            - -c
+          args:
+            - |
+              set -eu
+
+              PM=""
+              PM_UPDATED=0
+
+              if command -v apk >/dev/null 2>&1; then
+                PM="apk"
+              elif command -v apt-get >/dev/null 2>&1; then
+                PM="apt-get"
+              elif command -v dnf >/dev/null 2>&1; then
+                PM="dnf"
+              elif command -v microdnf >/dev/null 2>&1; then
+                PM="microdnf"
+              fi
+
+              pm_update() {
+                if [ "$PM_UPDATED" -eq 1 ] || [ -z "$PM" ]; then
+                  return 0
+                fi
+
+                case "$PM" in
+                  apk)
+                    ;;
+                  apt-get)
+                    apt-get update
+                    ;;
+                  dnf)
+                    dnf makecache
+                    ;;
+                  microdnf)
+                    microdnf makecache
+                    ;;
+                esac
+
+                PM_UPDATED=1
+              }
+
+              pm_install() {
+                package="$1"
+
+                if [ -z "$PM" ]; then
+                  return 1
+                fi
+
+                pm_update
+
+                case "$PM" in
+                  apk)
+                    apk add --no-cache "$package"
+                    ;;
+                  apt-get)
+                    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "$package"
+                    ;;
+                  dnf)
+                    dnf install -y "$package"
+                    ;;
+                  microdnf)
+                    microdnf install -y "$package"
+                    ;;
+                esac
+              }
+
+              ensure_installed() {
+                command_name="$1"
+                shift
+
+                if command -v "$command_name" >/dev/null 2>&1; then
+                  return 0
+                fi
+
+                for package in "$@"; do
+                  if pm_install "$package"; then
+                    return 0
+                  fi
+                done
+
+                return 1
+              }
+
+              ensure_installed git git
+              ensure_installed gh gh github-cli || true
+
+              if ! command -v mise >/dev/null 2>&1; then
+                ensure_installed mise mise || true
+              fi
+
+              if ! command -v mise >/dev/null 2>&1; then
+                if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+                  ensure_installed curl curl || ensure_installed wget wget busybox
+                fi
+
+                export PATH="$HOME/.local/bin:$PATH"
+
+                if command -v curl >/dev/null 2>&1; then
+                  curl -fsSL https://mise.run | sh
+                elif command -v wget >/dev/null 2>&1; then
+                  wget -qO- https://mise.run | sh
+                else
+                  echo "Unable to install mise: curl or wget is unavailable" >&2
+                  exit 1
+                fi
+              fi
+
+              exec opencode serve --hostname 0.0.0.0 --port 4096
           ports:
             - containerPort: 4096
               name: http
