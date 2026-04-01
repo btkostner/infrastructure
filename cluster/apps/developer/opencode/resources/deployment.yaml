@@ -57,6 +57,14 @@ spec:
           env:
             - name: HOME
               value: /data
+            - name: XDG_CONFIG_HOME
+              value: /data/.config
+            - name: XDG_DATA_HOME
+              value: /data/.local/share
+            - name: XDG_STATE_HOME
+              value: /data/.local/state
+            - name: GH_CONFIG_DIR
+              value: /data/.config/gh
             - name: OPENCODE_DISABLE_AUTOUPDATE
               value: "true"
             - name: OPENCODE_CONFIG_CONTENT
