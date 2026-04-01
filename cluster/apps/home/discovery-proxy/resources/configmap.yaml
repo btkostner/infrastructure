@@ -7,15 +7,25 @@ data:
   relay.py: |
     #!/usr/bin/env python3
     """
-    Multicast-to-Unicast Discovery Relay
+    Bidirectional Multicast Discovery Relay
 
-    Joins mDNS (224.0.0.251:5353) and SSDP (239.255.255.250:1900) multicast
-    groups on the host network and forwards received packets to the Home
-    Assistant service L2 IP as unicast UDP.
+    Bridges the gap between Home Assistant running in Kubernetes pod networking
+    and IoT devices on the physical LAN that use multicast for discovery.
 
-    This enables Home Assistant running in pod networking to receive device
-    discovery announcements from the physical LAN without requiring
-    hostNetwork on the Home Assistant pod itself.
+    Two modes of operation:
+
+    1. Passive Relay (inbound):
+       Joins mDNS and SSDP multicast groups on the host network and forwards
+       all received multicast packets to the HA service L2 IP as unicast UDP.
+
+    2. Active Querier (outbound proxy):
+       Periodically sends mDNS and SSDP queries on the physical LAN on behalf
+       of Home Assistant. Responses are captured by the passive relay and
+       forwarded to HA automatically.
+
+    This enables Home Assistant to discover Thread border routers, HomeKit
+    devices, UPnP/SSDP devices, and other mDNS-advertised services without
+    requiring hostNetwork on the Home Assistant pod.
     """
 
     import os
@@ -27,54 +37,199 @@ data:
     import time
 
     HA_SERVICE_IP = os.environ.get("HA_SERVICE_IP", "192.168.3.62")
+    QUERY_INTERVAL = int(os.environ.get("QUERY_INTERVAL", "120"))
 
-    MULTICAST_GROUPS = [
-        {"name": "mDNS", "group": "224.0.0.251", "port": 5353},
-        {"name": "SSDP", "group": "239.255.255.250", "port": 1900},
+    MDNS_GROUP = "224.0.0.251"
+    MDNS_PORT = 5353
+    SSDP_GROUP = "239.255.255.250"
+    SSDP_PORT = 1900
+
+    # mDNS service types to actively query for on behalf of HA.
+    # Each entry is a DNS name that will be queried as a PTR record.
+    MDNS_QUERY_SERVICES = [
+        "_meshcop._udp.local",       # Thread border routers
+        "_hap._tcp.local",           # HomeKit accessories
+        "_homekit._tcp.local",       # HomeKit bridges
+        "_matter._tcp.local",        # Matter devices
+        "_esphomelib._tcp.local",    # ESPHome devices
+        "_http._tcp.local",          # Generic HTTP services
     ]
+
+    # SSDP M-SEARCH target to query for
+    SSDP_SEARCH_TARGET = "ssdp:all"
 
     running = True
 
 
-    def relay_multicast(name, group, port):
-        """Join a multicast group and relay received packets to HA service IP."""
+    def build_mdns_query(service_name):
+        """Build a minimal mDNS PTR query packet for the given service name."""
+        # Header: ID=0, Flags=0 (standard query), QDCOUNT=1
+        header = b"\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00"
+
+        # Encode the QNAME as DNS labels
+        qname = b""
+        for label in service_name.rstrip(".").split("."):
+            encoded = label.encode("utf-8")
+            qname += bytes([len(encoded)]) + encoded
+        qname += b"\x00"  # Root label
+
+        # QTYPE=PTR (12), QCLASS=IN (1) with unicast-response bit clear
+        qtype_qclass = b"\x00\x0c\x00\x01"
+
+        return header + qname + qtype_qclass
+
+
+    def build_ssdp_msearch():
+        """Build an SSDP M-SEARCH request."""
+        return (
+            "M-SEARCH * HTTP/1.1\r\n"
+            f"HOST: {SSDP_GROUP}:{SSDP_PORT}\r\n"
+            'MAN: "ssdp:discover"\r\n'
+            "MX: 3\r\n"
+            f"ST: {SSDP_SEARCH_TARGET}\r\n"
+            "\r\n"
+        ).encode("utf-8")
+
+
+    def create_multicast_receiver(group, port):
+        """Create a UDP socket that joins a multicast group for receiving."""
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        except AttributeError:
+        except (AttributeError, OSError):
             pass
-
         sock.settimeout(2.0)
         sock.bind(("", port))
 
         # Join multicast group on all interfaces
         mreq = struct.pack("4sL", socket.inet_aton(group), socket.INADDR_ANY)
         sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+        return sock
 
-        sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-        print(f"[{name}] Listening on {group}:{port}, relaying to {HA_SERVICE_IP}:{port}", flush=True)
-
+    def relay_multicast(name, group, port):
+        """Join a multicast group and relay received packets to HA service IP."""
+        retry_delay = 1
         while running:
             try:
-                data, addr = sock.recvfrom(65535)
-
-                # Don't relay packets that originated from the HA service IP
-                # to avoid forwarding loops
-                if addr[0] == HA_SERVICE_IP:
-                    continue
-
-                sender.sendto(data, (HA_SERVICE_IP, port))
-            except socket.timeout:
+                sock = create_multicast_receiver(group, port)
+            except OSError as e:
+                print(f"[{name}] Failed to create socket: {e}, retrying in {retry_delay}s", flush=True)
+                time.sleep(retry_delay)
+                retry_delay = min(retry_delay * 2, 30)
                 continue
-            except Exception as e:
-                print(f"[{name}] Error: {e}", flush=True)
+
+            retry_delay = 1
+            sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            print(f"[{name}] Listening on {group}:{port}, relaying to {HA_SERVICE_IP}:{port}", flush=True)
+
+            while running:
+                try:
+                    data, addr = sock.recvfrom(65535)
+
+                    # Don't relay packets from HA to avoid loops
+                    if addr[0] == HA_SERVICE_IP:
+                        continue
+
+                    sender.sendto(data, (HA_SERVICE_IP, port))
+                except socket.timeout:
+                    continue
+                except OSError as e:
+                    print(f"[{name}] Socket error: {e}, recreating", flush=True)
+                    break
+
+            try:
+                sock.close()
+            except OSError:
+                pass
+            try:
+                sender.close()
+            except OSError:
+                pass
+
+        print(f"[{name}] Stopped", flush=True)
+
+
+    def active_mdns_querier():
+        """Periodically send mDNS queries for well-known service types."""
+        # Wait for the passive relay to start up first
+        time.sleep(5)
+
+        print(
+            f"[mDNS-querier] Querying {len(MDNS_QUERY_SERVICES)} service types "
+            f"every {QUERY_INTERVAL}s",
+            flush=True,
+        )
+
+        while running:
+            sock = None
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+                sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+
+                for service in MDNS_QUERY_SERVICES:
+                    if not running:
+                        break
+                    try:
+                        query = build_mdns_query(service)
+                        sock.sendto(query, (MDNS_GROUP, MDNS_PORT))
+                    except OSError as e:
+                        print(f"[mDNS-querier] Failed to query {service}: {e}", flush=True)
+                    # Small delay between queries to avoid flooding
+                    time.sleep(0.2)
+
+                print(
+                    f"[mDNS-querier] Sent queries for {len(MDNS_QUERY_SERVICES)} services",
+                    flush=True,
+                )
+            except OSError as e:
+                print(f"[mDNS-querier] Error: {e}", flush=True)
+            finally:
+                if sock:
+                    try:
+                        sock.close()
+                    except OSError:
+                        pass
+
+            # Sleep in small increments so we can stop promptly
+            for _ in range(QUERY_INTERVAL):
+                if not running:
+                    break
                 time.sleep(1)
 
-        sock.close()
-        sender.close()
-        print(f"[{name}] Stopped", flush=True)
+        print("[mDNS-querier] Stopped", flush=True)
+
+
+    def active_ssdp_querier():
+        """Periodically send SSDP M-SEARCH requests."""
+        time.sleep(8)
+
+        print(f"[SSDP-querier] Sending M-SEARCH every {QUERY_INTERVAL}s", flush=True)
+
+        while running:
+            sock = None
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+                sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+                msearch = build_ssdp_msearch()
+                sock.sendto(msearch, (SSDP_GROUP, SSDP_PORT))
+                print("[SSDP-querier] Sent M-SEARCH", flush=True)
+            except OSError as e:
+                print(f"[SSDP-querier] Error: {e}", flush=True)
+            finally:
+                if sock:
+                    try:
+                        sock.close()
+                    except OSError:
+                        pass
+
+            for _ in range(QUERY_INTERVAL):
+                if not running:
+                    break
+                time.sleep(1)
+
+        print("[SSDP-querier] Stopped", flush=True)
 
 
     def shutdown(*_):
@@ -87,22 +242,29 @@ data:
         signal.signal(signal.SIGTERM, shutdown)
         signal.signal(signal.SIGINT, shutdown)
 
-        print(f"Starting discovery relay to {HA_SERVICE_IP}", flush=True)
+        print(f"Starting bidirectional discovery relay to {HA_SERVICE_IP}", flush=True)
+        print(f"  Active query interval: {QUERY_INTERVAL}s", flush=True)
+        print(f"  mDNS services: {', '.join(MDNS_QUERY_SERVICES)}", flush=True)
+
+        workers = [
+            # Passive multicast relays (inbound)
+            ("mDNS-relay", relay_multicast, ("mDNS", MDNS_GROUP, MDNS_PORT)),
+            ("SSDP-relay", relay_multicast, ("SSDP", SSDP_GROUP, SSDP_PORT)),
+            # Active queriers (outbound on behalf of HA)
+            ("mDNS-querier", active_mdns_querier, ()),
+            ("SSDP-querier", active_ssdp_querier, ()),
+        ]
 
         threads = []
-        for mc in MULTICAST_GROUPS:
-            t = threading.Thread(
-                target=relay_multicast,
-                args=(mc["name"], mc["group"], mc["port"]),
-                daemon=True,
-            )
+        for label, func, args in workers:
+            t = threading.Thread(target=func, args=args, daemon=True, name=label)
             t.start()
             threads.append(t)
 
         for t in threads:
             t.join()
 
-        print("All relays stopped", flush=True)
+        print("All workers stopped", flush=True)
 
 
     if __name__ == "__main__":
