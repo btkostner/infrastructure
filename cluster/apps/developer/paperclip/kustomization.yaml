@@ -5,9 +5,4 @@ metadata:
 
 namespace: developer
 
-resources:
-  - ./resources/deployment.yaml
-  - ./resources/http-route.yaml
-  - ./resources/namespace.yaml
-  - ./resources/pvc-data.yaml
-  - ./resources/service.yaml
+resources: []
