@@ -88,6 +88,20 @@ data:
     ensure_installed git git
     ensure_installed gh gh github-cli || true
     ensure_installed kubectl kubectl || true
+    ensure_installed gpg gnupg gpg2 gpg || true
+    ensure_installed zsh zsh || true
+
+    if command -v zsh >/dev/null 2>&1; then
+      if command -v chsh >/dev/null 2>&1; then
+        chsh -s "$(command -v zsh)"
+      else
+        sed -i "s|^$USER:x:\([^:]*\):\([^:]*\):[^:]*:[^:]*:[^:]*$|$USER:x:\1:\2::/home/$USER:$(command -v zsh)|" /etc/passwd || true
+      fi
+
+      if ! grep -q "eval \"\$(mise activate zsh)\"" "$HOME/.zshrc" 2>/dev/null; then
+        echo 'eval "$(mise activate zsh)"' >> "$HOME/.zshrc"
+      fi
+    fi
 
     if ! command -v mise >/dev/null 2>&1; then
       ensure_installed mise mise || true
