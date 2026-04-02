@@ -28,17 +28,20 @@ RUN apt-get update \
         curl \
         dirmngr \
         flex \
-        gcc \
         g++ \
-        git \
+        gcc \
         gh \
+        git \
         gnupg \
         gpg-agent \
+        icu-devtools \
+        libcurl4-openssl-dev \
         libffi-dev \
         libgdbm-dev \
         libgl1-mesa-dev \
         libglu1-mesa-dev \
         libgmp-dev \
+        libicu-dev \
         libncurses-dev \
         libncurses5-dev \
         libpng-dev \
@@ -55,13 +58,14 @@ RUN apt-get update \
         python3 \
         python3-pip \
         python3-venv \
-        unzip \
         unixodbc-dev \
+        unzip \
+        uuid-dev \
         wget \
-        xz-utils \
         xsltproc \
-        zlib1g-dev \
+        xz-utils \
         zip \
+        zlib1g-dev \
         zsh \
     && rm -rf /var/lib/apt/lists/*
 
