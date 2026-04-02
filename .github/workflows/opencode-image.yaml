@@ -1,0 +1,52 @@
+name: OpenCode Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/opencode-image.yaml
+      - images/opencode/**
+
+concurrency:
+  group: opencode-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Publish:
+    permissions:
+      contents: read
+      packages: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+
+      - name: Login to GHCR
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: metadata
+        name: Docker metadata
+        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
+        with:
+          images: ghcr.io/btkostner/opencode
+          tags: |
+            type=raw,value=ubuntu
+            type=sha,format=short,prefix=sha-
+
+      - name: Build and push
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: ./images/opencode
+          file: ./images/opencode/Dockerfile
+          push: true
+          provenance: false
+          sbom: false
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}

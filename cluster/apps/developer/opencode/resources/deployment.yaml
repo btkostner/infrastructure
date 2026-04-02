@@ -20,13 +20,13 @@ spec:
     spec:
       serviceAccountName: opencode
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
         fsGroup: 1000
       containers:
         - name: opencode
-          image: ghcr.io/anomalyco/opencode:latest
+          image: ghcr.io/btkostner/opencode:ubuntu
           imagePullPolicy: Always
-          command:
-            - /usr/local/bin/startup.sh
           ports:
             - containerPort: 4096
               name: http
@@ -68,14 +68,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-            - name: startup-script
-              mountPath: /usr/local/bin/startup.sh
-              subPath: startup.sh
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: opencode-data
-        - name: startup-script
-          configMap:
-            name: opencode-startup
-            defaultMode: 0755

@@ -1,0 +1,5 @@
+[tools]
+node = "25.9.0"
+postgres = "18.3"
+erlang = "28.4.1"
+elixir = "1.19.5-otp-28"

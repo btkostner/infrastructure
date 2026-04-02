@@ -12,4 +12,3 @@ resources:
   - ./resources/rbac.yaml
   - ./resources/secret-config.yaml
   - ./resources/service.yaml
-  - ./resources/startup-script.yaml
