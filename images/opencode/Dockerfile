@@ -87,7 +87,7 @@ RUN mkdir -p /tmp/mise-home/.gnupg \
     && HOME=/tmp/mise-home mise reshim \
     && rm -rf /tmp/mise-home
 
-RUN useradd --create-home --home-dir /home/opencode --shell /usr/bin/zsh --uid 1000 opencode \
+RUN useradd --create-home --home-dir /home/opencode --shell /usr/bin/zsh --uid 1001 opencode \
     && mkdir -p /data /workspace \
     && chown -R opencode:opencode /home/opencode /data /workspace "$MISE_CACHE_DIR" "$MISE_STATE_DIR"
 
