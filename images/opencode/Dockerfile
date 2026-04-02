@@ -45,6 +45,7 @@ RUN apt-get update \
         libreadline-dev \
         libssh-dev \
         libssl-dev \
+        libuuid1 \
         libwxgtk-webview3.2-dev \
         libwxgtk3.2-dev \
         libxml2-utils \
