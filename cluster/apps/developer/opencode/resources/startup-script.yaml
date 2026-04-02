@@ -10,7 +10,7 @@ data:
 
     apk update
 
-    apk add --no-cache git github-cli kubectl gpgpg mise shadow zsh
+    apk add --no-cache git github-cli kubectl gnupg mise shadow zsh
 
     chsh -s "$(command -v zsh)"
 
