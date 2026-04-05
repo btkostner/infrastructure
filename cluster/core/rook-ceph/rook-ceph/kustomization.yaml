@@ -15,12 +15,12 @@ helmCharts:
 
 resources:
   - https://github.com/rook/rook/raw/v1.19.3/deploy/examples/toolbox-operator-image.yaml
-  - ./resources/ceph-block-pool-danger.yaml
-  - ./resources/ceph-block-pool-safe.yaml
+  - ./resources/ceph-block-pool.yaml
+  - ./resources/ceph-block-pool-replicated.yaml
   - ./resources/ceph-cluster.yaml
-  - ./resources/ceph-object-store.yaml
+  - ./resources/ceph-object-store-replicated.yaml
   - ./resources/http-route.yaml
   - ./resources/namespace.yaml
-  - ./resources/storage-class-block-danger.yaml
-  - ./resources/storage-class-block-safe.yaml
-  - ./resources/storage-class-object.yaml
+  - ./resources/storage-class-ceph-block.yaml
+  - ./resources/storage-class-ceph-block-replicated.yaml
+  - ./resources/storage-class-ceph-object-replicated.yaml

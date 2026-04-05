@@ -6,3 +6,4 @@ mdbook 0.4.36
 prettier 3.6.2
 shellcheck 0.11.0
 yamllint 1.37.1
+talhelper latest

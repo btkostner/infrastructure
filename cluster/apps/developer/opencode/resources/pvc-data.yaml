@@ -5,7 +5,7 @@ metadata:
   namespace: developer
 spec:
   volumeMode: Filesystem
-  storageClassName: ceph-safe-block
+  storageClassName: ceph-block-replicated
   accessModes:
     - ReadWriteOnce
   resources:

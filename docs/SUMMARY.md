@@ -7,6 +7,7 @@
 
 - [Networking](networking.md)
 - [Secrets](secrets.md)
+- [Storage](storage.md)
 
 # Processes
 

@@ -49,6 +49,8 @@ resources:
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_schedules.yaml
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datadownloads.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datauploads.yaml
 
   # Prometheus Operator
   #- https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml

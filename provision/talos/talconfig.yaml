@@ -1,0 +1,102 @@
+---
+allowSchedulingOnControlPlanes: true
+clusterName: btkostner.network
+controlPlane:
+  patches:
+    # System Upgrades
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            allowedKubernetesNamespaces:
+              - system-upgrade
+            allowedRoles:
+              - os:admin
+            enabled: true
+  schematic:
+    customization:
+      extraKernelArgs:
+        - cpufreq.default_governor=performance
+        - ipv6.disable=1
+        - net.ifnames=1
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ice-firmware
+          - siderolabs/intel-ucode
+          - siderolabs/iscsi-tools
+          - siderolabs/thunderbolt
+          - siderolabs/util-linux-tools
+endpoint: https://talos.btkostner.network:6443
+networkInterfaces:
+  - deviceSelector:
+      physical: true
+    dhcp: true
+    mtu: 9000
+nodes:
+  - hostname: nuc-1
+    controlPlane: true
+    ipAddress: 192.168.3.11
+    installDisk: /dev/nvme0n1
+  - hostname: nuc-2
+    controlPlane: true
+    ipAddress: 192.168.3.12
+    installDisk: /dev/nvme0n1
+  - hostname: nuc-3
+    controlPlane: true
+    ipAddress: 192.168.3.13
+    installDisk: /dev/sdb
+  - hostname: nuc-4
+    controlPlane: false
+    ipAddress: 192.168.3.14
+    installDisk: /dev/nvme0n1
+  - hostname: nuc-5
+    controlPlane: false
+    ipAddress: 192.168.3.15
+    installDisk: /dev/sda
+patches:
+  # Cilium support
+  - |-
+    cluster:
+      network:
+        cni:
+          name: none
+      proxy:
+        disabled: true
+    machine:
+      features:
+        kubePrism:
+          enabled: true
+          port: 7445
+  # Networking
+  - |-
+    machine:
+      features:
+        hostDNS:
+          enabled: false
+          forwardKubeDNSToHost: false
+      nodeLabels:
+        bgp: "65020"
+      time:
+        servers:
+          - time.cloudflare.com
+  # Security
+  - |-
+    machine:
+      features:
+        rbac: false
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: 1.12.6
+worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - cpufreq.default_governor=performance
+        - ipv6.disable=1
+        - net.ifnames=1
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ice-firmware
+          - siderolabs/intel-ucode
+          - siderolabs/iscsi-tools
+          - siderolabs/thunderbolt
+          - siderolabs/util-linux-tools

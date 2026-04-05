@@ -16,9 +16,3 @@ resources:
 patches:
   - path: ./overlays/config-argocd-cm.yaml
   - path: ./overlays/config-argocd-cmd-params-cm.yaml
-  - target:
-      kind: Deployment
-      name: argocd-redis-ha-haproxy
-    patch: |-
-      - op: remove
-        path: "/spec/template/spec/initContainers/0"

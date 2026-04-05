@@ -15,4 +15,4 @@ spec:
         ]
       securityContext:
         privileged: true
-  nodeName: nuc-4
+  nodeName: nuc-1

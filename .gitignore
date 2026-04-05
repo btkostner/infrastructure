@@ -52,7 +52,5 @@ provision/1password/1password-token
 
 ### Talos ###
 
-provision/talos/controlplane.yaml
-provision/talos/secrets.yaml
-provision/talos/talosconfig
-provision/talos/worker.yaml
+provision/talos/clusterconfig/
+provision/talos/talsecret.yaml
