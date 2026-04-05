@@ -1,0 +1,7 @@
+prometheus:
+  monitor:
+    enabled: true
+
+prometheusScrape: true
+
+replicas: 2

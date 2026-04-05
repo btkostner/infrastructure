@@ -1,0 +1,42 @@
+alloy:
+  configMap:
+    create: false
+    name: alloy
+    key: config.alloy
+  clustering:
+    enabled: true
+  mounts:
+    dockercontainers: true
+    extra:
+      - name: host-rootfs
+        mountPath: /host/fs
+        readOnly: true
+      - name: host-procfs
+        mountPath: /host/proc
+        readOnly: true
+      - name: host-sysfs
+        mountPath: /host/sys
+        readOnly: true
+      - name: host-udev
+        mountPath: /host/udev
+        readOnly: true
+    varlog: true
+  stabilityLevel: experimental
+controller:
+  type: daemonset
+  volumes:
+    extra:
+      - name: host-rootfs
+        hostPath:
+          path: /
+      - name: host-procfs
+        hostPath:
+          path: /proc
+      - name: host-sysfs
+        hostPath:
+          path: /sys
+      - name: host-udev
+        hostPath:
+          path: /run/udev/data
+serviceMonitor:
+  enabled: true

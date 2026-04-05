@@ -1,0 +1,87 @@
+replicas: 1
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPU: "60"
+
+createConfigmap: true
+
+configMapAnnotations:
+  argocd.argoproj.io/sync-options: Replace=true
+
+service:
+  enabled: true
+  type: ClusterIP
+
+serviceMonitor:
+  enabled: true
+
+persistence:
+  enabled: false
+  inMemory:
+    enabled: true
+    sizeLimit: 300Mi
+
+initChownData:
+  enabled: true
+
+admin:
+  existingSecret: grafana-credentials
+  userKey: admin-user
+  passwordKey: admin-password
+
+plugins:
+  - grafana-piechart-panel
+  - vonage-status-panel
+
+sidecar:
+  alerts:
+    enabled: true
+    searchNamespace: ALL
+  datasources:
+    enabled: true
+    searchNamespace: ALL
+  dashboards:
+    enabled: true
+    searchNamespace: ALL
+  notifiers:
+    enabled: true
+    searchNamespace: ALL
+
+grafana.ini:
+  alerting:
+    enabled: false
+  auth:
+    anonymous:
+      enabled: true
+  feature_toggles:
+    grafanaAPIServerEnsureKubectlAccess: true
+    kubernetesClientDashboardsFolders: true
+    kubernetesDashboards: true
+    provisioning: true
+  instance_name: grafana-btkostner
+  security:
+    allow_embedding: true
+  server:
+    domain: grafana.btkostner.network
+    root_url: https://grafana.btkostner.network
+  unified_alerting:
+    enabled: true
+    ha_peers: "grafana-headless:9094"
+    ha_listen_address: "${POD_IP}:9094"
+    ha_advertise_address: "${POD_IP}:9094"
+
+headlessService: true
+
+imageRenderer:
+  enabled: true
+  replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPU: "60"
+  serviceMonitor:
+    enabled: true
