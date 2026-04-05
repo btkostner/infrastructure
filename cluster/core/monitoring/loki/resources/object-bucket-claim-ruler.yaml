@@ -5,4 +5,4 @@ metadata:
   namespace: monitoring
 spec:
   bucketName: loki-ruler
-  storageClassName: ceph-object-replicated
+  storageClassName: safe-ceph-object

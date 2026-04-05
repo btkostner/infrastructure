@@ -1,13 +1,13 @@
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name: block-pool
+  name: safe-block-pool
   namespace: rook-ceph
 spec:
   enableRBDStats: true
   failureDomain: host
   replicated:
-    size: 1
+    size: 3
   mirroring:
     enabled: true
     mode: image

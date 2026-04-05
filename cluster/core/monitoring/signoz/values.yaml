@@ -1,6 +1,6 @@
 global:
   clusterName: btkostner
-  storageClass: ceph-block-replicated
+  storageClass: ceph-safe-block
 
 clickhouse:
   persistence:

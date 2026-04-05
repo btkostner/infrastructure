@@ -33,7 +33,7 @@ spec:
       - name: rook
         enabled: true
   monitoring:
-    enabled: true
+    enabled: false
   removeOSDsIfOutAndSafeToRemove: true
   resources:
     api:
@@ -55,3 +55,4 @@ spec:
   storage:
     useAllNodes: true
     useAllDevices: true
+    deviceFilter: "sda"
