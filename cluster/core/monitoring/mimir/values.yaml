@@ -46,6 +46,9 @@ gateway:
     minReplicas: 2
     maxReplicas: 3
   enabledNonEnterprise: true
+  nginx:
+    config:
+      enableIPv6: false
   replicas: 2
   resources:
     limits:
