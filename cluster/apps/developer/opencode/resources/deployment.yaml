@@ -49,15 +49,15 @@ spec:
               memory: 256Mi
           env:
             - name: HOME
-              value: /data
+              value: /workspace
             - name: XDG_CONFIG_HOME
-              value: /data/.config
+              value: /workspace/.config
             - name: XDG_DATA_HOME
-              value: /data/.local/share
+              value: /workspace/.local/share
             - name: XDG_STATE_HOME
-              value: /data/.local/state
+              value: /workspace/.local/state
             - name: GH_CONFIG_DIR
-              value: /data/.config/gh
+              value: /workspace/.config/gh
             - name: OPENCODE_DISABLE_AUTOUPDATE
               value: "true"
             - name: OPENCODE_CONFIG_CONTENT
@@ -67,7 +67,7 @@ spec:
                   key: config
           volumeMounts:
             - name: data
-              mountPath: /data
+              mountPath: /workspace
       volumes:
         - name: data
           persistentVolumeClaim:
