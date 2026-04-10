@@ -12,6 +12,11 @@ rules:
   - apiGroups: ["*"]
     resources: ["*"]
     verbs: ["get", "list", "watch"]
+  # resources: ["*"] wildcards do not cover subresources in Kubernetes RBAC.
+  # pods/log must be listed explicitly to allow reading pod logs.
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
