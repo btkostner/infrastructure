@@ -53,14 +53,12 @@ spec:
             - .spec.dataFrom[].extract.nullBytePolicy
         - group: apps
           kind: Deployment
-          jqPathExpressions:
-            - .metadata.labels."helm.sh/chart"
-            - .metadata.labels."app.kubernetes.io/version"
+          managedFieldsManagers:
+            - argocd-controller
         - group: apps
           kind: StatefulSet
-          jqPathExpressions:
-            - .metadata.labels."helm.sh/chart"
-            - .metadata.labels."app.kubernetes.io/version"
+          managedFieldsManagers:
+            - argocd-controller
         - group: ""
           kind: PersistentVolumeClaim
           jsonPointers:
