@@ -74,6 +74,15 @@
       "minimumGroupSize": 1
     },
     {
+      "description": "Velero Group",
+      "groupName": "velero",
+      "matchPackageNames": ["/velero/"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "minimumGroupSize": 1
+    },
+    {
       "description": "Software tools",
       "groupName": "tools",
       "matchCategories": ["asdf"],
