@@ -68,6 +68,8 @@ spec:
             - /spec/volumeName
         - group: ""
           kind: ConfigMap
+          managedFieldsManagers:
+            - argocd-controller
           jsonPointers:
             - /data/ca.crt
             - /data/tls.crt
