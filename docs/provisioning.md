@@ -54,7 +54,7 @@ talosctl kubeconfig ~/.kube/config --nodes talos.btkostner.network --force
 
 ## Installing Core Resources
 
-Once the Kubernetes cluster is up, we can start installing software on it. To simplify this process I just run the `provision/core/install.sh` script. This will install all of the resources in the `cluster/core` directory. Once this is ran initially, ArgoCD will take care of syncing all resources, so you should never need to run this provision core install script again.
+Once the Kubernetes cluster is up, we can start installing software on it. To simplify this process I just run the `provision/core/install.sh` script. This will install all of the resources in the `cluster/argocd` directory. Once this is ran initially, ArgoCD will take care of syncing all resources, so you should never need to run this provision core install script again.
 
 ## Bootstrapping 1Password credentials
 

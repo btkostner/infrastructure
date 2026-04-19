@@ -6,13 +6,19 @@
       "description": "Process annotated dependencies",
       "managerFilePatterns": ["/.env$/", "/.sh$/", "/.*y[a]?ml$/"],
       "matchStrings": [
-        // # renovate: datasource=github-releases depName=foo/bar
-        // foobar_version: v1.0.0
-        // # renovate: datasource=docker depName=ghcr.io/foo/bar
-        // FOOBAR_VERSION=v1.0.0
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( extractVersion=(?<extractVersion>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": "Process annotated GitHub URLs in kustomization files",
+      "managerFilePatterns": ["/kustomization.yaml/"],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?\\n\\s+- https://raw.githubusercontent.com/[^/]*/[^/]*/(?<currentValue>[^/]+)/",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?\\n\\s+- https://github.com/[^/]*/[^/]*/releases/download/(?<currentValue>[^/]+)/"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-tags{{/if}}"
     },
     {
       "customType": "regex",
@@ -36,15 +42,6 @@
         "https://github.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
       ],
       "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "description": "Github raw content with tags",
-      "managerFilePatterns": ["/kustomization.yaml/"],
-      "matchStrings": [
-        "https://raw.githubusercontent.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
-      ],
-      "datasourceTemplate": "github-tags"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # OpenCode Image
 
-This directory contains the custom Ubuntu-based `opencode` image used by `cluster/apps/developer/opencode`.
+This directory contains the custom Ubuntu-based `opencode` image used by `cluster/developer/opencode`.
 
 ## What Is Baked Into The Image
 
@@ -48,7 +48,7 @@ For manual publishing:
 docker push ghcr.io/btkostner/opencode:ubuntu
 ```
 
-If the image is published somewhere else, update `cluster/apps/developer/opencode/resources/deployment.yaml` to match.
+If the image is published somewhere else, update `cluster/developer/opencode/resources/deployment.yaml` to match.
 
 ## Runtime Notes
 

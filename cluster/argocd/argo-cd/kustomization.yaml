@@ -6,6 +6,7 @@ metadata:
 namespace: argocd
 
 resources:
+  # renovate: datasource=github-tags depName=argoproj/argo-cd
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.6/manifests/ha/install.yaml
   - ./resources/http-route.yaml
   - ./resources/secret-repository.yaml

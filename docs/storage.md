@@ -169,7 +169,7 @@ The Synology NAS provides NFS volumes for large media and download directories. 
 All Rook Ceph resources are defined in:
 
 ```
-cluster/core/rook-ceph/rook-ceph/
+cluster/rook-ceph/rook-ceph/
 ├── kustomization.yaml
 ├── values.yaml
 └── resources/
@@ -185,5 +185,5 @@ cluster/core/rook-ceph/rook-ceph/
 Individual application PVCs are defined alongside their deployments in:
 
 ```
-cluster/apps/<namespace>/<application>/resources/pvc-*.yaml
+cluster/<namespace>/<application>/resources/pvc-*.yaml
 ```
