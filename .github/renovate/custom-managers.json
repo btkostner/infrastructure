@@ -6,7 +6,7 @@
       "description": "Process annotated dependencies",
       "managerFilePatterns": ["/.env$/", "/.sh$/", "/.*y[a]?ml$/"],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( extractVersion=(?<extractVersion>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( extractVersion=(?<extractVersion>\\S+))?( versioning=(?<versioning>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     },
@@ -15,8 +15,8 @@
       "description": "Process annotated GitHub URLs in kustomization files",
       "managerFilePatterns": ["/kustomization.yaml/"],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?\\n\\s+- https://raw.githubusercontent.com/[^/]*/[^/]*/(?<currentValue>[^/]+)/",
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?\\n\\s+- https://github.com/[^/]*/[^/]*/releases/download/(?<currentValue>[^/]+)/"
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?( versioning=(?<versioning>\\S+))?\\n\\s+- https://raw.githubusercontent.com/[^/]*/[^/]*/(?<currentValue>[^/]+)/",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+?)( extractVersion=(?<extractVersion>\\S+))?( versioning=(?<versioning>\\S+))?\\n\\s+- https://github.com/[^/]*/[^/]*/releases/download/(?<currentValue>[^/]+)/"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-tags{{/if}}"
     },
