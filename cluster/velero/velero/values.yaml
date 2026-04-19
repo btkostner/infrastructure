@@ -29,13 +29,13 @@ metrics:
   scrapeTimeout: 10s
   serviceMonitor:
     autodetect: true
-    enabled: false
+    enabled: true
   nodeAgentPodMonitor:
     autodetect: true
-    enabled: false
+    enabled: true
   prometheusRule:
     autodetect: true
-    enabled: false
+    enabled: true
 upgradeCRDs: true
 cleanUpCRDs: false
 configuration:
