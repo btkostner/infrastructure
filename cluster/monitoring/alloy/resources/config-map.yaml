@@ -36,11 +36,15 @@ data:
       tenant_id = "anonymous"
     }
 
+    // ========================================================================
+    // Node metrics (cpu, memory, disk, network via node_exporter)
+    // ========================================================================
+
     prometheus.exporter.unix "default" {
       include_exporter_metrics = true
       procfs_path              = "/host/proc"
-      sysfs_path	             = "/host/sys"
-      rootfs_path	             = "/host/fs"
+      sysfs_path               = "/host/sys"
+      rootfs_path              = "/host/fs"
       udev_data_path           = "/host/udev"
     }
 
@@ -53,6 +57,10 @@ data:
       }
     }
 
+    // ========================================================================
+    // Alloy self-monitoring
+    // ========================================================================
+
     prometheus.exporter.self "default" {}
 
     prometheus.scrape "alloy" {
@@ -63,6 +71,10 @@ data:
       }
     }
 
+    // ========================================================================
+    // Prometheus operator CRD scraping (ServiceMonitors, PodMonitors)
+    // ========================================================================
+
     prometheus.operator.podmonitors "default" {
       forward_to = [prometheus.remote_write.default.receiver]
     }
@@ -71,19 +83,141 @@ data:
       forward_to = [prometheus.remote_write.default.receiver]
     }
 
-    local.file_match "node_logs" {
-      path_targets = [{
-          __path__  = "/var/log/syslog",
-          job       = "node/syslog",
-          node_name = env("HOSTNAME"),
-          cluster   = "btkostner",
-      }]
+    // ========================================================================
+    // Kubelet and cAdvisor metrics (container-level cpu/memory/network)
+    // ========================================================================
+
+    discovery.kubernetes "nodes" {
+      role = "node"
     }
 
-    loki.source.file "node_logs" {
-      targets    = local.file_match.node_logs.targets
-      forward_to = [loki.write.default.receiver]
+    discovery.relabel "kubelet" {
+      targets = discovery.kubernetes.nodes.targets
+
+      rule {
+        target_label = "__address__"
+        replacement  = "kubernetes.default.svc:443"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_node_name"]
+        target_label  = "__metrics_path__"
+        replacement   = "/api/v1/nodes/$1/proxy/metrics"
+      }
     }
+
+    discovery.relabel "cadvisor" {
+      targets = discovery.kubernetes.nodes.targets
+
+      rule {
+        target_label = "__address__"
+        replacement  = "kubernetes.default.svc:443"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_node_name"]
+        target_label  = "__metrics_path__"
+        replacement   = "/api/v1/nodes/$1/proxy/metrics/cadvisor"
+      }
+    }
+
+    prometheus.scrape "kubelet" {
+      targets         = discovery.relabel.kubelet.output
+      forward_to      = [prometheus.remote_write.default.receiver]
+      scheme          = "https"
+      scrape_interval = "15s"
+      bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      tls_config {
+        insecure_skip_verify = true
+      }
+      clustering {
+        enabled = true
+      }
+    }
+
+    prometheus.scrape "cadvisor" {
+      targets         = discovery.relabel.cadvisor.output
+      forward_to      = [prometheus.remote_write.default.receiver]
+      scheme          = "https"
+      scrape_interval = "15s"
+      bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      tls_config {
+        insecure_skip_verify = true
+      }
+      clustering {
+        enabled = true
+      }
+    }
+
+    // ========================================================================
+    // Kubernetes API server metrics (control plane health)
+    // ========================================================================
+
+    discovery.relabel "api_server" {
+      targets = discovery.kubernetes.nodes.targets
+
+      rule {
+        target_label = "__address__"
+        replacement  = "kubernetes.default.svc:443"
+      }
+
+      rule {
+        target_label = "__metrics_path__"
+        replacement  = "/metrics"
+      }
+    }
+
+    prometheus.scrape "api_server" {
+      targets         = discovery.relabel.api_server.output
+      forward_to      = [prometheus.remote_write.default.receiver]
+      scheme          = "https"
+      scrape_interval = "30s"
+      bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      tls_config {
+        insecure_skip_verify = true
+      }
+      clustering {
+        enabled = true
+      }
+    }
+
+    // ========================================================================
+    // eBPF auto-instrumentation (HTTP/gRPC RED metrics)
+    // ========================================================================
+
+    beyla.ebpf "default" {
+      discovery {
+        instrument {
+          kubernetes {
+            namespace = "*"
+          }
+        }
+      }
+
+      attributes {
+        kubernetes {
+          enable       = "true"
+          cluster_name = "btkostner"
+        }
+      }
+
+      metrics {
+        features = ["application", "application_service_graph"]
+      }
+    }
+
+    prometheus.scrape "beyla" {
+      targets      = beyla.ebpf.default.targets
+      honor_labels = true
+      forward_to   = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+    }
+
+    // ========================================================================
+    // Kubernetes events -> Loki
+    // ========================================================================
 
     loki.source.kubernetes_events "cluster_events" {
       job_name   = "integrations/kubernetes/eventhandler"
@@ -109,9 +243,12 @@ data:
       }
     }
 
+    // ========================================================================
+    // Pod logs -> Loki
+    // ========================================================================
+
     discovery.kubernetes "pod" {
       role = "pod"
-      // limit to pods on this node to reduce the amount you need to filter
       selectors {
         role  = "pod"
         field = "spec.nodeName=" + env("HOSTNAME")
@@ -183,24 +320,4 @@ data:
       }
 
       forward_to = [loki.write.default.receiver]
-    }
-
-    discovery.kubernetes "nodes" {
-      role = "node"
-    }
-
-    discovery.kubernetes "service" {
-      role = "service"
-    }
-
-    discovery.kubernetes "endpoint" {
-      role = "endpoints"
-    }
-
-    discovery.kubernetes "endpointslice" {
-      role = "endpointslice"
-    }
-
-    discovery.kubernetes "ingress" {
-      role = "ingress"
     }

@@ -5,6 +5,18 @@ alloy:
     key: config.alloy
   clustering:
     enabled: true
+  securityContext:
+    runAsUser: 0
+    capabilities:
+      add:
+        - BPF
+        - SYS_PTRACE
+        - NET_RAW
+        - DAC_READ_SEARCH
+        - CHECKPOINT_RESTORE
+        - PERFMON
+      drop:
+        - ALL
   mounts:
     dockercontainers: true
     extra:
@@ -20,10 +32,22 @@ alloy:
       - name: host-udev
         mountPath: /host/udev
         readOnly: true
+      - name: cgroup
+        mountPath: /sys/fs/cgroup
+        readOnly: true
+      - name: debugfs
+        mountPath: /sys/kernel/debug
+        readOnly: true
+      - name: bpffs
+        mountPath: /sys/fs/bpf
+        readOnly: true
+      - name: beyla
+        mountPath: /var/run/beyla
     varlog: true
   stabilityLevel: experimental
 controller:
   type: daemonset
+  hostPID: true
   volumes:
     extra:
       - name: host-rootfs
@@ -38,5 +62,16 @@ controller:
       - name: host-udev
         hostPath:
           path: /run/udev/data
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+      - name: debugfs
+        hostPath:
+          path: /sys/kernel/debug
+      - name: bpffs
+        hostPath:
+          path: /sys/fs/bpf
+      - name: beyla
+        emptyDir: {}
 serviceMonitor:
   enabled: true

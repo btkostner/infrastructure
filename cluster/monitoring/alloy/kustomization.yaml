@@ -17,3 +17,17 @@ helmCharts:
 resources:
   - ./resources/config-map.yaml
   - ./resources/http-route.yaml
+
+patches:
+  - target:
+      group: rbac.authorization.k8s.io
+      version: v1
+      kind: ClusterRole
+      name: alloy
+    patch: |-
+      - op: add
+        path: /rules/-
+        value:
+          apiGroups: [""]
+          resources: ["nodes/proxy"]
+          verbs: ["get"]
