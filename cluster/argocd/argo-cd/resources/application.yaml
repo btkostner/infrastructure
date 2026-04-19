@@ -15,5 +15,10 @@ spec:
     repoURL: https://github.com/btkostner/infrastructure.git
   syncPolicy:
     automated:
+      allowEmpty: true
       prune: false
       selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true

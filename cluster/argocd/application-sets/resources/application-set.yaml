@@ -13,6 +13,8 @@ spec:
     - git:
         files:
           - path: cluster/*/*/kustomization.yaml
+          - path: cluster/argocd/application-sets/kustomization.yaml
+            exclude: true
         repoURL: https://github.com/btkostner/infrastructure.git
         requeueAfterSeconds: 20
         revision: HEAD
