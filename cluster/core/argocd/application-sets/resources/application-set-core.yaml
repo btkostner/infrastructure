@@ -42,6 +42,16 @@ spec:
           - RespectIgnoreDifferences=true
           - ServerSideApply=true
       ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jqPathExpressions:
+            - .metadata.labels["helm.sh/chart"]
+            - .metadata.labels["app.kubernetes.io/version"]
+        - group: apps
+          kind: StatefulSet
+          jqPathExpressions:
+            - .metadata.labels["helm.sh/chart"]
+            - .metadata.labels["app.kubernetes.io/version"]
         - group: external-secrets.io
           kind: ExternalSecret
           jqPathExpressions:
