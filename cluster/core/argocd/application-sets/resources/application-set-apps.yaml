@@ -45,6 +45,15 @@ spec:
           - RespectIgnoreDifferences=true
           - ServerSideApply=true
       ignoreDifferences:
+        - group: external-secrets.io
+          kind: ExternalSecret
+          jqPathExpressions:
+            - .spec.refreshInterval
+            - .spec.target.deletionPolicy
+            - .spec.target.template.mergePolicy
+            - .spec.target.template.metadata
+            - .spec.data[].remoteRef.nullBytePolicy
+            - .spec.dataFrom[].extract.nullBytePolicy
         - group: ""
           kind: ConfigMap
           jsonPointers:
