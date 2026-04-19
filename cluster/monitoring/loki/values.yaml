@@ -272,7 +272,7 @@ querier:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 6
+    maxReplicas: 4
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 100
   resources:
@@ -281,7 +281,7 @@ querier:
       memory: 2Gi
     requests:
       cpu: 100m
-      memory: 128Mi
+      memory: 512Mi
   zoneAwareReplication:
     enabled: false
   extraArgs: ["-config.expand-env=true"]
