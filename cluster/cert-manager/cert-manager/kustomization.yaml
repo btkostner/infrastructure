@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: cert-manager
+
+namespace: cert-manager
+
+helmCharts:
+  - name: cert-manager
+    repo: https://charts.jetstack.io
+    releaseName: cert-manager
+    # renovate: datasource=github-releases depName=cert-manager/cert-manager
+    version: v1.20.0
+    namespace: cert-manager
+    valuesFile: ./values.yaml
+
+resources:
+  - ./resources/secret-cloudflare-credentials.yaml
+  - ./resources/cluster-issuer-production.yaml
+  - ./resources/cluster-issuer-staging.yaml

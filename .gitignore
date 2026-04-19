@@ -43,7 +43,7 @@ book
 
 ### Kustomization ###
 
-cluster/*/*/*/charts
+cluster/*/*/charts
 
 ### 1password ###
 

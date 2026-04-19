@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: application-sets
+  name: application-sets
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: cluster/argocd/application-sets
+    repoURL: https://github.com/btkostner/infrastructure.git
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false

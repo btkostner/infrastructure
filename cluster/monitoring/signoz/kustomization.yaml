@@ -1,0 +1,103 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: signoz
+
+namespace: monitoring
+
+helmCharts:
+  - includeCRDs: true
+    name: signoz
+    namespace: monitoring
+    releaseName: signoz
+    repo: https://charts.signoz.io
+    valuesFile: ./values.yaml
+    version: 0.119.0
+
+resources:
+  - ./resources/http-route.yaml
+
+patches:
+  - target:
+      version: v1
+      kind: ServiceAccount
+      name: signoz
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: ServiceAccount
+      name: signoz-otel-collector
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: ServiceAccount
+      name: signoz-telemetrystore-migrator
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: ConfigMap
+      name: signoz-otel-collector
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: Service
+      name: signoz
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: Service
+      name: signoz-otel-collector
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: signoz-otel-collector
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: signoz
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      group: batch
+      version: v1
+      kind: Job
+      name: signoz-telemetrystore-migrator
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
+  - target:
+      version: v1
+      kind: Pod
+      name: signoz-test-connection
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: monitoring
