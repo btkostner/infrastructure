@@ -53,14 +53,14 @@ spec:
             - .spec.dataFrom[].extract.nullBytePolicy
         - group: apps
           kind: Deployment
-          jsonPointers:
-            - /metadata/labels/helm.sh~1chart
-            - /metadata/labels/app.kubernetes.io~1version
+          jqPathExpressions:
+            - .metadata.labels."helm.sh/chart"
+            - .metadata.labels."app.kubernetes.io/version"
         - group: apps
           kind: StatefulSet
-          jsonPointers:
-            - /metadata/labels/helm.sh~1chart
-            - /metadata/labels/app.kubernetes.io~1version
+          jqPathExpressions:
+            - .metadata.labels."helm.sh/chart"
+            - .metadata.labels."app.kubernetes.io/version"
         - group: ""
           kind: PersistentVolumeClaim
           jsonPointers:
