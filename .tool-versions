@@ -1,4 +1,4 @@
-helm 3.19.2
+helm 3.20.2
 kubectl 1.35.0
 kustomize 5.8.0
 kubeconform 0.7.0
