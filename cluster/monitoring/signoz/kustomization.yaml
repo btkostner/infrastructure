@@ -84,6 +84,10 @@ patches:
       - op: add
         path: /metadata/namespace
         value: monitoring
+      - op: add
+        path: /spec/volumeClaimTemplates/0/metadata/labels
+        value:
+          velero.io/exclude-from-backup: "true"
   - target:
       group: batch
       version: v1
