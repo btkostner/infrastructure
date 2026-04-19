@@ -5,13 +5,21 @@ resources:
   # Gateway API
   # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_backendtlspolicies.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_tcproutes.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
+  # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_udproutes.yaml
 
   # Node Feature Discovery
@@ -21,20 +29,31 @@ resources:
   # Intel Device Manager
   # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dlbdeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dsadeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_fpgadeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_iaadeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_npudeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_qatdeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_sgxdeviceplugins.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/fpga.intel.com_acceleratorfunctions.yaml
+  # renovate: datasource=github-tags depName=intel/helm-charts extractVersion=^intel-device-plugins-operator-(?<version>.+)$
   - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
 
   # Volume Snapshots
   # renovate: datasource=github-tags depName=kubernetes-csi/external-snapshotter
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.4.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+  # renovate: datasource=github-tags depName=kubernetes-csi/external-snapshotter
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.4.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+  # renovate: datasource=github-tags depName=kubernetes-csi/external-snapshotter
   - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/v8.4.0/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 
   # Cert Manager
@@ -44,28 +63,49 @@ resources:
   # Velero
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backuprepositories.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backups.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_downloadrequests.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_podvolumebackups.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_podvolumerestores.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_restores.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_schedules.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datadownloads.yaml
+  # renovate: datasource=github-tags depName=vmware-tanzu/velero
   - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datauploads.yaml
 
   # Prometheus Operator
   # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-probes.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusagents.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheuses.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-scrapeconfigs.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml
+  # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
   - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-55.5.1/charts/kube-prometheus-stack/charts/crds/crds/crd-thanosrulers.yaml
