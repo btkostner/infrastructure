@@ -62,31 +62,31 @@ resources:
 
   # Velero
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backuprepositories.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_backuprepositories.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_backups.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_backupstoragelocations.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_deletebackuprequests.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_downloadrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_downloadrequests.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_podvolumebackups.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_podvolumebackups.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_podvolumerestores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_podvolumerestores.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_restores.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_restores.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_schedules.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_schedules.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_serverstatusrequests.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v1/bases/velero.io_volumesnapshotlocations.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datadownloads.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v2alpha1/bases/velero.io_datadownloads.yaml
   # renovate: datasource=github-tags depName=vmware-tanzu/velero
-  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.17.1/config/crd/v2alpha1/bases/velero.io_datauploads.yaml
+  - https://raw.githubusercontent.com/vmware-tanzu/velero/v1.18.0/config/crd/v2alpha1/bases/velero.io_datauploads.yaml
 
   # Prometheus Operator
   # renovate: datasource=github-tags depName=prometheus-community/helm-charts extractVersion=^kube-prometheus-stack-(?<version>.+)$
