@@ -1,5 +1,5 @@
 helm 3.20.2
-kubectl 1.35.0
+kubectl 1.36.0
 kustomize 5.8.0
 kubeconform 0.7.0
 mdbook 0.4.36
