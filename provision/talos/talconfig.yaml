@@ -85,7 +85,7 @@ patches:
       features:
         rbac: false
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: 1.12.6
+talosVersion: 1.13.2
 worker:
   schematic:
     customization:
