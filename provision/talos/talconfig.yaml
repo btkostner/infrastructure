@@ -21,6 +21,7 @@ controlPlane:
         - net.ifnames=1
       systemExtensions:
         officialExtensions:
+          - siderolabs/i915
           - siderolabs/intel-ice-firmware
           - siderolabs/intel-ucode
           - siderolabs/iscsi-tools
@@ -84,6 +85,12 @@ patches:
     machine:
       features:
         rbac: false
+  # Intel GPU support
+  - |-
+    machine:
+      kernel:
+        modules:
+          - name: i915
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: 1.13.2
 worker:
@@ -95,6 +102,7 @@ worker:
         - net.ifnames=1
       systemExtensions:
         officialExtensions:
+          - siderolabs/i915
           - siderolabs/intel-ice-firmware
           - siderolabs/intel-ucode
           - siderolabs/iscsi-tools
