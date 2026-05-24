@@ -23,4 +23,4 @@ spec:
     - wsize=32768
   nfs:
     server: 192.168.3.4
-    path: "/volume1/Cluster/download-pool"
+    path: "/volume2/Cluster/download-pool"

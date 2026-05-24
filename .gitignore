@@ -54,3 +54,6 @@ provision/1password/1password-token
 
 provision/talos/clusterconfig/
 provision/talos/talsecret.yaml
+
+### AI ###
+.sisyphus/
