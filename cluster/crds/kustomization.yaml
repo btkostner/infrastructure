@@ -28,25 +28,25 @@ resources:
 
   # Intel Device Manager
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dlbdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dlbdeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dsadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_dsadeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_fpgadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_fpgadeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_gpudeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_iaadeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_iaadeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_npudeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_npudeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_qatdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_qatdeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_sgxdeviceplugins.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/deviceplugin.intel.com_sgxdeviceplugins.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/fpga.intel.com_acceleratorfunctions.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/fpga.intel.com_acceleratorfunctions.yaml
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.35.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
+  - https://raw.githubusercontent.com/intel/helm-charts/intel-device-plugins-operator-0.36.0/charts/device-plugin-operator/crds/fpga.intel.com_fpgaregions.yaml
 
   # Volume Snapshots
   # renovate: datasource=github-tags depName=kubernetes-csi/external-snapshotter
