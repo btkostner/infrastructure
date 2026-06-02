@@ -10,6 +10,6 @@ helmCharts:
     releaseName: keda
     repo: https://kedacore.github.io/charts
     valuesFile: ./values.yaml
-    version: 2.19.0
+    version: 2.20.0
 
 resources:
