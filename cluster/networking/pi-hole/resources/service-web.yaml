@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-web
+  namespace: networking
+  labels:
+    app: pihole
+spec:
+  selector:
+    app: pihole
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http

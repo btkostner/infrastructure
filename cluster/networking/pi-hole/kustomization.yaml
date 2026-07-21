@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: pi-hole
+
+namespace: networking
+
+resources:
+  - ./resources/deployment.yaml
+  - ./resources/external-secret.yaml
+  - ./resources/http-route.yaml
+  - ./resources/pvc-config.yaml
+  - ./resources/service-dns.yaml
+  - ./resources/service-web.yaml

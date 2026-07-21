@@ -17,3 +17,10 @@ spec:
             values:
               - external-gateway
               - internal-gateway
+    - advertisementType: "Service"
+      service:
+        addresses:
+          - LoadBalancerIP
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: pihole
