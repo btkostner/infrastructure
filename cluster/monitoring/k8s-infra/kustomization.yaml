@@ -5,11 +5,4 @@ metadata:
 
 namespace: monitoring
 
-helmCharts:
-  - includeCRDs: true
-    name: k8s-infra
-    namespace: monitoring
-    releaseName: k8s-infra
-    repo: https://charts.signoz.io
-    valuesFile: ./values.yaml
-    version: 0.16.0
+helmCharts: []
