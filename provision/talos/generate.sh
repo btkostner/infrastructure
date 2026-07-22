@@ -14,4 +14,4 @@ talhelper genconfig
 
 # echo "=== Copying local talos configuration to primary storage"
 
-# cp ./talosconfig ~/.talos/config
+cp ./talosconfig ~/.talos/config
