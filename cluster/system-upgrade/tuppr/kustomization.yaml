@@ -9,7 +9,7 @@ helmCharts:
   - name: tuppr
     repo: oci://ghcr.io/home-operations/charts
     releaseName: tuppr
-    version: 0.4.1
+    version: 0.5.0
     includeCRDs: true
     namespace: system-upgrade
     valuesFile: ./values.yaml
