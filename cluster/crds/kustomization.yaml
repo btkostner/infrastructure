@@ -24,7 +24,7 @@ resources:
 
   # Node Feature Discovery
   # renovate: datasource=github-tags depName=kubernetes-sigs/node-feature-discovery
-  - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/v0.18.3/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/v0.19.0/deployment/helm/node-feature-discovery/crds/nfd-api-crds.yaml
 
   # Intel Device Manager
   # renovate: datasource=github-tags depName=intel/helm-charts versioning=regex:^intel-device-plugins-operator-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
