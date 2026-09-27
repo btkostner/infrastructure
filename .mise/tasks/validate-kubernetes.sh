@@ -21,9 +21,7 @@ validate() {
 
 for dir in \
   ./cluster/crds \
-  ./cluster/core \
-  ./cluster/core/*/* \
-  ./cluster/apps/*/*
+  ./cluster/*/*
 do
   validate "$dir"
 done
