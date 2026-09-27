@@ -18,6 +18,7 @@ spec:
       labels:
         app: lidarr
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: lidarr
           image: lscr.io/linuxserver/lidarr:latest

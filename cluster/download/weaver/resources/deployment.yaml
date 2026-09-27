@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sabnzbd
+  name: weaver
   namespace: download
   labels:
-    app: sabnzbd
+    app: weaver
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -12,27 +12,27 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: sabnzbd
+      app: weaver
   template:
     metadata:
-      annotations:
-        backup.velero.io/backup-volumes-excludes: incomplete
       labels:
-        app: sabnzbd
+        app: weaver
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1000
       containers:
-        - name: sabnzbd
-          image: lscr.io/linuxserver/sabnzbd:latest
+        - name: weaver
+          image: ghcr.io/scryer-media/weaver:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 9090
               name: http
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 9090
             initialDelaySeconds: 60
             periodSeconds: 60
             failureThreshold: 10
@@ -44,28 +44,44 @@ spec:
               cpu: "4"
               memory: 16G
           env:
-            - name: HAS_IPV6
-              value: "false"
             - name: PUID
               value: "1000"
             - name: PGID
               value: "1000"
             - name: TZ
               value: America/Los_Angeles
+            - name: WEAVER_INTERMEDIATE_DIR
+              value: /download/intermediate
+            - name: WEAVER_COMPLETE_DIR
+              value: /download/complete
+            - name: WEAVER_SECURE_COOKIES
+              value: "true"
+            - name: WEAVER_BOOTSTRAP_LOGIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: weaver-login
+                  key: username
+            - name: WEAVER_BOOTSTRAP_LOGIN_PASSWORD_FILE
+              value: /run/secrets/weaver-login/password
           volumeMounts:
             - name: config
               mountPath: /config
             - name: download
               mountPath: /download
-            - name: incomplete
-              mountPath: /incomplete
+            - name: login
+              mountPath: /run/secrets/weaver-login
+              readOnly: true
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: sabnzbd-config
+            claimName: weaver-config
         - name: download
           persistentVolumeClaim:
-            claimName: sabnzbd-download
-        - name: incomplete
-          emptyDir:
-            sizeLimit: 200Gi
+            claimName: weaver-download
+        - name: login
+          secret:
+            secretName: weaver-login
+            defaultMode: 0440
+            items:
+              - key: password
+                path: password

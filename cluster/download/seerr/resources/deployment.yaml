@@ -18,6 +18,7 @@ spec:
       labels:
         app: seerr
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: seerr
           image: ghcr.io/seerr-team/seerr:develop

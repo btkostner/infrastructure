@@ -18,6 +18,7 @@ spec:
       labels:
         app: prowlarr
     spec:
+      automountServiceAccountToken: false
       initContainers:
         - name: gluetun
           image: ghcr.io/qdm12/gluetun:v3.39.0

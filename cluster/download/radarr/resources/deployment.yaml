@@ -18,6 +18,7 @@ spec:
       labels:
         app: radarr
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest

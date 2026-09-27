@@ -1,0 +1,24 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: weaver-http
+  namespace: download
+spec:
+  hostnames:
+    - weaver.btkostner.network
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
+      namespace: networking
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: weaver
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

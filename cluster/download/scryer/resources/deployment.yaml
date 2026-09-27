@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sabnzbd
+  name: scryer
   namespace: download
   labels:
-    app: sabnzbd
+    app: scryer
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -12,26 +12,30 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: sabnzbd
+      app: scryer
   template:
     metadata:
-      annotations:
-        backup.velero.io/backup-volumes-excludes: incomplete
       labels:
-        app: sabnzbd
+        app: scryer
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1000
       containers:
-        - name: sabnzbd
-          image: lscr.io/linuxserver/sabnzbd:latest
+        - name: scryer
+          image: ghcr.io/scryer-media/scryer:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: http
               protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 60
@@ -39,33 +43,32 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 8G
+              memory: 128M
             limits:
               cpu: "4"
-              memory: 16G
+              memory: 4Gi
           env:
-            - name: HAS_IPV6
-              value: "false"
             - name: PUID
               value: "1000"
             - name: PGID
               value: "1000"
             - name: TZ
               value: America/Los_Angeles
+            - name: SCRYER_MOVIES_PATH
+              value: /data/movies
+            - name: SCRYER_SERIES_PATH
+              value: /data/series
+            - name: SCRYER_ANIME_PATH
+              value: /data/anime
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: download
-              mountPath: /download
-            - name: incomplete
-              mountPath: /incomplete
+            - name: data
+              mountPath: /data
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: sabnzbd-config
-        - name: download
+            claimName: scryer-config
+        - name: data
           persistentVolumeClaim:
-            claimName: sabnzbd-download
-        - name: incomplete
-          emptyDir:
-            sizeLimit: 200Gi
+            claimName: scryer-data
