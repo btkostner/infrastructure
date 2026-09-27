@@ -30,9 +30,11 @@ metrics:
   serviceMonitor:
     autodetect: true
     enabled: true
+    namespace: velero
   nodeAgentPodMonitor:
     autodetect: true
     enabled: true
+    namespace: velero
   prometheusRule:
     autodetect: true
     enabled: true
