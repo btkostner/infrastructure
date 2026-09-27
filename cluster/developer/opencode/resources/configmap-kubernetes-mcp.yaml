@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opencode-kubernetes-mcp
+  namespace: developer
+data:
+  config.toml: |
+    read_only = true
+
+    # opencode's ServiceAccount has get/list/watch on apiGroups: ["*"],
+    # resources: ["*"] (see rbac.yaml), which includes Secrets and
+    # ExternalSecrets. read_only alone only blocks writes, so deny the
+    # credential-bearing kinds explicitly too.
+    [[denied_resources]]
+    group = ""
+    version = "v1"
+    kind = "Secret"
+
+    [[denied_resources]]
+    group = "external-secrets.io"
+    version = "v1"
+    kind = "ExternalSecret"
+
+    [[denied_resources]]
+    group = "external-secrets.io"
+    version = "v1"
+    kind = "ClusterSecretStore"
+
+    [[denied_resources]]
+    group = "external-secrets.io"
+    version = "v1"
+    kind = "SecretStore"
+
+    [[denied_resources]]
+    group = "external-secrets.io"
+    version = "v1"
+    kind = "PushSecret"
+
+    [[denied_resources]]
+    group = "rbac.authorization.k8s.io"
+    version = "v1"
+    kind = "Role"
+
+    [[denied_resources]]
+    group = "rbac.authorization.k8s.io"
+    version = "v1"
+    kind = "RoleBinding"
+
+    [[denied_resources]]
+    group = "rbac.authorization.k8s.io"
+    version = "v1"
+    kind = "ClusterRole"
+
+    [[denied_resources]]
+    group = "rbac.authorization.k8s.io"
+    version = "v1"
+    kind = "ClusterRoleBinding"
