@@ -5,7 +5,4 @@ metadata:
 
 namespace: download
 
-resources:
-  - ./resources/configmap.yaml
-  - ./resources/cronjob.yaml
-  - ./resources/secret.yaml
+resources: []
