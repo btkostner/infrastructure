@@ -75,6 +75,23 @@ spec:
             capabilities:
               add: ["NET_ADMIN"]
             privileged: true
+        - name: seed-config
+          image: busybox
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ ! -s /config/config.xml ]; then
+                cp /config-seed/config.xml /config/config.xml
+                chown 1000:1000 /config/config.xml
+                chmod u+w /config/config.xml
+              fi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: config-seed
+              mountPath: /config-seed
+              readOnly: true
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
@@ -110,17 +127,13 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: config-file
-              mountPath: /config/config.xml
-              subPath: config.xml
-              readOnly: true
       securityContext:
         fsGroup: 1000
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-config
-        - name: config-file
+        - name: config-seed
           secret:
             defaultMode: 0644
             secretName: prowlarr-config
