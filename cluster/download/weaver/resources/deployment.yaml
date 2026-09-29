@@ -75,6 +75,9 @@ spec:
             - name: media
               mountPath: /download/downloads/complete
               subPath: downloads/complete
+            - name: media
+              mountPath: /download/downloads/completed
+              subPath: downloads/completed
             - name: login
               mountPath: /run/secrets/weaver-login
               readOnly: true
