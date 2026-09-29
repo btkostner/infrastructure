@@ -26,7 +26,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              if [ ! -e /config/config.xml ]; then
+              if [ ! -s /config/config.xml ]; then
                 cp /config-seed/config.xml /config/config.xml
                 chown 1000:1000 /config/config.xml
                 chmod u+w /config/config.xml
