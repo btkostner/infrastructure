@@ -97,7 +97,7 @@ Static NFS media layout:
 - `/volume2/Media` backs the media claims and the Scryer and Weaver data claims.
 
 
-Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir` capped at 100Gi and scheduled only to nodes with non-rotational storage. This workspace is not retained across a Pod recreation or rescheduling. Its `weaver-media` NFS claim remains mounted only at `/download/downloads/complete`.
+Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir` capped at 100Gi and scheduled only to nodes with non-rotational storage. A one-time init container moves the prior NAS intermediate workspace into the local workspace before the first cutover. Later Pod recreation or rescheduling does not retain the local workspace. Its `weaver-media` NFS claim remains mounted only at `/download/downloads/complete`.
 
 ## Volume Inventory
 

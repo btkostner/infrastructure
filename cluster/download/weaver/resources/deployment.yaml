@@ -23,6 +23,30 @@ spec:
       automountServiceAccountToken: false
       securityContext:
         fsGroup: 1000
+      initContainers:
+        - name: migrate-intermediate
+          image: ghcr.io/scryer-media/weaver:latest
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -ec
+            - |
+              marker=/config/.weaver-local-workspace-migrated
+              if [ ! -e "$marker" ]; then
+                cp -a /nas-intermediate/. /download/downloads/intermediate/
+                touch "$marker"
+              fi
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: intermediate
+              mountPath: /download/downloads/intermediate
+            - name: media
+              mountPath: /nas-intermediate
+              subPath: downloads/intermediate
       containers:
         - name: weaver
           image: ghcr.io/scryer-media/weaver:latest
