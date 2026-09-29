@@ -19,6 +19,24 @@ spec:
         app: radarr
     spec:
       automountServiceAccountToken: false
+      initContainers:
+        - name: seed-config
+          image: busybox
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ ! -e /config/config.xml ]; then
+                cp /config-seed/config.xml /config/config.xml
+                chown 1000:1000 /config/config.xml
+                chmod u+w /config/config.xml
+              fi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: config-seed
+              mountPath: /config-seed
+              readOnly: true
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
@@ -52,10 +70,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: config-file
-              mountPath: /config/config.xml
-              subPath: config.xml
-              readOnly: true
             - name: download
               mountPath: /download
             - name: media
@@ -66,7 +80,7 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config
-        - name: config-file
+        - name: config-seed
           secret:
             secretName: radarr-config
             items:
