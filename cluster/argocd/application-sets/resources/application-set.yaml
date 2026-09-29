@@ -53,6 +53,14 @@ spec:
             - .spec.target.template.metadata
             - .spec.data[].remoteRef.nullBytePolicy
             - .spec.dataFrom[].extract.nullBytePolicy
+        - group: apps
+          kind: Deployment
+          managedFieldsManagers:
+            - argocd-controller
+        - group: apps
+          kind: StatefulSet
+          managedFieldsManagers:
+            - argocd-controller
         - group: ""
           kind: PersistentVolumeClaim
           jsonPointers:
