@@ -18,6 +18,8 @@ spec:
       labels:
         app: weaver
     spec:
+      nodeSelector:
+        feature.node.kubernetes.io/storage-nonrotationaldisk: "true"
       automountServiceAccountToken: false
       securityContext:
         fsGroup: 1000
@@ -39,9 +41,11 @@ spec:
           resources:
             requests:
               cpu: 100m
+              ephemeral-storage: 100Gi
               memory: 8G
             limits:
               cpu: "4"
+              ephemeral-storage: 100Gi
               memory: 16G
           env:
             - name: PUID
@@ -66,8 +70,11 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: download
-              mountPath: /download
+            - name: intermediate
+              mountPath: /download/downloads/intermediate
+            - name: media
+              mountPath: /download/downloads/complete
+              subPath: downloads/complete
             - name: login
               mountPath: /run/secrets/weaver-login
               readOnly: true
@@ -75,7 +82,10 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: weaver-config
-        - name: download
+        - name: intermediate
+          emptyDir:
+            sizeLimit: 100Gi
+        - name: media
           persistentVolumeClaim:
             claimName: weaver-media
         - name: login
