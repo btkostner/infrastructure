@@ -38,18 +38,33 @@ spec:
         - k8sService:
             namespace: download
             serviceName: radarr
+      toPorts:
+        - ports:
+            - port: "7878"
+              protocol: TCP
+    - toServices:
         - k8sService:
             namespace: download
             serviceName: sonarr
+      toPorts:
+        - ports:
+            - port: "8989"
+              protocol: TCP
+    - toServices:
         - k8sService:
             namespace: download
             serviceName: prowlarr
+      toPorts:
+        - ports:
+            - port: "9696"
+              protocol: TCP
+    - toServices:
         - k8sService:
             namespace: download
             serviceName: weaver
       toPorts:
         - ports:
-            - port: "80"
+            - port: "9090"
               protocol: TCP
     - toEntities:
         - world
