@@ -40,7 +40,7 @@ spec:
             app: radarr
       toPorts:
         - ports:
-            - port: "7878"
+            - port: "80"
               protocol: TCP
     - toEndpoints:
         - matchLabels:
@@ -48,7 +48,7 @@ spec:
             app: sonarr
       toPorts:
         - ports:
-            - port: "8989"
+            - port: "80"
               protocol: TCP
     - toEndpoints:
         - matchLabels:
@@ -56,7 +56,7 @@ spec:
             app: prowlarr
       toPorts:
         - ports:
-            - port: "9696"
+            - port: "80"
               protocol: TCP
     - toEndpoints:
         - matchLabels:
@@ -64,7 +64,7 @@ spec:
             app: weaver
       toPorts:
         - ports:
-            - port: "9090"
+            - port: "80"
               protocol: TCP
     - toEntities:
         - world
