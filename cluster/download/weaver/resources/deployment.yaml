@@ -51,9 +51,9 @@ spec:
             - name: TZ
               value: America/Los_Angeles
             - name: WEAVER_INTERMEDIATE_DIR
-              value: /download/intermediate
+              value: /download/downloads/intermediate
             - name: WEAVER_COMPLETE_DIR
-              value: /download/complete
+              value: /download/downloads/complete
             - name: WEAVER_SECURE_COOKIES
               value: "true"
             - name: WEAVER_BOOTSTRAP_LOGIN_USERNAME
@@ -77,7 +77,7 @@ spec:
             claimName: weaver-config
         - name: download
           persistentVolumeClaim:
-            claimName: weaver-download
+            claimName: weaver-media
         - name: login
           secret:
             secretName: weaver-login

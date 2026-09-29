@@ -74,7 +74,7 @@ spec:
                 path: config.xml
         - name: download
           persistentVolumeClaim:
-            claimName: lidarr-download
+            claimName: lidarr-downloads
         - name: media
           persistentVolumeClaim:
             claimName: lidarr-media

@@ -88,7 +88,7 @@ spec:
                 path: config.xml
         - name: download
           persistentVolumeClaim:
-            claimName: radarr-download
+            claimName: radarr-downloads
         - name: media
           persistentVolumeClaim:
             claimName: radarr-media

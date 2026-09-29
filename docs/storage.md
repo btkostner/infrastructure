@@ -91,6 +91,11 @@ All block storage classes use the `rook-ceph.rbd.csi.ceph.com` provisioner with 
 ## NFS Storage
 
 The Synology NAS provides NFS volumes for large media and download directories. NFS PVCs use the `nfs` storage class with `ReadWriteMany` access mode, allowing multiple pods to mount the same volume simultaneously. These are typically sized at 1Mi as nominal placeholders since the actual storage is managed by the NAS.
+Static NFS media layout:
+
+- `/volume2/Media/downloads` backs the download claims for Lidarr, Radarr, SABnzbd, and Sonarr.
+- `/volume2/Media` backs the media claims and the Scryer and Weaver data claims.
+
 
 ## Volume Inventory
 
@@ -107,18 +112,20 @@ The Synology NAS provides NFS volumes for large media and download directories. 
 | PVC Name           | Storage Class           | Size | Access Mode   | Application |
 | ------------------ | ----------------------- | ---- | ------------- | ----------- |
 | `lidarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Lidarr      |
-| `lidarr-download`  | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
+| `lidarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
 | `lidarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
 | `prowlarr-config`  | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Prowlarr    |
 | `radarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Radarr      |
-| `radarr-download`  | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
+| `radarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
 | `radarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
 | `sabnzbd-config`   | `ceph-block-replicated` | 20Gi | ReadWriteOnce | SABnzbd     |
-| `sabnzbd-download` | `nfs`                   | 1Mi  | ReadWriteMany | SABnzbd     |
+| `sabnzbd-downloads` | `nfs`                 | 1Mi  | ReadWriteMany | SABnzbd     |
 | `seerr-config`     | `ceph-block-replicated` | 10Gi | ReadWriteOnce | Seerr       |
 | `sonarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Sonarr      |
-| `sonarr-download`  | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
+| `sonarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
 | `sonarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
+| `scryer-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Scryer      |
+| `weaver-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Weaver      |
 
 #### `home`
 
@@ -148,7 +155,7 @@ The Synology NAS provides NFS volumes for large media and download directories. 
 | Storage Class           | Consumers | Total Ceph Storage |
 | ----------------------- | --------- | ------------------ |
 | `ceph-block-replicated` | 12        | **555Gi**          |
-| `nfs`                   | 11        | N/A (NAS-managed)  |
+| `nfs`                   | 12        | N/A (NAS-managed)  |
 
 ### Largest Consumers
 

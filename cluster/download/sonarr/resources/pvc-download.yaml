@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarr-download
+  name: sonarr-downloads
   namespace: download
 spec:
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
-  volumeName: download-sonarr-download
+  volumeName: download-sonarr-downloads
   resources:
     requests:
       storage: 1Mi

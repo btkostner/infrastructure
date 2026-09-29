@@ -71,4 +71,4 @@ spec:
             claimName: scryer-config
         - name: data
           persistentVolumeClaim:
-            claimName: scryer-data
+            claimName: scryer-media

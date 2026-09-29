@@ -88,7 +88,7 @@ spec:
                 path: config.xml
         - name: download
           persistentVolumeClaim:
-            claimName: sonarr-download
+            claimName: sonarr-downloads
         - name: media
           persistentVolumeClaim:
             claimName: sonarr-media

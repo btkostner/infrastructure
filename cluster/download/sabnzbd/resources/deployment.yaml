@@ -65,7 +65,7 @@ spec:
             claimName: sabnzbd-config
         - name: download
           persistentVolumeClaim:
-            claimName: sabnzbd-download
+            claimName: sabnzbd-downloads
         - name: incomplete
           emptyDir:
             sizeLimit: 200Gi
