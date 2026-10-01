@@ -49,9 +49,9 @@ spec:
               memory: 16G
           env:
             - name: PUID
-              value: "1000"
+              value: "1024"
             - name: PGID
-              value: "1000"
+              value: "100"
             - name: TZ
               value: America/Los_Angeles
             - name: WEAVER_INTERMEDIATE_DIR
