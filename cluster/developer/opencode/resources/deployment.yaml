@@ -68,7 +68,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /workspace
+            - name: kubernetes-mcp-config
+              mountPath: /etc/kubernetes-mcp-server
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: opencode-data
+        - name: kubernetes-mcp-config
+          configMap:
+            name: opencode-kubernetes-mcp
