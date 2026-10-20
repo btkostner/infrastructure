@@ -88,6 +88,36 @@ All block storage classes use the `rook-ceph.rbd.csi.ceph.com` provisioner with 
 - **`ceph-block-replicated`** — Use for important application data that must survive node failures (3× replication).
 - **`ceph-object-replicated`** — Use for S3-compatible object/bucket storage with erasure coding.
 
+### Local Storage
+
+The `local-path` storage class (rancher `local-path-provisioner` v0.0.37,
+`cluster/kube-system/local-path-provisioner/`) provisions `hostPath`
+volumes under `/var/mnt/local-path-provisioner` on nodes labeled
+`cnpg.io/local-storage: "true"` (nuc-1 through nuc-4 only, set via per-node
+`nodeLabels` in `provision/talos/talconfig.yaml`; nuc-5 is intentionally
+excluded pending a disk-layout check, since its Talos install disk and
+Ceph's OSD device filter both resolve to `/dev/sda`). The directory lives on
+the Talos `EPHEMERAL` partition (`/var`), the same partition Rook's
+`dataDirHostPath` uses — there is no dedicated partition or CSI-level
+isolation from other `/var` I/O. `volumeBindingMode: WaitForFirstConsumer`
+co-locates the pod and its volume; there is no resize or snapshot support at
+the CSI level, by design — CNPG's own replica-recreate procedure and the
+Barman Cloud plugin backups substitute for those.
+
+The CloudNativePG operator (`cluster/cnpg-system/cnpg/`) manages per-cluster
+`Cluster` resources; `immich-database`
+(`cluster/media/immich/resources/database.yaml`) is currently the only one
+and uses `local-path` for its storage instead of Ceph RBD, relying on
+PostgreSQL streaming replication (`instances: 3`,
+`podAntiAffinityType: required` across `kubernetes.io/hostname`) for
+availability instead of storage-layer replication. Losing a node's local
+volume does not strand the cluster: the operator reseeds the lost instance
+from a surviving primary via `pg_basebackup`. Backups and WAL archiving go
+through the Barman Cloud CNPG-I plugin
+(`cluster/cnpg-system/plugin-barman-cloud/`) to the `safe-object-store` Ceph
+RGW, using the same `ObjectBucketClaim` pattern as Loki and Mimir.
+
+
 ## NFS Storage
 
 The Synology NAS provides NFS volumes for large media and download directories. NFS PVCs use the `nfs` storage class with `ReadWriteMany` access mode, allowing multiple pods to mount the same volume simultaneously. These are typically sized at 1Mi as nominal placeholders since the actual storage is managed by the NAS.
@@ -95,6 +125,7 @@ Static NFS media layout:
 
 - `/volume2/Media/downloads` backs the download claims for Lidarr, Radarr, SABnzbd, and Sonarr.
 - `/volume2/Media` backs the media claims and the Scryer and Weaver data claims.
+- `/volume2/homes/btkostner/Photos` backs the Immich photo library claim.
 
 
 Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir` capped at 100Gi and scheduled only to nodes with non-rotational storage. A one-time init container moves the prior NAS intermediate workspace into the local workspace before the first cutover. Later Pod recreation or rescheduling does not retain the local workspace. Its `weaver-media` NFS claim remains mounted only at `/download/downloads/complete`.
@@ -142,6 +173,8 @@ Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir
 | `autoscan-media`  | `nfs`                   | 1Mi   | ReadWriteMany | Autoscan    |
 | `ersatztv-config` | `ceph-block-replicated` | 5Gi   | ReadWriteOnce | ErsatzTV    |
 | `ersatztv-media`  | `nfs`                   | 1Mi   | ReadWriteMany | ErsatzTV    |
+| `immich-database-N` | `local-path`         | 20Gi  | ReadWriteOnce | Immich (CNPG, x3) |
+| `immich-photos`   | `nfs`                   | 1Mi   | ReadWriteMany | Immich      |
 | `plex-config`     | `ceph-block-replicated` | 300Gi | ReadWriteOnce | Plex        |
 | `plex-media`      | `nfs`                   | 1Mi   | ReadWriteMany | Plex        |
 | `tautulli-config` | `ceph-block-replicated` | 20Gi  | ReadWriteOnce | Tautulli    |
@@ -157,7 +190,8 @@ Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir
 | Storage Class           | Consumers | Total Ceph Storage |
 | ----------------------- | --------- | ------------------ |
 | `ceph-block-replicated` | 12        | **555Gi**          |
-| `nfs`                   | 12        | N/A (NAS-managed)  |
+| `nfs`                   | 13        | N/A (NAS-managed)  |
+| `local-path`            | 3         | N/A (node-local)   |
 
 ### Largest Consumers
 

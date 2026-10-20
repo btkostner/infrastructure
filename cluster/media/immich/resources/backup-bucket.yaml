@@ -1,0 +1,27 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: immich-database-backup
+  namespace: media
+spec:
+  bucketName: immich-database-backup
+  storageClassName: safe-ceph-object
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: immich-database-backup
+  namespace: media
+spec:
+  configuration:
+    destinationPath: s3://immich-database-backup/
+    endpointURL: http://rook-ceph-rgw-safe-object-store.rook-ceph.svc:80
+    s3Credentials:
+      accessKeyId:
+        name: immich-database-backup
+        key: AWS_ACCESS_KEY_ID
+      secretAccessKey:
+        name: immich-database-backup
+        key: AWS_SECRET_ACCESS_KEY
+    wal:
+      compression: gzip

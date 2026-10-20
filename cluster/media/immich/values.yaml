@@ -1,0 +1,30 @@
+defaultPodOptions:
+  securityContext:
+    fsGroup: 1000
+
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          DB_HOSTNAME: immich-database-rw
+          DB_DATABASE_NAME: immich
+          DB_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: username
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich-database-app
+                key: password
+          TZ: America/Los_Angeles
+
+immich:
+  persistence:
+    library:
+      existingClaim: immich-photos
+
+valkey:
+  enabled: true

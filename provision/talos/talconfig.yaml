@@ -39,18 +39,26 @@ nodes:
     controlPlane: true
     ipAddress: 192.168.3.11
     installDisk: /dev/nvme0n1
+    nodeLabels:
+      cnpg.io/local-storage: "true"
   - hostname: nuc-2
     controlPlane: true
     ipAddress: 192.168.3.12
     installDisk: /dev/nvme0n1
+    nodeLabels:
+      cnpg.io/local-storage: "true"
   - hostname: nuc-3
     controlPlane: true
     ipAddress: 192.168.3.13
     installDisk: /dev/sdb
+    nodeLabels:
+      cnpg.io/local-storage: "true"
   - hostname: nuc-4
     controlPlane: false
     ipAddress: 192.168.3.14
     installDisk: /dev/nvme0n1
+    nodeLabels:
+      cnpg.io/local-storage: "true"
   - hostname: nuc-5
     controlPlane: false
     ipAddress: 192.168.3.15

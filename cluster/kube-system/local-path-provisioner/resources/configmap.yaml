@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: local-path-config
+data:
+  config.json: |-
+    {
+            "nodePathMap":[
+            {
+                    "node":"nuc-1",
+                    "paths":["/var/mnt/local-path-provisioner"]
+            },
+            {
+                    "node":"nuc-2",
+                    "paths":["/var/mnt/local-path-provisioner"]
+            },
+            {
+                    "node":"nuc-3",
+                    "paths":["/var/mnt/local-path-provisioner"]
+            },
+            {
+                    "node":"nuc-4",
+                    "paths":["/var/mnt/local-path-provisioner"]
+            }
+            ]
+    }
+  setup: |-
+    #!/bin/sh
+    set -eu
+    mkdir -m 0777 -p "$VOL_DIR"
+  teardown: |-
+    #!/bin/sh
+    set -eu
+    rm -rf "$VOL_DIR"
+  helperPod.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: helper-pod
+    spec:
+      priorityClassName: system-node-critical
+      tolerations:
+        - key: node.kubernetes.io/disk-pressure
+          operator: Exists
+          effect: NoSchedule
+      containers:
+      - name: helper-pod
+        image: docker.io/library/busybox
+        imagePullPolicy: IfNotPresent
