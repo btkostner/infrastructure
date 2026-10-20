@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-immich-photos-smb
+spec:
+  storageClassName: smb
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Mi
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - dir_mode=0770
+    - file_mode=0660
+    - uid=1000
+    - gid=1000
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: 192.168.3.4-homes-btkostner-photos
+    volumeAttributes:
+      source: "//192.168.3.4/homes"
+      subDir: "btkostner/Photos"
+    nodeStageSecretRef:
+      name: immich-photos-smb
+      namespace: media

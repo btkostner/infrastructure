@@ -19,3 +19,6 @@ resources:
   - ./resources/http-route.yaml
   - ./resources/pv-photos.yaml
   - ./resources/pvc-photos.yaml
+  - ./resources/pv-photos-smb.yaml
+  - ./resources/pvc-photos-smb.yaml
+  - ./resources/secret-smb.yaml
