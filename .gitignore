@@ -57,3 +57,4 @@ provision/talos/talsecret.yaml
 
 ### AI ###
 .sisyphus/
+.mcp.json
