@@ -23,6 +23,17 @@ controllers:
                 key: password
           TZ: America/Los_Angeles
 
+machine-learning:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            tag: v3.3.4-openvino
+          resources:
+            limits:
+              gpu.intel.com/i915: 1
+
 immich:
   persistence:
     library:
