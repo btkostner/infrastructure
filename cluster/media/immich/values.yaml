@@ -24,7 +24,7 @@ controllers:
 immich:
   persistence:
     library:
-      existingClaim: immich-photos
+      existingClaim: immich-photos-smb
 
 valkey:
   enabled: true
