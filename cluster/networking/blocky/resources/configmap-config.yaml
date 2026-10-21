@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky-config
+  namespace: networking
+  labels:
+    app: blocky
+data:
+  config.yml: |
+    upstreams:
+      groups:
+        default:
+          - 1.1.1.1
+          - 8.8.8.8
+
+    blocking:
+      denylists:
+        blocking:
+          - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      clientGroupsBlock:
+        default:
+          - blocking
+      blockType: zeroIp
+      loading:
+        refreshPeriod: 24h
+
+    caching:
+      minTime: 5m
+      maxTime: 30m
+
+    prometheus:
+      enable: true
+      path: /metrics
+
+    ports:
+      dns:
+        - 53
+      http: 4000

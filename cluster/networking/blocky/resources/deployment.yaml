@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blocky
+  namespace: networking
+  labels:
+    app: blocky
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: blocky
+  template:
+    metadata:
+      labels:
+        app: blocky
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app: blocky
+      containers:
+        - name: blocky
+          image: ghcr.io/0xerr0r/blocky:v0.35.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - --config
+            - /app/config.yml
+          ports:
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 53
+              name: dns-udp
+              protocol: UDP
+            - containerPort: 4000
+              name: http
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - /app/blocky
+                - healthcheck
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 5
+          readinessProbe:
+            exec:
+              command:
+                - /app/blocky
+                - healthcheck
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.yml
+              subPath: config.yml
+      volumes:
+        - name: config
+          configMap:
+            name: blocky-config

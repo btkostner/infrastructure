@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: blocky
+
+namespace: networking
+
+resources:
+  - ./resources/configmap-config.yaml
+  - ./resources/deployment.yaml
+  - ./resources/grafana-dashboard.yaml
+  - ./resources/service-dns.yaml
+  - ./resources/service-metrics.yaml
+  - ./resources/servicemonitor.yaml
