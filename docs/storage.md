@@ -93,8 +93,8 @@ All block storage classes use the `rook-ceph.rbd.csi.ceph.com` provisioner with 
 The `local-path` storage class (rancher `local-path-provisioner` v0.0.37,
 `cluster/kube-system/local-path-provisioner/`) provisions `hostPath`
 volumes under `/var/mnt/local-path-provisioner` on nodes labeled
-`cnpg.io/local-storage: "true"` (nuc-1 through nuc-4 only, set via per-node
-`nodeLabels` in `provision/talos/talconfig.yaml`; nuc-5 is intentionally
+`btkostner.network/local-storage: "true"` (nuc-1 through nuc-4 only, set via
+per-node `nodeLabels` in `provision/talos/talconfig.yaml`; nuc-5 is intentionally
 excluded pending a disk-layout check, since its Talos install disk and
 Ceph's OSD device filter both resolve to `/dev/sda`). The directory lives on
 the Talos `EPHEMERAL` partition (`/var`), the same partition Rook's
@@ -103,6 +103,13 @@ isolation from other `/var` I/O. `volumeBindingMode: WaitForFirstConsumer`
 co-locates the pod and its volume; there is no resize or snapshot support at
 the CSI level, by design — CNPG's own replica-recreate procedure and the
 Barman Cloud plugin backups substitute for those.
+
+The nodes also still carry the legacy `cnpg.io/local-storage: "true"` label
+(same 4 nodes), which `immich-database`'s `nodeSelector` still targets as of
+this writing. The generic label was added alongside it during a staged
+migration; consumers should move to `btkostner.network/local-storage` and the
+legacy label should be removed from `talconfig.yaml` once nothing references
+it.
 
 The CloudNativePG operator (`cluster/cnpg-system/cnpg/`) manages per-cluster
 `Cluster` resources; `immich-database`

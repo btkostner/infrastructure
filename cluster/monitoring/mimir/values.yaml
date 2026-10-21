@@ -146,7 +146,15 @@ kafka:
       cpu: 256m
       memory: 512Mi
   persistence:
-    enabled: false
+    enabled: true
+    size: 10Gi
+    storageClassName: local-path
+  # local-path-provisioner only has paths configured on nodes labeled
+  # btkostner.network/local-storage: "true" (see provision/talos/talconfig.yaml
+  # and cluster/kube-system/local-path-provisioner); Kafka's single broker
+  # must land on one of them or the PVC will never bind.
+  nodeSelector:
+    btkostner.network/local-storage: "true"
 
 metaMonitoring:
   dashboards:

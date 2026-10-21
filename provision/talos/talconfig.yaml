@@ -41,6 +41,7 @@ nodes:
     installDisk: /dev/nvme0n1
     nodeLabels:
       cnpg.io/local-storage: "true"
+      btkostner.network/local-storage: "true"
     patches:
       - |-
         machine:
@@ -59,6 +60,7 @@ nodes:
     installDisk: /dev/nvme0n1
     nodeLabels:
       cnpg.io/local-storage: "true"
+      btkostner.network/local-storage: "true"
     patches:
       - |-
         machine:
@@ -77,6 +79,7 @@ nodes:
     installDisk: /dev/sdb
     nodeLabels:
       cnpg.io/local-storage: "true"
+      btkostner.network/local-storage: "true"
     patches:
       - |-
         machine:
@@ -95,6 +98,7 @@ nodes:
     installDisk: /dev/nvme0n1
     nodeLabels:
       cnpg.io/local-storage: "true"
+      btkostner.network/local-storage: "true"
     patches:
       - |-
         machine:
