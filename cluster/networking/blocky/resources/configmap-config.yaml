@@ -17,6 +17,16 @@ data:
       denylists:
         blocking:
           - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+          # Migrated from the UniFi "Personal" content-filter custom block list,
+          # which was disabled because UniFi content filtering intercepts all
+          # client DNS and prevents queries from ever reaching blocky.
+          - |
+            googleadservices.com
+            www.googleadservices.com
+            advertising.apple.com
+            iadsdk.apple.com
+            tr.iadsdk.apple.com
+            api-adservices.apple.com
       clientGroupsBlock:
         default:
           - blocking
