@@ -36,6 +36,8 @@ machine-learning:
           image:
             tag: v3.3.4-openvino
           resources:
+            requests:
+              gpu.intel.com/i915: 1
             limits:
               gpu.intel.com/i915: 1
 
