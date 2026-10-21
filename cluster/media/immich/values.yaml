@@ -8,6 +8,11 @@ controllers:
       main:
         image:
           tag: v3.3.4
+        resources:
+          requests:
+            gpu.intel.com/i915: 1
+          limits:
+            gpu.intel.com/i915: 1
         env:
           DB_HOSTNAME: immich-database-rw
           DB_DATABASE_NAME: immich
