@@ -9,6 +9,7 @@ resources:
   - ./resources/configmap-config.yaml
   - ./resources/deployment.yaml
   - ./resources/grafana-dashboard.yaml
+  - ./resources/poddisruptionbudget.yaml
   - ./resources/service-dns.yaml
   - ./resources/service-metrics.yaml
   - ./resources/servicemonitor.yaml
