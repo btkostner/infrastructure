@@ -23,4 +23,4 @@ spec:
           - LoadBalancerIP
       selector:
         matchLabels:
-          app.kubernetes.io/name: pihole
+          app.kubernetes.io/name: blocky
