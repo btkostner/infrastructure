@@ -94,6 +94,34 @@ spec:
             - /spec/removeOSDsIfOutAndSafeToRemove
             - /spec/skipUpgradeChecks
             - /spec/storage/onlyApplyOSDPlacement
+        - group: postgresql.cnpg.io
+          kind: Cluster
+          name: immich-database
+          jsonPointers:
+            - /spec/enablePDB
+            - /spec/enableSuperuserAccess
+            - /spec/failoverDelay
+            - /spec/logLevel
+            - /spec/maxSyncReplicas
+            - /spec/minSyncReplicas
+            - /spec/monitoring
+            - /spec/postgresGID
+            - /spec/postgresUID
+            - /spec/postgresql/parameters
+            - /spec/postgresql/syncReplicaElectionConstraint
+            - /spec/primaryUpdateMethod
+            - /spec/primaryUpdateStrategy
+            - /spec/probes
+            - /spec/replicationSlots
+            - /spec/resources
+            - /spec/smartShutdownTimeout
+            - /spec/startDelay
+            - /spec/stopDelay
+            - /spec/switchoverDelay
+            - /spec/plugins/0/enabled
+            - /spec/bootstrap/initdb/encoding
+            - /spec/bootstrap/initdb/localeCType
+            - /spec/bootstrap/initdb/localeCollate
         # This is a workaround for mutated CRD, where ingoreDifferences must be set
         # https://github.com/metallb/metallb/issues/1681
         - group: "apiextensions.k8s.io"
