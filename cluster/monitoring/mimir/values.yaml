@@ -259,6 +259,18 @@ ruler:
 rollout_operator:
   enabled: false
 
+runtimeConfig:
+  # Default (10000/200000) is too low for this cluster's real scrape
+  # volume: confirmed via Alloy's remote_write shard scaler reporting
+  # shards_desired consistently 150-450+ vs shards_max 50, and sustained,
+  # continuous distributor 429 rejection even with a near-empty backlog.
+  # multitenancy_enabled: false -> Mimir uses the fixed "anonymous" tenant
+  # for every request (confirmed via distributor/ingester logs).
+  overrides:
+    anonymous:
+      ingestion_rate: 30000
+      ingestion_burst_size: 500000
+
 store_gateway:
   persistentVolume:
     enabled: false
