@@ -57,6 +57,10 @@ sidecar:
   notifiers:
     enabled: true
     searchNamespace: ALL
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
 
 grafana.ini:
   alerting:
@@ -86,6 +90,10 @@ headlessService: true
 imageRenderer:
   enabled: true
   replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
   autoscaling:
     enabled: true
     minReplicas: 1

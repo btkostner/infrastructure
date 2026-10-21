@@ -9,6 +9,10 @@ spec:
   replicas: 1
   revisionHistoryLimit: 1
   strategy:
+    # Live Deployment predates SSA and has an orphaned rollingUpdate default
+    # that no field manager owns, so this null does not clear it on its own;
+    # a one-time `kubectl patch --type=json` remove is required once, live.
+    rollingUpdate: null
     type: Recreate
   selector:
     matchLabels:
