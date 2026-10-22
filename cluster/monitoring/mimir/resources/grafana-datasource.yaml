@@ -21,3 +21,6 @@ data:
         jsonData:
           implementation: mimir
           handleGrafanaManagedAlerts: true
+    deleteDatasources:
+      - name: Dashboard1
+        orgId: 1
