@@ -124,7 +124,6 @@ through the Barman Cloud CNPG-I plugin
 (`cluster/cnpg-system/plugin-barman-cloud/`) to the `safe-object-store` Ceph
 RGW, using the same `ObjectBucketClaim` pattern as Loki and Mimir.
 
-
 ## NFS Storage
 
 The Synology NAS provides NFS volumes for large media and download directories. NFS PVCs use the `nfs` storage class with `ReadWriteMany` access mode, allowing multiple pods to mount the same volume simultaneously. These are typically sized at 1Mi as nominal placeholders since the actual storage is managed by the NAS.
@@ -133,7 +132,6 @@ Static NFS media layout:
 - `/volume2/Media/downloads` backs the download claims for Lidarr, Radarr, SABnzbd, and Sonarr.
 - `/volume2/Media` backs the media claims and the Scryer and Weaver data claims.
 - `/volume2/homes/btkostner/Photos` backs the Immich photo library claim.
-
 
 Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir` capped at 100Gi and scheduled only to nodes with non-rotational storage. A one-time init container moves the prior NAS intermediate workspace into the local workspace before the first cutover. Later Pod recreation or rescheduling does not retain the local workspace. Its `weaver-media` NFS claim remains mounted only at `/download/downloads/complete`.
 
@@ -149,23 +147,23 @@ Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir
 
 #### `download`
 
-| PVC Name           | Storage Class           | Size | Access Mode   | Application |
-| ------------------ | ----------------------- | ---- | ------------- | ----------- |
-| `lidarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Lidarr      |
-| `lidarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
-| `lidarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
-| `prowlarr-config`  | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Prowlarr    |
-| `radarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Radarr      |
-| `radarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
-| `radarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
-| `sabnzbd-config`   | `ceph-block-replicated` | 20Gi | ReadWriteOnce | SABnzbd     |
-| `sabnzbd-downloads` | `nfs`                 | 1Mi  | ReadWriteMany | SABnzbd     |
-| `seerr-config`     | `ceph-block-replicated` | 10Gi | ReadWriteOnce | Seerr       |
-| `sonarr-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Sonarr      |
-| `sonarr-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
-| `sonarr-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
-| `scryer-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Scryer      |
-| `weaver-media`     | `nfs`                   | 1Mi  | ReadWriteMany | Weaver      |
+| PVC Name            | Storage Class           | Size | Access Mode   | Application |
+| ------------------- | ----------------------- | ---- | ------------- | ----------- |
+| `lidarr-config`     | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Lidarr      |
+| `lidarr-downloads`  | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
+| `lidarr-media`      | `nfs`                   | 1Mi  | ReadWriteMany | Lidarr      |
+| `prowlarr-config`   | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Prowlarr    |
+| `radarr-config`     | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Radarr      |
+| `radarr-downloads`  | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
+| `radarr-media`      | `nfs`                   | 1Mi  | ReadWriteMany | Radarr      |
+| `sabnzbd-config`    | `ceph-block-replicated` | 20Gi | ReadWriteOnce | SABnzbd     |
+| `sabnzbd-downloads` | `nfs`                   | 1Mi  | ReadWriteMany | SABnzbd     |
+| `seerr-config`      | `ceph-block-replicated` | 10Gi | ReadWriteOnce | Seerr       |
+| `sonarr-config`     | `ceph-block-replicated` | 20Gi | ReadWriteOnce | Sonarr      |
+| `sonarr-downloads`  | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
+| `sonarr-media`      | `nfs`                   | 1Mi  | ReadWriteMany | Sonarr      |
+| `scryer-media`      | `nfs`                   | 1Mi  | ReadWriteMany | Scryer      |
+| `weaver-media`      | `nfs`                   | 1Mi  | ReadWriteMany | Weaver      |
 
 #### `home`
 
@@ -175,16 +173,16 @@ Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir
 
 #### `media`
 
-| PVC Name          | Storage Class           | Size  | Access Mode   | Application |
-| ----------------- | ----------------------- | ----- | ------------- | ----------- |
-| `autoscan-media`  | `nfs`                   | 1Mi   | ReadWriteMany | Autoscan    |
-| `ersatztv-config` | `ceph-block-replicated` | 5Gi   | ReadWriteOnce | ErsatzTV    |
-| `ersatztv-media`  | `nfs`                   | 1Mi   | ReadWriteMany | ErsatzTV    |
-| `immich-database-N` | `local-path`         | 20Gi  | ReadWriteOnce | Immich (CNPG, x3) |
-| `immich-photos`   | `nfs`                   | 1Mi   | ReadWriteMany | Immich      |
-| `plex-config`     | `ceph-block-replicated` | 300Gi | ReadWriteOnce | Plex        |
-| `plex-media`      | `nfs`                   | 1Mi   | ReadWriteMany | Plex        |
-| `tautulli-config` | `ceph-block-replicated` | 20Gi  | ReadWriteOnce | Tautulli    |
+| PVC Name            | Storage Class           | Size  | Access Mode   | Application       |
+| ------------------- | ----------------------- | ----- | ------------- | ----------------- |
+| `autoscan-media`    | `nfs`                   | 1Mi   | ReadWriteMany | Autoscan          |
+| `ersatztv-config`   | `ceph-block-replicated` | 5Gi   | ReadWriteOnce | ErsatzTV          |
+| `ersatztv-media`    | `nfs`                   | 1Mi   | ReadWriteMany | ErsatzTV          |
+| `immich-database-N` | `local-path`            | 20Gi  | ReadWriteOnce | Immich (CNPG, x3) |
+| `immich-photos`     | `nfs`                   | 1Mi   | ReadWriteMany | Immich            |
+| `plex-config`       | `ceph-block-replicated` | 300Gi | ReadWriteOnce | Plex              |
+| `plex-media`        | `nfs`                   | 1Mi   | ReadWriteMany | Plex              |
+| `tautulli-config`   | `ceph-block-replicated` | 20Gi  | ReadWriteOnce | Tautulli          |
 
 #### `rook-ceph` (via Helm)
 
