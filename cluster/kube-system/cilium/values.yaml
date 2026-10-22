@@ -49,6 +49,8 @@ operator:
   replicas: 2
   podDisruptionBudget:
     enabled: true
+  unmanagedPodWatcher:
+    intervalSeconds: 15
 rollOutCiliumPods: true
 securityContext:
   capabilities:
