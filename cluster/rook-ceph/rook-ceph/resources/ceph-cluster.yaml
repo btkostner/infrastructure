@@ -12,7 +12,7 @@ spec:
   continueUpgradeAfterChecksEvenIfNotHealthy: false
   csi:
     readAffinity:
-      enabled: true
+      enabled: false
   dashboard:
     enabled: true
   dataDirHostPath: /var/lib/rook
