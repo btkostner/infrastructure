@@ -15,7 +15,7 @@ validate() {
 
   printf '=== Validating %s\n' "$dir"
   kustomize build --enable-helm "$dir" > "$output"
-  kubeconform -strict -ignore-missing-schemas -summary < "$output"
+  kubeconform -n 1 -strict -ignore-missing-schemas -summary < "$output"
   rm -f "$output"
 }
 
