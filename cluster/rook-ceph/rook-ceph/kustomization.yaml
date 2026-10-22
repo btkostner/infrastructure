@@ -18,6 +18,7 @@ resources:
   - ./resources/ceph-block-pool-danger.yaml
   - ./resources/ceph-block-pool-safe.yaml
   - ./resources/ceph-cluster.yaml
+  - ./resources/ceph-mgr-servicemonitor.yaml
   - ./resources/ceph-object-store.yaml
   - ./resources/http-route.yaml
   - ./resources/storage-class-block-danger.yaml
