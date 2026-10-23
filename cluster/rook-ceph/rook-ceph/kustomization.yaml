@@ -19,6 +19,15 @@ helmCharts:
     version: 1.1.0
     valuesFile: ./values-csi-drivers.yaml
 
+patches:
+  - target:
+      kind: ServiceAccount
+      name: ceph-csi
+    patch: |-
+      - op: add
+        path: /metadata/namespace
+        value: rook-ceph
+
 resources:
   - https://github.com/rook/rook/raw/v1.20.9/deploy/examples/toolbox-operator-image.yaml
   - ./resources/ceph-block-pool-danger.yaml
