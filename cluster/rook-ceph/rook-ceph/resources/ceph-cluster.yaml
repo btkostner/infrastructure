@@ -7,6 +7,8 @@ spec:
   cephConfig:
     global:
       mon_warn_on_pool_no_redundancy: "false"
+      bluestore_slow_ops_warn_threshold: "10"
+      bluestore_slow_ops_warn_lifetime: "86400"
   cephVersion:
     image: quay.io/ceph/ceph:v20.2.4
   continueUpgradeAfterChecksEvenIfNotHealthy: false
