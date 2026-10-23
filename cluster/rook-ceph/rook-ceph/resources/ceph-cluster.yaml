@@ -34,7 +34,7 @@ spec:
     count: 2
     modules:
       - name: diskprediction_local
-        enabled: true
+        enabled: false
       - name: nfs
         enabled: true
       - name: pg_autoscaler
