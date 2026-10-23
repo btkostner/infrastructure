@@ -15832,7 +15832,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -20015,7 +20015,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -20250,7 +20250,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -20948,7 +20948,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -27184,7 +27184,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -27336,7 +27336,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
@@ -27488,7 +27488,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "null",
+                "align": null,
                 "cellOptions": {
                   "type": "auto"
                 },
