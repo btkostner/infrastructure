@@ -38,7 +38,6 @@ admin:
   passwordKey: admin-password
 
 plugins:
-  - grafana-piechart-panel
   - vonage-status-panel
 
 sidecar:

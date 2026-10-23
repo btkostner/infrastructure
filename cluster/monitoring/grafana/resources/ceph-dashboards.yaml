@@ -5477,71 +5477,19 @@ data:
       ],
       "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
-          "colors": [
-            "rgba(50, 128, 45, 0.9)",
-            "rgba(237, 129, 40, 0.9)",
-            "rgb(255, 0, 0)"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "editable": false,
-          "error": false,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 21,
           "gridPos": {
             "h": 3,
             "w": 6,
             "x": 0,
             "y": 0
           },
-          "hideTimeOverride": true,
-          "id": 21,
-          "interval": "1m",
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 2,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Health Status",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "ceph_health_status{cluster=~'$cluster'}",
@@ -5553,30 +5501,74 @@ data:
               "step": 60
             }
           ],
-          "thresholds": "1,2",
-          "timeFrom": null,
-          "title": "Health Status",
-          "transparent": false,
-          "type": "singlestat",
-          "valueFontSize": "50%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "OK",
-              "value": "0"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgba(50, 128, 45, 0.9)",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.9)",
+                    "value": 1.0
+                  },
+                  {
+                    "color": "rgb(255, 0, 0)",
+                    "value": 2.0
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "value",
+                  "options": {
+                    "0": {
+                      "text": "OK",
+                      "color": "rgba(50, 128, 45, 0.9)"
+                    },
+                    "1": {
+                      "text": "WARN",
+                      "color": "rgba(237, 129, 40, 0.9)"
+                    },
+                    "2": {
+                      "text": "ERR",
+                      "color": "rgb(255, 0, 0)"
+                    }
+                  }
+                },
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
             },
-            {
-              "op": "=",
-              "text": "WARN",
-              "value": "1"
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
             },
-            {
-              "op": "=",
-              "text": "ERR",
-              "value": "2"
-            }
-          ],
-          "valueName": "current"
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "interval": "1m",
+          "transparent": false
         },
         {
           "colorMode": "Panel",
@@ -5968,68 +5960,19 @@ data:
           "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "decimals": 2,
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 1,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 47,
           "gridPos": {
             "h": 6,
             "w": 6,
             "x": 0,
             "y": 6
           },
-          "id": 47,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "title": "Capacity used",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ceph_osd_stat_bytes_used{cluster=~'$cluster'})/sum(ceph_osd_stat_bytes{cluster=~'$cluster'})",
@@ -6039,18 +5982,56 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "0.7,0.8",
-          "title": "Capacity used",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 0.7
+                  },
+                  {
+                    "color": "#d44a3a",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "decimals": 2
         },
         {
           "aliasColors": {},
@@ -14875,67 +14856,19 @@ data:
           "type": "row"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 3,
           "gridPos": {
             "h": 5,
             "w": 3,
             "x": 0,
             "y": 1
           },
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "OSDs",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "count(sum by (ceph_daemon) (ceph_osd_metadata{cluster=~\"$cluster\",  hostname=~\"$ceph_hosts\"}))",
@@ -14945,18 +14878,47 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "OSDs",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1"
         },
         {
           "datasource": {
@@ -15336,68 +15298,19 @@ data:
           "type": "timeseries"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Each OSD consists of a Journal/WAL partition and a data partition. The RAW Capacity shown is the sum of the data partitions across all OSDs on the selected OSD hosts.",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 8,
           "gridPos": {
             "h": 5,
             "w": 3,
             "x": 0,
             "y": 6
           },
-          "id": 8,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Raw Capacity",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(\n  ceph_osd_stat_bytes{cluster=~\"$cluster\", } and\n    on (ceph_daemon) ceph_disk_occupation{instance=~\"($ceph_hosts)([\\\\\\\\.:].*)?\", cluster=~\"$cluster\", }\n)\n",
@@ -15407,18 +15320,48 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Raw Capacity",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Each OSD consists of a Journal/WAL partition and a data partition. The RAW Capacity shown is the sum of the data partitions across all OSDs on the selected OSD hosts."
         },
         {
           "datasource": {
@@ -16176,67 +16119,19 @@ data:
       ],
       "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 2,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 0,
             "y": 0
           },
-          "id": 2,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "OSD Hosts",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "count(sum by (hostname) (ceph_osd_metadata{cluster=~\"$cluster\", }))",
@@ -16247,82 +16142,62 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "OSD Hosts",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Average CPU busy across all hosts (OSD, RGW, MON etc) within the cluster",
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 3,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 4,
             "y": 0
           },
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "AVG CPU Busy",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "avg(1 - (\n  avg by(instance) (\n    rate(node_cpu_seconds_total{mode='idle',instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}[$__rate_interval]) or\n    rate(node_cpu{mode='idle',instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}[$__rate_interval])\n  )\n))\n",
@@ -16333,82 +16208,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "AVG CPU Busy",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Average CPU busy across all hosts (OSD, RGW, MON etc) within the cluster"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Average Memory Usage across all hosts in the cluster (excludes buffer/cache usage)",
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 4,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 8,
             "y": 0
           },
-          "id": 4,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "AVG RAM Utilization",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "avg ((\n  (\n    node_memory_MemTotal{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n    node_memory_MemTotal_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}\n  ) - ((\n    node_memory_MemFree{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n    node_memory_MemFree_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}) +\n    (\n      node_memory_Cached{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n      node_memory_Cached_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}\n    ) + (\n      node_memory_Buffers{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n      node_memory_Buffers_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}\n    ) + (\n      node_memory_Slab{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n      node_memory_Slab_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"}\n    )\n  )\n) / (\n  node_memory_MemTotal{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\"} or\n   node_memory_MemTotal_bytes{instance=~\"($osd_hosts|$rgw_hosts|$mon_hosts|$mds_hosts).*\"}\n))\n",
@@ -16419,82 +16275,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "AVG RAM Utilization",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Average Memory Usage across all hosts in the cluster (excludes buffer/cache usage)"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "IOPS Load at the device as reported by the OS on all OSD hosts",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 5,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 12,
             "y": 0
           },
-          "id": 5,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Physical IOPS",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum ((\n  rate(node_disk_reads_completed{instance=~\"($osd_hosts).*\"}[$__rate_interval]) or\n  rate(node_disk_reads_completed_total{instance=~\"($osd_hosts).*\"}[$__rate_interval])\n) + (\n  rate(node_disk_writes_completed{instance=~\"($osd_hosts).*\"}[$__rate_interval]) or\n  rate(node_disk_writes_completed_total{instance=~\"($osd_hosts).*\"}[$__rate_interval])\n))\n",
@@ -16505,82 +16342,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Physical IOPS",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "IOPS Load at the device as reported by the OS on all OSD hosts"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Average Disk utilization for all OSD data devices (i.e. excludes journal/WAL)",
-          "format": "percent",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 6,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 16,
             "y": 0
           },
-          "id": 6,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "AVG Disk Utilization",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "avg (\n  label_replace(\n    (rate(node_disk_io_time_ms[$__rate_interval]) / 10 ) or\n      (rate(node_disk_io_time_seconds_total[$__rate_interval]) * 100),\n    \"instance\", \"$1\", \"instance\", \"([^.:]*).*\"\n  ) * on(instance, device) group_left(ceph_daemon) label_replace(\n    label_replace(\n      ceph_disk_occupation_human{instance=~\"($osd_hosts).*\", cluster=~\"$cluster\", },\n      \"device\", \"$1\", \"device\", \"/dev/(.*)\"\n    ), \"instance\", \"$1\", \"instance\", \"([^.:]*).*\"\n  )\n)\n",
@@ -16591,82 +16409,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "AVG Disk Utilization",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Average Disk utilization for all OSD data devices (i.e. excludes journal/WAL)"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Total send/receive network load across all hosts in the ceph cluster",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 7,
           "gridPos": {
             "h": 5,
             "w": 4,
             "x": 20,
             "y": 0
           },
-          "id": 7,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Network Load",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum (\n  (\n    rate(node_network_receive_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\",device!=\"lo\"}[$__rate_interval]) or\n    rate(node_network_receive_bytes_total{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\",device!=\"lo\"}[$__rate_interval])\n  ) unless on (device, instance)\n  label_replace((node_bonding_slaves > 0), \"device\", \"$1\", \"master\", \"(.+)\")\n) +\nsum (\n  (\n    rate(node_network_transmit_bytes{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\",device!=\"lo\"}[$__rate_interval]) or\n    rate(node_network_transmit_bytes_total{instance=~\"($osd_hosts|$mon_hosts|$mds_hosts|$rgw_hosts).*\",device!=\"lo\"}[$__rate_interval])\n  ) unless on (device, instance)\n  label_replace((node_bonding_slaves > 0), \"device\", \"$1\", \"master\", \"(.+)\")\n)\n",
@@ -16677,18 +16476,48 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Network Load",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Total send/receive network load across all hosts in the ceph cluster"
         },
         {
           "datasource": {
@@ -20933,68 +20762,19 @@ data:
           ]
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "This gauge panel shows onode Hits ratio to help determine if increasing RAM per OSD could help improve the performance of the cluster",
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 1,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 10,
           "gridPos": {
             "h": 8,
             "w": 4,
             "x": 20,
             "y": 8
           },
-          "id": 10,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "OSD onode Hits Ratio",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ceph_bluestore_onode_hits{cluster=~\"$cluster\", }) / (\n  sum(ceph_bluestore_onode_hits{cluster=~\"$cluster\", }) +\n  sum(ceph_bluestore_onode_misses{cluster=~\"$cluster\", })\n)\n",
@@ -21004,18 +20784,52 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": ".75",
-          "title": "OSD onode Hits Ratio",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 0.75
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "This gauge panel shows onode Hits ratio to help determine if increasing RAM per OSD could help improve the performance of the cluster"
         },
         {
           "collapse": false,
@@ -21407,67 +21221,19 @@ data:
       ],
       "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 1,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 2,
           "gridPos": {
             "h": 7,
             "w": 7,
             "x": 0,
             "y": 0
           },
-          "id": 2,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
+          "title": "Capacity used",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "(ceph_pool_stored{cluster=~\"$cluster\", } / (ceph_pool_stored{cluster=~\"$cluster\", } + ceph_pool_max_avail{cluster=~\"$cluster\", })) *\n  on(pool_id) group_left(instance, name) ceph_pool_metadata{name=~\"$pool_name\", cluster=~\"$cluster\", }\n",
@@ -21477,82 +21243,70 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": ".7,.8",
-          "title": "Capacity used",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 0.7
+                  },
+                  {
+                    "color": "#d44a3a",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": 100,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Time till pool is full assuming the average fill rate of the last 6 hours",
-          "format": "s",
-          "gauge": {
-            "maxValue": false,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 3,
           "gridPos": {
             "h": 7,
             "w": 5,
             "x": 7,
             "y": 0
           },
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": ""
+          "title": "Time till full",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "(ceph_pool_max_avail{cluster=~\"$cluster\", } / deriv(ceph_pool_stored{cluster=~\"$cluster\", }[6h])) *\n  on(pool_id) group_left(instance, name) ceph_pool_metadata{name=~\"$pool_name\", cluster=~\"$cluster\", } > 0\n",
@@ -21562,18 +21316,48 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "current",
-          "title": "Time till full",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": false
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Time till pool is full assuming the average fill rate of the last 6 hours"
         },
         {
           "datasource": {
@@ -22066,67 +21850,19 @@ data:
       ],
       "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 2,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 0,
             "y": 0
           },
-          "id": 2,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Pools",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "count(ceph_pool_metadata{cluster=~\"$cluster\", })",
@@ -22137,82 +21873,62 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Pools",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Count of the pools that have compression enabled",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 3,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 3,
             "y": 0
           },
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Pools with Compression",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "count(ceph_pool_metadata{compression_mode!=\"none\", cluster=~\"$cluster\", })",
@@ -22222,82 +21938,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Pools with Compression",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Count of the pools that have compression enabled"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Total raw capacity available to the cluster",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 4,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 6,
             "y": 0
           },
-          "id": 4,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Total Raw Capacity",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ceph_osd_stat_bytes{cluster=~\"$cluster\", })",
@@ -22307,82 +22004,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Total Raw Capacity",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Total raw capacity available to the cluster"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Total raw capacity consumed by user data and associated overheads (metadata + redundancy)",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 5,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 9,
             "y": 0
           },
-          "id": 5,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Raw Capacity Consumed",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ceph_pool_bytes_used{cluster=~\"$cluster\", })",
@@ -22393,82 +22071,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Raw Capacity Consumed",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Total raw capacity consumed by user data and associated overheads (metadata + redundancy)"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Total of client data stored in the cluster",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 6,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 12,
             "y": 0
           },
-          "id": 6,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Logical Stored ",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ceph_pool_stored{cluster=~\"$cluster\", })",
@@ -22479,82 +22138,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Logical Stored ",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Total of client data stored in the cluster"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "A compression saving is determined as the data eligible to be compressed minus the capacity used to store the data after compression",
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 7,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 15,
             "y": 0
           },
-          "id": 7,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Compression Savings",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(\n  ceph_pool_compress_under_bytes{cluster=~\"$cluster\", } -\n    ceph_pool_compress_bytes_used{cluster=~\"$cluster\", }\n)\n",
@@ -22564,82 +22204,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Compression Savings",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "A compression saving is determined as the data eligible to be compressed minus the capacity used to store the data after compression"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "Indicates how suitable the data is within the pools that are/have been enabled for compression - averaged across all pools holding compressed data",
-          "format": "percent",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 8,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 18,
             "y": 0
           },
-          "id": 8,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Compression Eligibility",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "(\n  sum(ceph_pool_compress_under_bytes{cluster=~\"$cluster\", } > 0) /\n    sum(ceph_pool_stored_raw{cluster=~\"$cluster\", } and ceph_pool_compress_under_bytes{cluster=~\"$cluster\", } > 0)\n) * 100\n",
@@ -22649,82 +22270,63 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Compression Eligibility",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "Indicates how suitable the data is within the pools that are/have been enabled for compression - averaged across all pools holding compressed data"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "This factor describes the average ratio of data eligible to be compressed divided by the data actually stored. It does not account for data written that was ineligible for compression (too small, or compression yield too low)",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "id": 9,
           "gridPos": {
             "h": 3,
             "w": 3,
             "x": 21,
             "y": 0
           },
-          "id": 9,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
+          "title": "Compression Factor",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PAE45454D0EDB9216"
           },
-          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(\n  ceph_pool_compress_under_bytes{cluster=~\"$cluster\", } > 0)\n    / sum(ceph_pool_compress_bytes_used{cluster=~\"$cluster\", } > 0\n)\n",
@@ -22734,18 +22336,48 @@ data:
               "refId": "A"
             }
           ],
-          "thresholds": "",
-          "title": "Compression Factor",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "fieldConfig": {
+            "defaults": {
+              "unit": "none",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  }
+                ]
+              },
+              "mappings": [
+                {
+                  "type": "special",
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  }
+                }
+              ]
+            },
+            "overrides": []
+          },
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto"
+          },
+          "pluginVersion": "12.3.1",
+          "description": "This factor describes the average ratio of data eligible to be compressed divided by the data actually stored. It does not account for data written that was ineligible for compression (too small, or compression yield too low)"
         },
         {
           "columns": [],
