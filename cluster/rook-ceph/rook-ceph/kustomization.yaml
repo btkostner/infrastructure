@@ -10,11 +10,11 @@ helmCharts:
     repo: https://charts.rook.io/release
     releaseName: rook-ceph
     namespace: rook-ceph
-    version: v1.19.3
+    version: v1.19.12
     valuesFile: ./values.yaml
 
 resources:
-  - https://github.com/rook/rook/raw/v1.19.3/deploy/examples/toolbox-operator-image.yaml
+  - https://github.com/rook/rook/raw/v1.19.12/deploy/examples/toolbox-operator-image.yaml
   - ./resources/ceph-block-pool-danger.yaml
   - ./resources/ceph-block-pool-safe.yaml
   - ./resources/ceph-cluster.yaml
