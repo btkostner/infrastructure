@@ -137,7 +137,7 @@ data:
 
     prometheus.scrape "cadvisor" {
       targets         = discovery.relabel.cadvisor.output
-      forward_to      = [prometheus.remote_write.default.receiver]
+      forward_to      = [prometheus.relabel.cadvisor.receiver]
       scheme          = "https"
       scrape_interval = "15s"
       bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
@@ -146,6 +146,21 @@ data:
       }
       clustering {
         enabled = true
+      }
+    }
+
+    // cAdvisor emits root/aggregate cgroup metrics (empty "container"
+    // label) alongside real per-container metrics. The aggregates are
+    // ~3x the cardinality of the per-container data and aren't used by
+    // any dashboard here, so drop them before remote_write.
+    prometheus.relabel "cadvisor" {
+      forward_to = [prometheus.remote_write.default.receiver]
+
+      rule {
+        source_labels = ["__name__", "container"]
+        separator     = "@"
+        regex         = "container_.+@"
+        action        = "drop"
       }
     }
 
