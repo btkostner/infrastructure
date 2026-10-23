@@ -36,27 +36,11 @@ spec:
               protocol: TCP
     - toServices:
         - k8sService:
-            namespace: download
-            serviceName: radarr
+            namespace: media
+            serviceName: plex
       toPorts:
         - ports:
-            - port: "7878"
-              protocol: TCP
-    - toServices:
-        - k8sService:
-            namespace: download
-            serviceName: sonarr
-      toPorts:
-        - ports:
-            - port: "8989"
-              protocol: TCP
-    - toServices:
-        - k8sService:
-            namespace: download
-            serviceName: prowlarr
-      toPorts:
-        - ports:
-            - port: "9696"
+            - port: "32400"
               protocol: TCP
     - toServices:
         - k8sService:

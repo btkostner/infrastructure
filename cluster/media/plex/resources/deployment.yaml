@@ -53,7 +53,7 @@ spec:
             - name: ADVERTISE_IP
               value: "https://abraxis.tv:443/"
             - name: ALLOWED_NETWORKS
-              value: "192.168.0.0/16"
+              value: "192.168.0.0/16,10.244.0.0/16"
             - name: HOSTNAME
               value: "abraxis.tv"
             - name: TZ
