@@ -12,7 +12,6 @@ spec:
   hostnames:
     - abraxis.tv
     - request.abraxis.tv
-    - ha.btkostner.network
   rules:
     - filters:
         - type: RequestRedirect

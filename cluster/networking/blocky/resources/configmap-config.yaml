@@ -16,7 +16,6 @@ data:
     customDNS:
       mapping:
         btkostner.network: 192.168.3.52
-        ha.btkostner.network: 192.168.3.51
         kvm.btkostner.network: 192.168.3.2
         behemoth.btkostner.network: 192.168.3.4
         talos.btkostner.network: 192.168.3.11,192.168.3.12,192.168.3.13
@@ -25,9 +24,6 @@ data:
         nuc-3.btkostner.network: 192.168.3.13
         nuc-4.btkostner.network: 192.168.3.14
         nuc-5.btkostner.network: 192.168.3.15
-        nuc-6.btkostner.network: 192.168.3.16
-        nuc-7.btkostner.network: 192.168.3.17
-        nuc-8.btkostner.network: 192.168.3.18
 
     blocking:
       denylists:
