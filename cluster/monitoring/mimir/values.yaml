@@ -270,6 +270,12 @@ runtimeConfig:
     anonymous:
       ingestion_rate: 30000
       ingestion_burst_size: 500000
+      # Default (150000) was hit exactly (cortex_ingester_memory_series
+      # pinned at 150000) once cAdvisor scraping was added, silently
+      # discarding all new cAdvisor series while reporting write success.
+      # Ingester memory usage was ~275Mi/4Gi at the time, so there is
+      # ample headroom for this increase.
+      max_global_series_per_user: 300000
 
 store_gateway:
   persistentVolume:
