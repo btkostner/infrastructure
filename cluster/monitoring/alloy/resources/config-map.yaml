@@ -184,7 +184,7 @@ data:
 
     prometheus.scrape "api_server" {
       targets         = discovery.relabel.api_server.output
-      forward_to      = [prometheus.remote_write.default.receiver]
+      forward_to      = [prometheus.relabel.api_server.receiver]
       scheme          = "https"
       scrape_interval = "30s"
       bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
@@ -193,6 +193,20 @@ data:
       }
       clustering {
         enabled = true
+      }
+    }
+
+    // apiserver/etcd histogram buckets (per verb/resource/group/version/
+    // client/code) are the dominant source of cardinality here (~86000 of
+    // ~111000 series for this job). _sum/_count remain for rate/average
+    // queries; only the per-bucket quantile detail is dropped.
+    prometheus.relabel "api_server" {
+      forward_to = [prometheus.remote_write.default.receiver]
+
+      rule {
+        source_labels = ["__name__"]
+        regex         = ".+_bucket"
+        action        = "drop"
       }
     }
 
