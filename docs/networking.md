@@ -20,14 +20,18 @@ My Intel NUC cluster runs on a separate vlan powered by [Ubiquiti](https://www.u
 | Intel NUC11PAHI&                        | NUC 5                           | 192.168.3.15 |
 | Kubernetes ingress VIP                  | cilium-ingress                  | 192.168.3.50 |
 | Kubernetes ingress VIP                  | cilium-gateway-external-gateway | 192.168.3.51 |
+| Kubernetes ingress VIP                  | cilium-gateway-internal-gateway | 192.168.3.52 |
+| Blocky DNS                              | blocky-dns                      | 192.168.3.61 |
 
 ## Private Network
 
-To make things easier, I have a [Tailscale](https://tailscale.com) network for everything. This makes it easy for all of my devices to access private services on the cluster. To make it _even_ easier, I have a full DNS setup with Cloudflare at `btkostner.network`. All IPs in that zone point to _private_ local network IPs or Tailscale IPs.
+Private services live under `btkostner.network` and are reached with [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/). Devices run the Cloudflare One (WARP) client. A `cloudflared` deployment in the cluster (`cluster/networking/cloudflared`) connects the `cluster` tunnel to Cloudflare.
 
-Currently the PiKVM and Synology NAS has built in Tailscale support, so they _just work™_. This allows me to access my kvm from any device with Tailscale setup by opening a browser and accessing <https://kvm.btkostner.network>, similarly my nas with <https://behemoth.btkostner.network>.
+The tunnel has a private hostname route for `btkostner.network`, which also covers its subdomains. When a WARP client looks up a name such as `grafana.btkostner.network`, Cloudflare Gateway answers with a temporary IP in `172.64.128.0/20` and sends the traffic through the tunnel. The public `btkostner.network` zone has no A, AAAA, or CNAME records.
 
-For the Kubernetes cluster.... TODO....
+`cloudflared` resolves the real address through [Blocky](https://0xerr0r.github.io/blocky/) (`192.168.3.61`). Blocky's `customDNS` mapping in `cluster/networking/blocky` answers `btkostner.network` and every subdomain with the `internal-gateway` IP (`192.168.3.52`). More specific entries override this for hosts that are not behind the gateway: `talos` (the Kubernetes API on the control plane nodes), `nuc-1` to `nuc-5`, `kvm`, and `behemoth`. Add an entry there when a new host needs to be reachable.
+
+Gateway TCP and UDP proxying must stay enabled in Zero Trust for private hostname routing to work. The default device profile reconnects WARP 10 minutes after it is turned off (`auto_connect: 600`).
 
 ## Public Network
 
