@@ -15,6 +15,12 @@ alloy:
         - DAC_READ_SEARCH
         - CHECKPOINT_RESTORE
         - PERFMON
+        # Required for beyla's application-observability mode (library-level
+        # uprobe instrumentation + joining target network namespaces); see
+        # https://grafana.com/docs/beyla/latest/security/. Without it beyla
+        # fails with "join target netns: operation not permitted" and
+        # produces no metrics at all.
+        - SYS_ADMIN
       drop:
         - ALL
   mounts:
