@@ -14,6 +14,17 @@ data:
         url: http://mimir-gateway/prometheus
         access: proxy
         isDefault: true
+      # Ceph dashboard's shipped frontend hardcodes the Grafana datasource
+      # name for embedded metrics iframes to the literal string "Dashboard1"
+      # (ceph-mgr dashboard module, compiled JS: this.datasource =
+      # "metrics" === this.type ? "Dashboard1" : ...). There is no backend
+      # config key to override this -- the datasource must exist under this
+      # exact name or Ceph's embedded Grafana panels fail with a Prometheus
+      # API error. Points at the same backend as Mimir above.
+      - name: Dashboard1
+        type: prometheus
+        url: http://mimir-gateway/prometheus
+        access: proxy
       - name: Alertmanager
         type: alertmanager
         url: http://mimir-gateway/alertmanager
@@ -21,6 +32,3 @@ data:
         jsonData:
           implementation: mimir
           handleGrafanaManagedAlerts: true
-    deleteDatasources:
-      - name: Dashboard1
-        orgId: 1
