@@ -19982,29 +19982,30 @@ data:
           "seriesOverrides": [],
           "targets": [
             {
-              "expr": "avg(\n  rate(ceph_osd_op_r_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n  on (ceph_daemon) rate(ceph_osd_op_r_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n)\n",
+              "expr": "avg(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "AVG read",
+              "legendFormat": "avg",
               "refId": "A"
             },
             {
-              "expr": "max(\n  rate(ceph_osd_op_r_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n  on (ceph_daemon) rate(ceph_osd_op_r_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n)\n",
+              "expr": "max(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "MAX read",
+              "legendFormat": "max",
               "refId": "B"
             },
             {
-              "expr": "quantile(0.95,\n  (\n    rate(ceph_osd_op_r_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n    on (ceph_daemon) rate(ceph_osd_op_r_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n  )\n)\n",
+              "expr": "quantile(0.95, ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "@95%ile",
+              "legendFormat": "p95",
               "refId": "C"
             }
           ],
-          "title": "OSD Read Latencies",
-          "type": "timeseries"
+          "title": "OSD Apply Latency",
+          "type": "timeseries",
+          "description": "ceph_osd_apply_latency_ms (BlueStore reports apply and commit latency as equal; there is no distinct per-operation read-latency metric exported by this Ceph build)."
         },
         {
           "columns": [],
@@ -20112,7 +20113,7 @@ data:
           "styles": "",
           "targets": [
             {
-              "expr": "topk(10,\n  (sort(\n    (\n      rate(ceph_osd_op_r_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n        on (ceph_daemon) rate(ceph_osd_op_r_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) *\n        1000\n    )\n  ))\n)\n",
+              "expr": "topk(10, sort(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"}))",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
@@ -20122,7 +20123,7 @@ data:
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Highest READ Latencies",
+          "title": "Highest Apply Latencies",
           "transformations": [
             {
               "id": "merge",
@@ -20216,29 +20217,30 @@ data:
           "seriesOverrides": [],
           "targets": [
             {
-              "expr": "avg(\n  rate(ceph_osd_op_w_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n  on (ceph_daemon) rate(ceph_osd_op_w_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n)\n",
+              "expr": "avg(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "AVG write",
+              "legendFormat": "avg",
               "refId": "A"
             },
             {
-              "expr": "max(\n  rate(ceph_osd_op_w_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n  on (ceph_daemon) rate(ceph_osd_op_w_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n)\n",
+              "expr": "max(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "MAX write",
+              "legendFormat": "max",
               "refId": "B"
             },
             {
-              "expr": "quantile(0.95,\n  (\n    rate(ceph_osd_op_w_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n    on (ceph_daemon) rate(ceph_osd_op_w_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) * 1000\n  )\n)\n",
+              "expr": "quantile(0.95, ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
               "format": "time_series",
               "intervalFactor": 1,
-              "legendFormat": "@95%ile write",
+              "legendFormat": "p95",
               "refId": "C"
             }
           ],
           "title": "OSD Write Latencies",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "ceph_osd_commit_latency_ms (BlueStore write-path latency; equal to apply latency in BlueStore)."
         },
         {
           "columns": [],
@@ -20381,7 +20383,7 @@ data:
           "styles": "",
           "targets": [
             {
-              "expr": "topk(10,\n  (sort(\n    (rate(ceph_osd_op_w_latency_sum{cluster=~\"$cluster\", }[$__rate_interval]) /\n      on (ceph_daemon) rate(ceph_osd_op_w_latency_count{cluster=~\"$cluster\", }[$__rate_interval]) *\n      1000)\n  ))\n)\n",
+              "expr": "topk(10, sort(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"}))",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
@@ -20544,222 +20546,6 @@ data:
           ],
           "title": "OSD Objectstore Types",
           "type": "piechart"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "description": "The pie chart shows the various OSD sizes used within the cluster",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "mappings": []
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 4,
-            "x": 8,
-            "y": 8
-          },
-          "id": 8,
-          "options": {
-            "displayLabels": [
-              "percent"
-            ],
-            "legend": {
-              "calcs": [],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "values": [
-                "percent",
-                "value"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {},
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } < 1099511627776)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<1TB",
-              "refId": "A"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 1099511627776 < 2199023255552)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<2TB",
-              "refId": "B"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 2199023255552 < 3298534883328)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<3TB",
-              "refId": "C"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 3298534883328 < 4398046511104)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<4TB",
-              "refId": "D"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 4398046511104 < 6597069766656)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<6TB",
-              "refId": "E"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 6597069766656 < 8796093022208)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<8TB",
-              "refId": "F"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 8796093022208 < 10995116277760)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<10TB",
-              "refId": "G"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 10995116277760 < 13194139533312)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<12TB",
-              "refId": "H"
-            },
-            {
-              "expr": "count(ceph_osd_stat_bytes{cluster=~\"$cluster\", } >= 13194139533312)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "<12TB+",
-              "refId": "I"
-            }
-          ],
-          "title": "OSD Size Summary",
-          "type": "piechart"
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PAE45454D0EDB9216"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {
-                "fillOpacity": 8,
-                "showPoints": "never"
-              },
-              "unit": "short"
-            }
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 12,
-            "y": 8
-          },
-          "id": 9,
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "ceph_osd_numpg{cluster=~\"$cluster\", }",
-              "format": "time_series",
-              "instant": true,
-              "intervalFactor": 1,
-              "legendFormat": "PGs per OSD",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Distribution of PGs per OSD",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "timeseries",
-          "xaxis": {
-            "buckets": 20,
-            "mode": "histogram",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": "# of OSDs",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            }
-          ]
         },
         {
           "id": 10,
