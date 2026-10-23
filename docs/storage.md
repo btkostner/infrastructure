@@ -175,7 +175,6 @@ Weaver stores incomplete downloads and unpacking work in a disk-backed `emptyDir
 
 | PVC Name            | Storage Class           | Size  | Access Mode   | Application       |
 | ------------------- | ----------------------- | ----- | ------------- | ----------------- |
-| `autoscan-media`    | `nfs`                   | 1Mi   | ReadWriteMany | Autoscan          |
 | `ersatztv-config`   | `ceph-block-replicated` | 5Gi   | ReadWriteOnce | ErsatzTV          |
 | `ersatztv-media`    | `nfs`                   | 1Mi   | ReadWriteMany | ErsatzTV          |
 | `immich-database-N` | `local-path`            | 20Gi  | ReadWriteOnce | Immich (CNPG, x3) |
