@@ -37,4 +37,4 @@ Gateway TCP and UDP proxying must stay enabled in Zero Trust for private hostnam
 
 For public networking it's a pretty standard Kubernetes setup. One _abnormal_ thing about my setup is I use the new (and totally awesome) [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io). There is a single `external-gateway` resource that uses [MetalLB](https://metallb.universe.tf) to allocate the `192.68.3.50` IP address to it. Port forwarding with Ubiquiti allows my house public IP address to accept traffic and route to my cluster services.
 
-To make this fully work, I also have some ddns jobs on the cluster that set the required Cloudflare records pointing to my house public IP address.
+To make this fully work, a ddns job on the cluster keeps the `abraxis.tv` Cloudflare records pointed at my house public IP address. `btkostner.network` has no public records and is only reachable through Cloudflare Zero Trust.
