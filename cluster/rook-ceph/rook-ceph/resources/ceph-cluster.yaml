@@ -33,8 +33,6 @@ spec:
   mgr:
     count: 2
     modules:
-      - name: dashboard
-        enabled: true
       - name: diskprediction_local
         enabled: true
       - name: nfs
