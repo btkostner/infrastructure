@@ -13,6 +13,13 @@ data:
           - 1.1.1.1
           - 8.8.8.8
 
+    customDNS:
+      mapping:
+        btkostner.network: 192.168.3.52
+        cluster.btkostner.network: 192.168.3.10
+        kvm.btkostner.network: 192.168.3.2
+        behemoth.btkostner.network: 192.168.3.4
+
     blocking:
       denylists:
         blocking:
