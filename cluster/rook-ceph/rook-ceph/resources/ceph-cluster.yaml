@@ -10,6 +10,15 @@ spec:
   cephVersion:
     image: quay.io/ceph/ceph:v20.2.4
   continueUpgradeAfterChecksEvenIfNotHealthy: false
+  security:
+    cephx:
+      daemon:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
+      csi:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
+        keyType: aes
   csi:
     readAffinity:
       enabled: false
