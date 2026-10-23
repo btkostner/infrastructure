@@ -19982,21 +19982,21 @@ data:
           "seriesOverrides": [],
           "targets": [
             {
-              "expr": "avg(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "avg(ceph_osd_apply_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "avg",
               "refId": "A"
             },
             {
-              "expr": "max(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "max(ceph_osd_apply_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "max",
               "refId": "B"
             },
             {
-              "expr": "quantile(0.95, ceph_osd_apply_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "quantile(0.95, ceph_osd_apply_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "p95",
@@ -20113,7 +20113,7 @@ data:
           "styles": "",
           "targets": [
             {
-              "expr": "topk(10, sort(ceph_osd_apply_latency_ms{cluster=~\"$cluster\"}))",
+              "expr": "topk(10, sort(ceph_osd_apply_latency_ms))",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
@@ -20217,21 +20217,21 @@ data:
           "seriesOverrides": [],
           "targets": [
             {
-              "expr": "avg(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "avg(ceph_osd_commit_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "avg",
               "refId": "A"
             },
             {
-              "expr": "max(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "max(ceph_osd_commit_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "max",
               "refId": "B"
             },
             {
-              "expr": "quantile(0.95, ceph_osd_commit_latency_ms{cluster=~\"$cluster\"})",
+              "expr": "quantile(0.95, ceph_osd_commit_latency_ms)",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "p95",
@@ -20383,7 +20383,7 @@ data:
           "styles": "",
           "targets": [
             {
-              "expr": "topk(10, sort(ceph_osd_commit_latency_ms{cluster=~\"$cluster\"}))",
+              "expr": "topk(10, sort(ceph_osd_commit_latency_ms))",
               "format": "table",
               "instant": true,
               "intervalFactor": 1,
