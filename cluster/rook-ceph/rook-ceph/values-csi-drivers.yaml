@@ -1,0 +1,32 @@
+# Rook-compatible default values for the ceph-csi-drivers Helm chart.
+#
+# Use these values when installing or upgrading the ceph-csi-drivers chart
+# alongside the rook-ceph operator chart. The driver names must match the
+# provisioner names used by Rook (e.g. in StorageClasses and VolumeSnapshotClasses).
+#
+# Sourced verbatim from:
+# https://raw.githubusercontent.com/rook/rook/v1.20.9/deploy/charts/ceph-csi-drivers/values.yaml
+
+operatorConfig:
+  namespace: rook-ceph # namespace:operator
+  driverSpecDefaults:
+    imageSet:
+      name: rook-csi-operator-image-set-configmap
+    nodePlugin:
+      priorityClassName: system-node-critical
+    controllerPlugin:
+      priorityClassName: system-cluster-critical
+
+drivers:
+  rbd:
+    enabled: true
+    name: rook-ceph.rbd.csi.ceph.com # csi-provisioner-name
+  cephfs:
+    enabled: true
+    name: rook-ceph.cephfs.csi.ceph.com # csi-provisioner-name
+  nfs:
+    enabled: false
+    name: rook-ceph.nfs.csi.ceph.com # csi-provisioner-name
+  nvmeof:
+    enabled: false
+    name: rook-ceph.nvmeof.csi.ceph.com # csi-provisioner-name

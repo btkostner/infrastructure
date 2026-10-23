@@ -10,11 +10,17 @@ helmCharts:
     repo: https://charts.rook.io/release
     releaseName: rook-ceph
     namespace: rook-ceph
-    version: v1.19.12
+    version: v1.20.9
     valuesFile: ./values.yaml
+  - name: ceph-csi-drivers
+    repo: https://ceph.github.io/ceph-csi-operator
+    releaseName: ceph-csi-drivers
+    namespace: rook-ceph
+    version: 1.1.0
+    valuesFile: ./values-csi-drivers.yaml
 
 resources:
-  - https://github.com/rook/rook/raw/v1.19.12/deploy/examples/toolbox-operator-image.yaml
+  - https://github.com/rook/rook/raw/v1.20.9/deploy/examples/toolbox-operator-image.yaml
   - ./resources/ceph-block-pool-danger.yaml
   - ./resources/ceph-block-pool-safe.yaml
   - ./resources/ceph-cluster.yaml
