@@ -1,3 +1,0 @@
-oauthSecretVolume:
-  secret:
-    secretName: operator-oauth
