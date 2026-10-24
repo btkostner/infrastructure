@@ -27,7 +27,7 @@ My Intel NUC cluster runs on a separate vlan powered by [Ubiquiti](https://www.u
 
 Private services live under `btkostner.network` and are reached with [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/). Devices run the Cloudflare One (WARP) client. A `cloudflared` deployment in the cluster (`cluster/networking/cloudflared`) connects the `cluster` tunnel to Cloudflare.
 
-The tunnel has a private hostname route for `btkostner.network`, which also covers its subdomains. When a WARP client looks up a name such as `grafana.btkostner.network`, Cloudflare Gateway answers with a temporary IP in `172.64.128.0/20` and sends the traffic through the tunnel. The public `btkostner.network` zone has no A, AAAA, or CNAME records.
+The tunnel has a private hostname route for `btkostner.network`, which also covers its subdomains. When a WARP client looks up a name such as `grafana.btkostner.network`, Cloudflare Gateway answers with a temporary IP in `172.64.128.0/20` and sends the traffic through the tunnel. The public zone is otherwise private, with `ha.btkostner.network` being the exception for Home Assistant webhooks.
 
 `cloudflared` resolves the real address through [Blocky](https://0xerr0r.github.io/blocky/) (`192.168.3.61`). Blocky's `customDNS` mapping in `cluster/networking/blocky` answers `btkostner.network` and every subdomain with the `internal-gateway` IP (`192.168.3.52`). More specific entries override this for hosts that are not behind the gateway: `talos` (the Kubernetes API on the control plane nodes), `nuc-1` to `nuc-5`, `kvm`, and `behemoth`. Add an entry there when a new host needs to be reachable.
 
@@ -37,4 +37,4 @@ Gateway TCP and UDP proxying must stay enabled in Zero Trust for private hostnam
 
 For public networking it's a pretty standard Kubernetes setup. One _abnormal_ thing about my setup is I use the new (and totally awesome) [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io). There is a single `external-gateway` resource that uses [MetalLB](https://metallb.universe.tf) to allocate the `192.68.3.50` IP address to it. Port forwarding with Ubiquiti allows my house public IP address to accept traffic and route to my cluster services.
 
-To make this fully work, a ddns job on the cluster keeps the `abraxis.tv` Cloudflare records pointed at my house public IP address. `btkostner.network` has no public records and is only reachable through Cloudflare Zero Trust.
+To make this fully work, a DDNS job on the cluster keeps the `abraxis.tv` Cloudflare records and `ha.btkostner.network` pointed at my house public IP address. The remaining `btkostner.network` services are only reachable through Cloudflare Zero Trust.

@@ -8,3 +8,4 @@ namespace: networking
 resources:
   - ./resources/gateway-redirect.yaml
   - ./resources/gateway.yaml
+  - ./resources/homeassistant-webhook-redirect.yaml

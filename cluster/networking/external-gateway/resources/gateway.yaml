@@ -46,6 +46,20 @@ spec:
             kind: Secret
             name: request-abraxis-tv
 
+    - hostname: ha.btkostner.network
+      name: ha-btkostner-network
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: ha-btkostner-network
+
     - name: http-redirect
       port: 80
       protocol: HTTP

@@ -8,4 +8,5 @@ namespace: home
 resources:
   - ./resources/endpoints.yaml
   - ./resources/http-route.yaml
+  - ./resources/http-route-external-webhook.yaml
   - ./resources/service.yaml
