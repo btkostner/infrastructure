@@ -19,9 +19,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh -s -- --tarball \
-    && curl -fsSL https://omp.sh/install | sh -s -- --binary \
-    && install -m 0755 /root/.local/bin/omp /usr/local/bin/omp \
-    && rm -rf /root/.local
+    && curl -fsSL https://omp.sh/install | PI_INSTALL_DIR=/usr/local/bin sh -s -- --binary
 
 RUN useradd --create-home --home-dir /home/rex --shell /usr/bin/zsh --uid 1001 rex \
     && mkdir -p /data \
