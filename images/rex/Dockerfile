@@ -15,9 +15,15 @@ RUN apt-get update \
         curl \
         git \
         gh \
-        nushell \
+        gnupg \
         zoxide \
         zsh \
+    && install -d -m 0755 /etc/apt/keyrings \
+    && curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor --yes --output /etc/apt/keyrings/fury-nushell.gpg \
+    && chmod 0644 /etc/apt/keyrings/fury-nushell.gpg \
+    && printf '%s\n' 'deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io/nushell/ /' > /etc/apt/sources.list.d/nushell.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nushell \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh -s -- --tarball \
