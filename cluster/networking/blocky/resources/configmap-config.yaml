@@ -16,6 +16,7 @@ data:
     customDNS:
       mapping:
         btkostner.network: 192.168.3.52
+        rex.btkostner.network: 192.168.3.52
         kvm.btkostner.network: 192.168.3.2
         behemoth.btkostner.network: 192.168.3.4
         talos.btkostner.network: 192.168.3.11,192.168.3.12,192.168.3.13
