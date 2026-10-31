@@ -24,7 +24,7 @@ spec:
         fsGroup: 1001
       containers:
         - name: rex
-          image: ghcr.io/btkostner/rex:ubuntu
+          image: ghcr.io/btkostner/rex:sha-ed1afe4
           imagePullPolicy: Always
           ports:
             - containerPort: 7297
