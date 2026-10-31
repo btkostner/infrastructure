@@ -15,13 +15,17 @@ RUN apt-get update \
         curl \
         git \
         gh \
+        nushell \
+        zoxide \
         zsh \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh -s -- --tarball \
-    && curl -fsSL https://omp.sh/install | PI_INSTALL_DIR=/usr/local/bin sh -s -- --binary
+    && curl -fsSL https://omp.sh/install | PI_INSTALL_DIR=/usr/local/bin sh -s -- --binary \
+    && curl -fsSL https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin sh \
+    && curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
-RUN useradd --create-home --home-dir /home/rex --shell /usr/bin/zsh --uid 1001 rex \
+RUN useradd --create-home --home-dir /home/rex --shell /usr/bin/nu --uid 1001 rex \
     && mkdir -p /data \
     && chown -R rex:rex /home/rex /data
 
