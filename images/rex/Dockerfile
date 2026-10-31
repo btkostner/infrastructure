@@ -28,7 +28,7 @@ RUN apt-get update \
 
 RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh -s -- --tarball \
     && curl -fsSL https://omp.sh/install | PI_INSTALL_DIR=/usr/local/bin sh -s -- --binary \
-    && curl -fsSL https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin sh \
+    && curl -fsSL https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin/mise sh \
     && curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 RUN useradd --create-home --home-dir /home/rex --shell /usr/bin/nu --uid 1001 rex \
