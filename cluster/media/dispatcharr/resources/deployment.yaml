@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatcharr
+  namespace: media
+  labels:
+    app: dispatcharr
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dispatcharr
+  template:
+    metadata:
+      labels:
+        app: dispatcharr
+    spec:
+      containers:
+        - name: dispatcharr
+          image: ghcr.io/dispatcharr/dispatcharr:0.33.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9191
+              name: http
+              protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /api/accounts/initialize-superuser/
+              port: http
+            failureThreshold: 60
+            periodSeconds: 5
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/accounts/initialize-superuser/
+              port: http
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          env:
+            - name: DISPATCHARR_ENV
+              value: aio
+            - name: REDIS_HOST
+              value: localhost
+            - name: CELERY_BROKER_URL
+              value: redis://localhost:6379/0
+            - name: DISPATCHARR_LOG_LEVEL
+              value: info
+            - name: TZ
+              value: America/Los_Angeles
+          volumeMounts:
+            - name: config
+              mountPath: /data
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: dispatcharr-config
