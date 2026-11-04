@@ -18,69 +18,6 @@ spec:
       labels:
         app: dispatcharr
     spec:
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-          - 127.0.0.1
-      initContainers:
-        - name: gluetun
-          image: ghcr.io/qdm12/gluetun:v3.41.3
-          imagePullPolicy: IfNotPresent
-          restartPolicy: Always
-          securityContext:
-            capabilities:
-              add:
-                - NET_ADMIN
-          envFrom:
-            - secretRef:
-                name: dispatcharr-vpn
-          env:
-            - name: VPN_SERVICE_PROVIDER
-              value: mullvad
-            - name: VPN_TYPE
-              value: wireguard
-            - name: FIREWALL
-              value: "on"
-            - name: FIREWALL_INPUT_PORTS
-              value: "9191"
-            - name: FIREWALL_OUTBOUND_SUBNETS
-              value: 10.244.0.0/16,10.96.0.0/12
-            - name: TZ
-              value: America/Los_Angeles
-            - name: UPDATER_PERIOD
-              value: 24h
-          startupProbe:
-            exec:
-              command:
-                - /gluetun-entrypoint
-                - healthcheck
-            failureThreshold: 60
-            periodSeconds: 5
-            timeoutSeconds: 10
-          readinessProbe:
-            exec:
-              command:
-                - /gluetun-entrypoint
-                - healthcheck
-            periodSeconds: 10
-            timeoutSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - /gluetun-entrypoint
-                - healthcheck
-            periodSeconds: 30
-            timeoutSeconds: 5
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
-          volumeMounts:
-            - name: tun
-              mountPath: /dev/net/tun
       containers:
         - name: dispatcharr
           image: ghcr.io/dispatcharr/dispatcharr:0.33.0
@@ -131,7 +68,3 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: dispatcharr-config
-        - name: tun
-          hostPath:
-            path: /dev/net/tun
-            type: CharDevice
