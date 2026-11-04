@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeassistant-mcp
+  namespace: home
+spec:
+  ports:
+    - port: 9583
+      protocol: TCP
+      targetPort: 9583

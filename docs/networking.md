@@ -41,12 +41,12 @@ Talos must be able to start without Blocky or the Cloudflare tunnel. The shared 
 
 The shared endpoint is **`https://mcp.btkostner.io/mcp`**. [Cloudflare MCP server portals](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/) combine the servers behind one authenticated endpoint. Clients do not need WARP. Private upstreams remain private.
 
-| Server ID        | Upstream                                       | Access                                                        |
-| ---------------- | ---------------------------------------------- | ------------------------------------------------------------- |
-| `kubernetes`     | `https://kubernetes-mcp.btkostner.network/mcp` | Read-only; Secrets, External Secrets, and RBAC objects denied |
-| `home-assistant` | Home Assistant MCP App on `192.168.2.30:9583`  | Existing Home Assistant permissions                           |
-| `argocd`         | `https://argocd-mcp.btkostner.network/mcp`     | Dedicated `argocd-mcp` account with `role:readonly`           |
-| `cloudflare`     | `https://mcp.cloudflare.com/mcp`               | Permissions granted during upstream OAuth approval            |
+| Server ID        | Upstream                                                         | Access                                                        |
+| ---------------- | ---------------------------------------------------------------- | ------------------------------------------------------------- |
+| `kubernetes`     | `https://kubernetes-mcp.btkostner.network/mcp`                   | Read-only; Secrets, External Secrets, and RBAC objects denied |
+| `home-assistant` | `https://ha-mcp.btkostner.network` with the existing secret path | Existing Home Assistant permissions                           |
+| `argocd`         | `https://argocd-mcp.btkostner.network/mcp`                       | Dedicated `argocd-mcp` account with `role:readonly`           |
+| `cloudflare`     | `https://mcp.cloudflare.com/mcp`                                 | Permissions granted during upstream OAuth approval            |
 
 The Kubernetes server is defined in `cluster/developer/kubernetes-mcp`. It has its own ServiceAccount and serves Streamable HTTP through the internal gateway. OpenCode's manifests use the same server through `http://kubernetes-mcp.developer.svc.cluster.local:8080/mcp`, without the public portal or a local MCP subprocess. Its Home Assistant connection is unchanged.
 
@@ -65,7 +65,7 @@ Cloudflare configuration is managed through the Cloudflare API or dashboard, not
 - Both the portal and each server have an Access application. The reusable **Personal MCP access** policy permits only `btkostner@gmail.com`, through the existing Cloudflare identity provider.
 - Managed OAuth is enabled. Access tokens last 15 minutes; refresh grants last 14 days. Clients must support OAuth token refresh to avoid repeated login prompts.
 - Dynamic client registration accepts localhost and loopback callbacks, plus HTTPS callbacks on `claude.ai`, `chatgpt.com`, `chat.openai.com`, `platform.openai.com`, and `playground.ai.cloudflare.com`. Add the callback URI required by another client to the portal Access application's Managed OAuth settings.
-- Gateway routing is enabled on the portal and each private upstream. Kubernetes and Argo CD use the existing private hostname route. Home Assistant uses a `192.168.2.30/32` CIDR route through the `cluster` tunnel; no full home subnet is routed.
+- Gateway routing is enabled on the portal and each private upstream. Kubernetes, Argo CD, and Home Assistant use private hostnames routed through the internal Gateway. No `192.168.2.30/32` CIDR route is required.
 - Each portal-server mapping has **Require user auth** off (`on_behalf: false`). Servers use their shared upstream identity or administrator OAuth credential, not a separate upstream login for each client.
 
 The Home Assistant MCP URL has a secret path. Its full value remains in 1Password and Cloudflare's server configuration. Do not copy it into documentation, client configuration, or logs. Cloudflare labels this upstream `unauthenticated` because it does not use an Authorization header; possession of its private URL still grants access.

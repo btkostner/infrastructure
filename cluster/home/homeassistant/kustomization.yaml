@@ -9,4 +9,7 @@ resources:
   - ./resources/endpoints.yaml
   - ./resources/http-route.yaml
   - ./resources/http-route-external-webhook.yaml
+  - ./resources/mcp-endpoints.yaml
+  - ./resources/mcp-http-route.yaml
+  - ./resources/mcp-service.yaml
   - ./resources/service.yaml
