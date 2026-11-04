@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  accounts.argocd-mcp: apiKey
   admin.enabled: "true"
   application.resourceTrackingMethod: annotation
   kustomize.buildOptions: "--enable-helm"

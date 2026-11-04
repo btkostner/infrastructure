@@ -6,10 +6,8 @@ metadata:
 namespace: developer
 
 resources:
-  - ./resources/configmap-kubernetes-mcp.yaml
   - ./resources/deployment.yaml
   - ./resources/http-route.yaml
   - ./resources/pvc-data.yaml
-  - ./resources/rbac.yaml
   - ./resources/secret-config.yaml
   - ./resources/service.yaml

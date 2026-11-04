@@ -1,19 +1,16 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: opencode
-  namespace: developer
+  name: kubernetes-mcp
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: opencode-kubernetes-mcp
+  name: kubernetes-mcp
 rules:
   - apiGroups: ["*"]
     resources: ["*"]
     verbs: ["get", "list", "watch"]
-  # resources: ["*"] wildcards do not cover subresources in Kubernetes RBAC.
-  # pods/log must be listed explicitly to allow reading pod logs.
   - apiGroups: [""]
     resources: ["pods/log"]
     verbs: ["get"]
@@ -21,12 +18,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: opencode-kubernetes-mcp
+  name: kubernetes-mcp
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: opencode-kubernetes-mcp
+  name: kubernetes-mcp
 subjects:
   - kind: ServiceAccount
-    name: opencode
+    name: kubernetes-mcp
     namespace: developer

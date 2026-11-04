@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: opencode-kubernetes-mcp
-  namespace: developer
+  name: kubernetes-mcp
 data:
   config.toml: |
+    port = "8080"
+    stateless = true
     read_only = true
+    cluster_provider_strategy = "in-cluster"
+    cluster_auth_mode = "kubeconfig"
 
-    # opencode's ServiceAccount has get/list/watch on apiGroups: ["*"],
-    # resources: ["*"] (see rbac.yaml), which includes Secrets and
-    # ExternalSecrets. read_only alone only blocks writes, so deny the
-    # credential-bearing kinds explicitly too.
     [[denied_resources]]
     group = ""
     version = "v1"
