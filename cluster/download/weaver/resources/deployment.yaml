@@ -25,7 +25,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: weaver
-          image: ghcr.io/scryer-media/weaver:latest
+          image: ghcr.io/scryer-media/weaver:0.16.8
           imagePullPolicy: Always
           ports:
             - containerPort: 9090

@@ -23,7 +23,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: scryer
-          image: ghcr.io/scryer-media/scryer:latest
+          image: ghcr.io/scryer-media/scryer:0.21.23
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
