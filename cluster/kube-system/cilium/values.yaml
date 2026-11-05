@@ -72,3 +72,4 @@ securityContext:
       - SETUID
 socketLB:
   enabled: true
+upgradeCompatibility: "1.19"
