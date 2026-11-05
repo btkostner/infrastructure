@@ -164,8 +164,8 @@ patches:
       kernel:
         modules:
           - name: i915
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: 1.13.2
+# renovate: datasource=docker depName=ghcr.io/siderolabs/talos
+talosVersion: 1.13.12
 worker:
   schematic:
     customization:
