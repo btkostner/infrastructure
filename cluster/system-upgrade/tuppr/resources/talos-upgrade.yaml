@@ -23,7 +23,3 @@ spec:
       kind: Schedule
       expr: |-
         status.phase in ['Enabled', 'New', 'Completed']
-    - apiVersion: ceph.rook.io/v1
-      kind: CephCluster
-      expr: |-
-        status.ceph.health in ['HEALTH_OK']
