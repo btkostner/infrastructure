@@ -7,7 +7,7 @@ spec:
   enableRBDStats: true
   failureDomain: host
   replicated:
-    size: 1
+    size: 2
   mirroring:
     enabled: true
     mode: image

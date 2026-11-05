@@ -136,11 +136,23 @@ patches:
         hostDNS:
           enabled: false
           forwardKubeDNSToHost: false
+      network:
+        extraHostEntries:
+          - ip: 192.168.3.11
+            aliases:
+              - talos.btkostner.network
+          - ip: 192.168.3.12
+            aliases:
+              - talos.btkostner.network
+          - ip: 192.168.3.13
+            aliases:
+              - talos.btkostner.network
       nodeLabels:
         bgp: "65020"
       time:
         servers:
-          - time.cloudflare.com
+          - 162.159.200.1
+          - 162.159.200.123
   # Security
   - |-
     machine:

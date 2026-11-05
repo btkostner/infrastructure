@@ -4,7 +4,7 @@ This cluster uses [Rook Ceph](https://rook.io) to provide distributed storage ac
 
 ## Ceph Cluster
 
-The Ceph cluster is deployed via the `rook-ceph` Helm chart (v1.19.3) in the `rook-ceph` namespace. It uses all available nodes and devices automatically.
+The Ceph cluster is deployed via the `rook-ceph` Helm chart (v1.20.9) in the `rook-ceph` namespace. It uses all available nodes and devices automatically.
 
 | Component      | Count              | Resources                |
 | -------------- | ------------------ | ------------------------ |
@@ -15,13 +15,19 @@ The Ceph cluster is deployed via the `rook-ceph` Helm chart (v1.19.3) in the `ro
 Key features enabled:
 
 - **Dashboard** — accessible via HTTP route for cluster monitoring
-- **Monitoring** — Prometheus metrics are exported
+- **Monitoring** — Prometheus metrics are exported; the chart's `monitoring.enabled` value also generates the namespace-scoped ServiceMonitor RBAC used by the operator.
 - **Disk prediction** — the `diskprediction_local` module is enabled for drive health forecasting
 - **PG autoscaler** — automatically tunes placement group counts
 - **CSI read affinity** — reads are served from the closest OSD based on topology
 - **Discovery daemon** — automatically detects new devices
 
 The Ceph cluster data directory is stored at `/var/lib/rook` on each node.
+
+### OSD Maintenance
+
+Rook checks whether an OSD can stop before it updates the deployment. The single-copy `danger-block-pool` can block this check even when all placement groups are active and clean. For a maintenance window, temporarily increase that CephBlockPool's replication size from 1 to 2 and wait for all placement groups to become active and clean. Keep Rook's safety checks enabled. Restore size 1 only after the CephCluster is Ready, its observed generation matches its current generation, and all OSD deployments are ready.
+
+Use a temporary Argo sync-deny window that selects only `rook-ceph` while the pool differs from Git. Remove that window after the original replication size is restored. Preserve retained volumes and bucket data.
 
 ## Block Pools
 
