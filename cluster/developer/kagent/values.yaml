@@ -1,0 +1,78 @@
+rbac:
+  namespaces:
+    - developer
+
+database:
+  postgres:
+    bundled:
+      enabled: false
+    urlFile: /run/kagent-database/uri
+
+controller:
+  substrate:
+    enabled: false
+  volumes:
+    - name: database
+      secret:
+        secretName: kagent-database-app
+        items:
+          - key: uri
+            path: uri
+  volumeMounts:
+    - name: database
+      mountPath: /run/kagent-database
+      readOnly: true
+
+ui:
+  externalUrl: https://kagent.btkostner.network
+
+providers:
+  default: openAI
+  openAI:
+    model: gpt-4.1-mini
+    apiKeySecretRef: kagent-openai
+    apiKeySecretKey: OPENAI_API_KEY
+
+# Static RemoteMCPServer tools do not need the dynamic MCPServer operator.
+# Keep its matching CRD enabled in the kagent-crds chart for API discovery.
+kmcp:
+  enabled: false
+
+substrate:
+  enabled: false
+substrateWorkerPool:
+  create: false
+
+kagent-tools:
+  enabled: true
+  rbac:
+    namespaces: []
+    readOnly: true
+    allowSecrets: false
+  tools:
+    args:
+      - --read-only
+
+k8s-agent:
+  enabled: false
+kgateway-agent:
+  enabled: false
+istio-agent:
+  enabled: false
+promql-agent:
+  enabled: false
+observability-agent:
+  enabled: false
+argo-rollouts-agent:
+  enabled: false
+helm-agent:
+  enabled: false
+cilium-policy-agent:
+  enabled: false
+cilium-manager-agent:
+  enabled: false
+cilium-debug-agent:
+  enabled: false
+
+grafana-mcp:
+  enabled: false
