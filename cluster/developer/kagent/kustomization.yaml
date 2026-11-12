@@ -21,7 +21,7 @@ helmCharts:
     repo: oci://ghcr.io/kagent-dev/kagent/helm
     releaseName: kagent
     namespace: developer
-    version: 0.10.6
+    version: 1.0.1
     valuesFile: ./values.yaml
 
 resources:
