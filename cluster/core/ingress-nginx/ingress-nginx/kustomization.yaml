@@ -9,7 +9,7 @@ helmCharts:
   - name: ingress-nginx
     repo: https://kubernetes.github.io/ingress-nginx
     releaseName: ingress-nginx
-    version: 4.12.0 # 4.12.0 as at 20250205 Chart version: https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+    version: 4.15.1 # 4.15.1 as at 20261114 - FINAL release, project archived 20260324; migrate to Gateway API. Chart version: https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
     namespace: ingress-nginx
     valuesFile: ./values.yaml
 
