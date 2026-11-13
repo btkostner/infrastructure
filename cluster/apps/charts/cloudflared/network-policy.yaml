@@ -1,178 +1,137 @@
-# # https://docs.cilium.io/en/stable/security/policy/language/
+# https://docs.cilium.io/en/stable/security/policy/language/
+# Least-privilege policy for the Cloudflare tunnel connector (reviewed 20261114).
+# Having any ingress/egress rule here puts the pods into default-deny for that direction.
+#
+# Egress requirements per https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/
+#   Required: region1/region2.v2.argotunnel.com on 7844 (TCP http2 / UDP quic).
+#   Optional (deliberately NOT allowed): api.cloudflare.com, update.argotunnel.com, github.com (auto-update only,
+#   and we run --no-autoupdate), pqtunnels.cloudflareresearch.com (error reporting). These resolve to shared
+#   Cloudflare anycast IPs that front unrelated sites, so allowing them would open general HTTPS egress.
+#   Blocking them may log errors; cloudflared still runs correctly.
+#   The cftunnel.com / _v2-origintunneld names in Cloudflare's doc are SNI values for SNI-filtering firewalls, not needed here.
 ---
-# Allow access to cluster dns
-# Note the existance of this policy applies a default deny-all for anything not listed.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: cloudflared-network-policy
-  # namespace: cloudflared
 spec:
   endpointSelector: {}  # all pods in this namespace
+  ingress:
+    # Nothing in the cluster needs to connect to cloudflared. Only the kubelet liveness probe (from the node) on the metrics port.
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "2000"
+              protocol: TCP
   egress:
-    - toEndpoints: # need to allow the pods/namespace to contact the cluster DNS service to resolve the FQDNs. 
+    # Cluster DNS. The dns rule is mandatory: without it Cilium can't learn the IPs for the toFQDNs below.
+    # matchPattern "*" kept on purpose: resolv.conf ndots:5 makes cloudflared query search-suffixed names first
+    # (e.g. region1.v2.argotunnel.com.cloudflared.svc.cluster.local); filtering those risks breaking edge discovery.
+    - toEndpoints:
         - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system # mandatory and doesn't matter that this label doesn't actually exist on the cluster
-            "k8s:k8s-app": kube-dns   # selects the cluster DNS pods, note that the "k8s:" is required to tell Cilium it's not its own label (I think)
+            "k8s:io.kubernetes.pod.namespace": kube-system
+            "k8s:k8s-app": kube-dns
       toPorts:
         - ports:
             - port: "53"
               protocol: UDP
             - port: "53"
               protocol: TCP
-          rules: # This is mandatory, without this cilium doesn't capture the IP addresses for the FQDN names below to add them to the allow list!
+          rules:
             dns:
-              - matchPattern: "*" # allow all DNS lookups
-    # cloudflared servers as per: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/
-    # - toCIDR: 
-    #   # Region 1
-    #   - 198.41.192.167/32
-    #   - 198.41.192.67/32
-    #   - 198.41.192.57/32
-    #   - 198.41.192.107/32
-    #   - 198.41.192.27/32
-    #   - 198.41.192.7/32
-    #   - 198.41.192.227/32
-    #   - 198.41.192.47/32
-    #   - 198.41.192.37/32
-    #   - 198.41.192.77/32
-    #   # Region 2
-    #   - 198.41.200.13/32
-    #   - 198.41.200.193/32
-    #   - 198.41.200.33/32
-    #   - 198.41.200.233/32
-    #   - 198.41.200.53/32
-    #   - 198.41.200.63/32
-    #   - 198.41.200.113/32
-    #   - 198.41.200.73/32
-    #   - 198.41.200.43/32
-    #   - 198.41.200.23/32
-    #   toPorts:
-    #     - ports:
-    #         - port: "7844"
-    #           protocol: UDP
-    #         - port: "7844"
-    #           protocol: TCP
-    - toFQDNs: # Core requirement for the Cloudfare Tunnel
-        - matchName: "region1.v2.argotunnel.com" 
+              - matchPattern: "*"
+
+    # Cloudflare edge - the tunnel itself (required).
+    - toFQDNs:
+        - matchName: "region1.v2.argotunnel.com"
         - matchName: "region2.v2.argotunnel.com"
       toPorts:
         - ports:
             - port: "7844"
-              protocol: ANY # Required to allow TCP, UDP and ICMP - as you cannot select on ICMP for some reason
-            # - port: "7844"
-            #   protocol: TCP
-    - toFQDNs: # only required for firewalls that enforce SNI
-        - matchName: "_v2-origintunneld._tcp.argotunnel.com" 
-        - matchName: "cftunnel.com"
-        - matchName: "h2.cftunnel.com" 
-        - matchName: "quic.cftunnel.com"
-      toPorts:
-        - ports:
-            - port: "7844"
-              protocol: ANY # (only TCP required?) Required to allow TCP, UDP and ICMP - as you cannot select on ICMP for some reason
-    - toFQDNs: # Optional Requirement for the Cloudflare Tunnel
-        - matchName: "api.cloudflare.com" 
-        - matchName: "update.argotunnel.com"
-        - matchName: "github.com" 
-        - matchName: "rockyroadrocks.cloudflareaccess.com"
-        - matchName: "pqtunnels.cloudflareresearch.com"
-      toPorts:
-        - ports:
-            - port: "443"
-              protocol: ANY # (only TCP required?) Required to allow TCP, UDP and ICMP - as you cannot select on ICMP for some reason
-    # - toFQDNs: # Permit access to the Gloomhaven webapp service
-    #     - matchName: "ghs-http-svc.gloomhaven.svc.cluster.local"
-    # - toEndpoints: # Permit access to the Gloomhaven webapp service
-    #     - matchLabels:
-    #         "k8s:io.kubernetes.service.name": ghs-http-svc
-    #         "k8s:io.kubernetes.pod.namespace": gloomhaven
-    - toServices: # Permit access to the Gloomhaven webapp service
-      # Services may be referenced by namespace + name
-      - k8sService:
-          serviceName: ghs-http-svc
-          namespace: gloomhaven
-        # Note there are also ways to select a service by its labels through a k8sServiceSelector
-      toPorts:
-        - ports:
-            - port: "8080" # has to be the targetPort became Cilium's policy effectively bypasses the service port 
-              protocol: TCP
-    - toEndpoints: # allow within the namespace - https://cilium.io/blog/2018/09/19/kubernetes-network-policies/
-      - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": argocd
-    - toServices: # Permit access to the argocd webapp service
-      # Services may be referenced by namespace + name
-      - k8sService:
-          serviceName: argocd-server
-          namespace: argocd
-        # Note there are also ways to select a service by its labels through a k8sServiceSelector
-      toPorts:
-        - ports:
-            - port: "8080" # has to be the targetPort became Cilium's policy effectively bypasses the service port 
-              protocol: TCP
-    - toServices: # Permit access to the cilium-hubble webapp service
-      # Services may be referenced by namespace + name
-      - k8sService:
-          serviceName: hubble-ui
-          namespace: kube-system
-        # Note there are also ways to select a service by its labels through a k8sServiceSelector
-      toPorts:
-        - ports:
-            - port: "8081" # has to be the targetPort became Cilium's policy effectively bypasses the service port 
-              protocol: TCP
-    # - toServices: # Permit access to the HomeAssistant webapp service
-    #   # Services may be referenced by namespace + name
-    #   - k8sService:
-    #       serviceName: home-assistant-lb
-    #       namespace: home-assistant
-    #     # Note there are also ways to select a service by its labels through a k8sServiceSelector
+              protocol: ANY # TCP (http2) + UDP (quic)
+
+    # Optional: only if "Enforce Access JWT validation" is turned on for the tunnel routes (Cloudflare dashboard).
+    # cloudflared then fetches the Access signing keys from the team domain.
+    # - toFQDNs:
+    #     - matchName: "rockyroadrocks.cloudflareaccess.com"
     #   toPorts:
     #     - ports:
-    #         # - port: "80" # Service Port
-    #         #   protocol: TCP
-    #         - port: "8123" # LB port
+    #         - port: "443"
     #           protocol: TCP
-    - toEntities: # Permit access to the HomeAssistant webapp service
-      # Services may be referenced by namespace + name
-      - host # this is ugly, but required because Home Assistant is running `hostNetwork: true`
-      toPorts:
-        - ports:
-            - port: "8123" 
-              protocol: TCP
-    - toServices: # Permit access to the spliit webapp service
-      # Services may be referenced by namespace + name
-      - k8sService:
-          serviceName: spliit-http-svc
-          namespace: spliit
-        # Note there are also ways to select a service by its labels through a k8sServiceSelector
-      toPorts:
-        - ports:
-            # - port: "80" # Service Port # you need to point the cloudflare tunnel to the port (not targetPort though)
-            #   protocol: TCP
-            - port: "3000" # has to be the targetPort became Cilium's policy effectively bypasses the service port 
-              protocol: TCP
-    - toServices: # Permit access to the scotland yard webapp service
-      # Services may be referenced by namespace + name
-      - k8sService:
-          serviceName: scotland-yard-http-svc
-          namespace: scotland-yard
-        # Note there are also ways to select a service by its labels through a k8sServiceSelector
-      toPorts:
-        - ports:
-            # - port: "80" # Service Port # you need to point the cloudflare tunnel to the port (not targetPort though)
-            #   protocol: TCP
-            - port: "8000" # has to be the targetPort became Cilium's policy effectively bypasses the service port 
-              protocol: TCP
-    - toServices: # Permit access to the cmui webapp service
-      - k8sService:
-          serviceName: cmui-web-http-svc
-          namespace: cmui
-      toPorts:
-        - ports:
-            - port: "8080" # targetPort: Cilium policy applies after service translation
-              protocol: TCP
-# TODO  --- Still not letting through ICMP packets
 
-# # Testing pod: 
+    # ---- Tunnel routes: one rule per published hostname, exact service + targetPort ----
+    # Cilium evaluates after service translation, so ports here are the pods' targetPorts.
+    # Keep in sync with the tunnel's public hostnames (scripts/cloudflare-access-audit.py lists them).
 
-# kubectl -n cloudflared run test-pod   --rm -i --tty   --image=curlimages/curl:8.1.2   --restart=Never   -- sh
+    # gloomhaven.rockyroad.rocks -> ghs-http-svc.gloomhaven:8080
+    - toServices:
+        - k8sService:
+            serviceName: ghs-http-svc
+            namespace: gloomhaven
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+
+    # spliit.rockyroad.rocks -> spliit-http-svc.spliit:80 (targetPort 3000)
+    - toServices:
+        - k8sService:
+            serviceName: spliit-http-svc
+            namespace: spliit
+      toPorts:
+        - ports:
+            - port: "3000"
+              protocol: TCP
+
+    # scotland-yard.rockyroad.rocks -> scotland-yard-http-svc.scotland-yard:8000
+    - toServices:
+        - k8sService:
+            serviceName: scotland-yard-http-svc
+            namespace: scotland-yard
+      toPorts:
+        - ports:
+            - port: "8000"
+              protocol: TCP
+
+    # cmui.rockyroad.rocks -> cmui-web-http-svc.cmui:80 (targetPort 8080)
+    - toServices:
+        - k8sService:
+            serviceName: cmui-web-http-svc
+            namespace: cmui
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+
+    # argo-cd.rockyroad.rocks -> argocd-server.argocd:80 (targetPort 8080)
+    # (previously also allowed ALL ports to EVERY pod in argocd: repo-server, redis, controller - removed 20261114)
+    - toServices:
+        - k8sService:
+            serviceName: argocd-server
+            namespace: argocd
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+
+    # cilium-hubble.rockyroad.rocks -> hubble-ui.kube-system:80 (targetPort 8081)
+    - toServices:
+        - k8sService:
+            serviceName: hubble-ui
+            namespace: kube-system
+      toPorts:
+        - ports:
+            - port: "8081"
+              protocol: TCP
+
+    # homeassistant.rockyroad.rocks -> home-assistant-lb.home-assistant:8123
+    # Home Assistant runs hostNetwork, so its endpoint is the node itself ("host" entity), not a pod.
+    # Works because HA and cloudflared both run on maurice-02 (maurice is tainted). If either moves to another
+    # node, add "remote-node" here. Allows only 8123 on the node.
+    - toEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "8123"
+              protocol: TCP

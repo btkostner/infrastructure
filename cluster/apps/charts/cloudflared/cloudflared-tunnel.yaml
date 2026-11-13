@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cloudflared-deployment
 spec:
-  # replicas: 2
+  # replicas: 2 # only one schedulable node for this today (maurice is tainted), so 2 replicas add little
   selector:
     matchLabels:
       pod: cloudflared
@@ -12,14 +12,22 @@ spec:
       labels:
         pod: cloudflared
     spec:
+      automountServiceAccountToken: false # cloudflared never talks to the Kubernetes API
       securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532 # image is distroless :nonroot (USER 65532:65532)
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
         sysctls:
-        # Allows ICMP traffic (ping, traceroute) to resources behind cloudflared.
+        # Allows ICMP traffic (ping, traceroute) to resources behind cloudflared. (A "safe" sysctl, permitted by Pod Security restricted)
           - name: net.ipv4.ping_group_range
             value: "65532 65532"
       containers:
-        - image: cloudflare/cloudflared:latest
-          name: cloudflared
+        - name: cloudflared
+          # 2026.10.7 as at 20261114 (newest release >14 days old; 2026.11.0 is 2 days old) https://github.com/cloudflare/cloudflared/releases
+          image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+          imagePullPolicy: IfNotPresent
           env:
             # Defines an environment variable for the tunnel token.
             - name: TUNNEL_TOKEN
@@ -33,10 +41,21 @@ spec:
             - tunnel
             - --no-autoupdate
             - --loglevel
-            - debug
+            - info # was debug: debug logs every proxied request's details
             - --metrics
-            - 0.0.0.0:2000
+            - 0.0.0.0:2000 # must listen on the pod IP for the kubelet probe; network policy limits who can reach it
             - run
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
           livenessProbe:
             httpGet:
               # Cloudflared has a /ready endpoint which returns 200 if and only if
