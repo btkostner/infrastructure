@@ -7,5 +7,9 @@ data:
     p, role:admin, exec, create, */*, allow
     g, homepagereadonly, role:readonly
     g, argocd-admins, role:admin
-  # Added to create a 'homepagereadonly' user to give gethomepage access
-  policy.default: role:admin
+  # homepagereadonly: API-key account so gethomepage can read app status.
+  # No default role: rights come only from the group/account mappings above
+  # (admin = Keycloak group argocd-admins, or the local break-glass admin).
+  policy.default: ""
+  # Match the OIDC "groups" claim (Keycloak group names) against the g, lines above.
+  scopes: "[groups]"
