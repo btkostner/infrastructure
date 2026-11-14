@@ -19,6 +19,21 @@ resources:
   - ./resources/cilium-l2-announcement-policy.yaml
   - ./resources/cilium-load-balancer-ip-pool.yaml
 
+# The chart renders a `cilium-secrets` Namespace; Kustomize < 5.8 renames it to kube-system, so this app
+# has tracked the kube-system Namespace object. Kustomize >= 5.8 (Argo CD 3.3+) keeps `cilium-secrets`,
+# and kube-system would then be pruned (the API server refuses, but the sync would keep failing).
+# Never prune it, and don't let it count as OutOfSync once it is no longer rendered.
+# Targets the chart's only Namespace by kind: patches run before the rename, so the name is still cilium-secrets.
+patches:
+  - target:
+      kind: Namespace
+    patch: |
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-options: Prune=false,Delete=false
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
+
 
 # Can use this command to check current running version of cilium: 
 # kubectl -n kube-system get ds/cilium -o jsonpath='{.spec.template.spec.containers[0].image}'
