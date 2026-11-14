@@ -1,6 +1,23 @@
 machine: 
   install: 
-    image: factory.talos.dev/metal-installer/a16b5437683037ec314efd168d2bc0521c2c611f99517e47a9bee751108c6cf5:v1.13.0
+    image: factory.talos.dev/metal-installer/a16b5437683037ec314efd168d2bc0521c2c611f99517e47a9bee751108c6cf5:v1.14.6 # v1.14.6 as at 20261115 https://github.com/siderolabs/talos/releases
+
+    # NOTE - This only applies once on inital installation - so not properly declarative...
+    #        After that you need to patch the image in manually via API
+    #
+    # version=v1.14.6 (via v1.13.12; same schematic, extensions unchanged)
+    # platform=metal
+    # arch amd64
+    # extensions:
+    #   - nvidia-container-toolkit-production
+    #   - nvidia-open-gpu-kernel-modules-production
+    #   - dvb-cx23885
+    #   - dvb-m88ds3103
+    # extraKernelArgs:
+    #    - talos.halt_if_installed=0
+    #
+    #  https://factory.talos.dev/?arch=amd64&bootloader=auto&cmdline=talos.halt_if_installed%3D0&cmdline-set=true&extensions=-&extensions=siderolabs%2Fdvb-cx23885&extensions=siderolabs%2Fdvb-m88ds3103&extensions=siderolabs%2Fnvidia-container-toolkit-production&extensions=siderolabs%2Fnvidia-open-gpu-kernel-modules-production&platform=metal&target=metal&version=1.14.6
+
    
     # NOTE - This only applies once on inital installation - so not properly declarative...  
     #        After that you need to patch the image in manually via API

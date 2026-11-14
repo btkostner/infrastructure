@@ -225,6 +225,10 @@ If you need to upgrade the Talos Linux cluster, either in version or adding exte
 # TALOSVERSION=v1.11.1
 # TALOSVERSION=v1.12.7
 # TALOSVERSION=v1.13.0
+# TALOSVERSION=v1.13.12  (2026-11, then straight on to v1.14.6; same schematic)
+# TALOSVERSION=v1.14.6
+# NOTE (1.14+): don't regenerate + apply-config with a 1.14 client without reviewing it first: gen config now
+#   adds a SecurityProfileConfig with workloadIsolation: true, which upgrades on their own do not enable.
 
 # Ensure your client version matches the --current-- version (matching target version seems to constantly throw errors): 
 cd ~
