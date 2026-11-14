@@ -17,4 +17,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - Replace=true      #  fixes the 262144 byte bug
+      # Server-side apply avoids the 262144-byte last-applied annotation limit on the
+      # Argo CD CRDs without Replace=true, which overwrote fields Argo CD writes at
+      # runtime (e.g. argocd-secret) on every sync. Do not switch back to Replace.
+      - ServerSideApply=true
