@@ -30,6 +30,9 @@ spec:
     spec:
       destination:
         server: https://kubernetes.default.svc
+        # Folder name = namespace. Catches Helm-rendered resources that don't set metadata.namespace
+        # (Kustomize >= 5.8, bundled from Argo CD 3.3, no longer applies `namespace:` to Helm output).
+        namespace: "{{path[2]}}"
       project: default
       source:
         path: "{{path}}"
