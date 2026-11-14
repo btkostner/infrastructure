@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: claude-readonly
+  labels:
+    # No pods run here; restricted is free and keeps it that way.
+    pod-security.kubernetes.io/enforce: restricted
