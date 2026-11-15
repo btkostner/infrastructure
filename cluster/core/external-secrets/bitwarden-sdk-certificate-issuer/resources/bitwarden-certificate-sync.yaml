@@ -1,4 +1,4 @@
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: bitwarden-ca-secret
@@ -11,7 +11,7 @@ spec:
     - secretKey: caBundle
       remoteRef:
         key: bitwarden-ca-bundle
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: bitwarden-ca-secret
