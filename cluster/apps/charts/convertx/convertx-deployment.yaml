@@ -87,42 +87,35 @@ spec:
     app: convertx
   type: ClusterIP
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# Served through Cilium's external-gateway (moved from the ingress-nginx Ingress 2026-11-15). TLS is terminated
+# at the gateway with the *.rockyroad.rocks wildcard certificate; HTTP is redirected by kube-system/https-redirect.
+# No request body limit on the gateway. Cilium leaves Envoy's 15 s route timeout in place unless a timeout is set;
+# 0s disables it, closest to nginx (which had no total request timeout, only idle timeouts).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
-  annotations:
-    #acme.cert-manager.io/http01-ingress-class: nginx-external
-    #kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: "letsencrypt-dns01-prod"
-    #cert-manager.io/cluster-issuer: "letsencrypt-staging"
-    kubernetes.io/ingress.class: "nginx"
-    #acme.cert-manager.io/http01-ingress-class: "nginx-external"
-    #nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    #nginx.org/ssl-services: "tvheadend-http-svc"
-    # nginx.org/websocket-services: "convertx-http-svc"        
-    nginx.org/proxy-read-timeout: "3600"
-    nginx.org/proxy-send-timeout: "3600" 
-    nginx.ingress.kubernetes.io/proxy-body-size: "100g" # allow uploads (aka backups) of up to 100GB
-    gethomepage.dev/description: Online File Converter
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Productivity
-    gethomepage.dev/icon: convertx
-    gethomepage.dev/name: ConvertX
   name: convertx
+  annotations:
+    gethomepage.dev/description: "Online File Converter"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: "Productivity"
+    gethomepage.dev/icon: "convertx"
+    gethomepage.dev/name: "ConvertX"
 spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - convertx.rockyroad.rocks
   rules:
-    - host: convertx.rockyroad.rocks
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: convertx-http-svc
-                port:
-                  number: 3000
-  tls:
-    - hosts:
-        - convertx.rockyroad.rocks
-      secretName: convertx-tls
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: convertx-http-svc
+          port: 3000
+      timeouts:
+        request: 0s
 ---
