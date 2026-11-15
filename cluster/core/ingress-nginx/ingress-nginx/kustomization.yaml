@@ -5,14 +5,12 @@ metadata:
 
 namespace: ingress-nginx
 
-helmCharts:
-  - name: ingress-nginx
-    repo: https://kubernetes.github.io/ingress-nginx
-    releaseName: ingress-nginx
-    version: 4.15.1 # 4.15.1 as at 20261114 - FINAL release, project archived 20260324; migrate to Gateway API. Chart version: https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
-    namespace: ingress-nginx
-    valuesFile: ./values.yaml
+# ingress-nginx is being removed (2026-11-15): every app now uses the Gateway API (Cilium external-gateway).
+# Step 1: the chart is dropped so Argo CD prunes the controller, its LoadBalancer (10.20.26.10), the admission
+# webhook, the IngressClass and RBAC; only the namespace is left, because the core ApplicationSet doesn't
+# auto-sync an empty app. Step 2 deletes this folder; the ApplicationSet preserves resources on deletion, so the
+# empty namespace is then removed by hand.
+# Was: chart ingress-nginx 4.15.1 (final release, project archived 2026-03-24), values in git history.
 
 resources:
   - ./resources/namespace.yaml
-
