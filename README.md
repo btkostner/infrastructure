@@ -173,7 +173,7 @@ curl https://bws.bitwarden.com/install | sh
 
 # install kubectl
 mkdir ~/.local/bin
-curl -LO "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/v1.35.10/bin/linux/amd64/kubectl" # match the cluster minor (±1)
 cp ./kubectl ~/.local/bin
 
 # install talosctl
