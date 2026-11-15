@@ -1,4 +1,4 @@
-# https://github.com/NVIDIA/k8s-device-plugin/blob/v0.17.0/deployments/helm/nvidia-device-plugin/values.yaml
+# https://github.com/NVIDIA/k8s-device-plugin/blob/v0.20.1/deployments/helm/nvidia-device-plugin/values.yaml
 gfd:
   enabled: true
 runtimeClassName: nvidia
