@@ -33,8 +33,8 @@ spec:
     httpsPort: 8443
   # proxy: # deprecated
   #   proxyAddressForwarding: true
-  # Behind a TLS-terminating proxy (ingress-nginx today, the Cilium gateway next): take scheme, host and client IP
-  # from X-Forwarded-* headers, but only from proxies in the pod network (ingress-nginx pods, Cilium's Envoy).
+  # Behind a TLS-terminating proxy (the Cilium gateway's Envoy): take scheme, host and client IP from
+  # X-Forwarded-* headers, but only from proxies in the pod network.
   proxy:
     headers: xforwarded
   db:
