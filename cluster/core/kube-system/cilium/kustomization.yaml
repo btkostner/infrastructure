@@ -10,7 +10,7 @@ helmCharts:
     repo: https://helm.cilium.io
     releaseName: cilium
     namespace: kube-system
-    version: 1.19.10 # 1.19.10 as at 20261115 https://github.com/cilium/cilium/releases ; make sure you update the Gateway API CRDs in the crds/kustomization.yaml file at the same time
+    version: 1.20.4 # 1.20.4 as at 20261115 https://github.com/cilium/cilium/releases ; one minor at a time, latest patch first; make sure you update the Gateway API CRDs in the crds/kustomization.yaml file at the same time
                     # See compatibility here: https://docs.cilium.io/en/latest/network/servicemesh/gateway-api/gateway-api/
     valuesFile: ./values.yaml
 
