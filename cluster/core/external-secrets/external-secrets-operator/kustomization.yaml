@@ -10,7 +10,8 @@ helmCharts:
     repo: https://charts.external-secrets.io
     releaseName: external-secrets
     namespace: external-secrets
-    version: 0.14.0 # 0.14.0 as at 20250207 # https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets
+    # Path 0.14 -> 0.16 (serves v1 and v1beta1) -> manifests to v1 -> latest (0.17+ stops serving v1beta1).
+    version: 0.16.2 # 0.16.2 as at 20261115 https://github.com/external-secrets/external-secrets/releases
     valuesFile: values.yaml
 
 resources:

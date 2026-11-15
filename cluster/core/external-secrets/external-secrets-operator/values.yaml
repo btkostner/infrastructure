@@ -6,8 +6,13 @@ crds:
   createClusterExternalSecret: true
   createClusterSecretStore: true
   createPushSecret: true
+  # The CRDs outgrow the 262144-byte last-applied annotation (0.16: ~254 KB, 0.19+: ~365 KB), so they
+  # must be applied server-side; the rest of the core app stays client-side.
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # No conversion webhook is deployed (webhook.create: false); v1 and v1beta1 share a schema and need none.
   conversion:
-    enabled: true
+    enabled: false
 processClusterExternalSecret: true
 processClusterStore: true
 processPushSecret: true
