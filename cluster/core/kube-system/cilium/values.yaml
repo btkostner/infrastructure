@@ -2,8 +2,12 @@ cgroup:
   autoMount:
     enabled: false
   hostRoot: /sys/fs/cgroup
+# The chart defaults debug.verbose, nodePort.addresses and policyCIDRMatchMode to null and only renders
+# them when the key exists. Helm 3 kept null keys, Helm 4 (Argo CD 3.5+) drops them; set them explicitly
+# so cilium-config (and its checksum, which restarts Cilium) is the same under both. Empty = Cilium default.
 debug:
   enabled: true
+  verbose: ""
 enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
@@ -70,9 +74,11 @@ l2announcements:
   enabled: true
   interfaces:
    - eno2 # temporary to allow metallb to announce
+policyCIDRMatchMode: []
 l7Proxy: true # is on by default, but we need it so being explicit
 nodePort:
   enabled: true
+  addresses: []
 operator:
   rollOutPods: true
   replicas: 1 # reduced to one because of single node cluster
