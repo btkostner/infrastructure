@@ -23,7 +23,28 @@ patches:
                           "paths":["/var/local-path-provisioner"]
                   }
                   ]
-          }    
+          }
+        # Helper pods create/delete volume directories on the volume's node. Tolerate maurice's
+        # workload=LargeWorkload:NoSchedule taint so volumes there don't hang in Pending; pin busybox.
+        helperPod.yaml: |-
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: helper-pod
+          spec:
+            priorityClassName: system-node-critical
+            tolerations:
+              - key: node.kubernetes.io/disk-pressure
+                operator: Exists
+                effect: NoSchedule
+              - key: workload
+                operator: Equal
+                value: LargeWorkload
+                effect: NoSchedule
+            containers:
+            - name: helper-pod
+              image: busybox:1.38.0 # 1.38.0 as at 20261115 https://hub.docker.com/_/busybox
+              imagePullPolicy: IfNotPresent
   # - patch: |-
   #     apiVersion: storage.k8s.io/v1
   #     kind: StorageClass
