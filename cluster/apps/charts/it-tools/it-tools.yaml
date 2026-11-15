@@ -46,33 +46,34 @@ spec:
     app: it-tools
   type: ClusterIP
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# Served through Cilium's external-gateway (moved from the ingress-nginx Ingress 2026-11-15). TLS is terminated
+# at the gateway with the *.rockyroad.rocks wildcard certificate; HTTP is redirected by kube-system/https-redirect.
+# No request body limit on the gateway. Cilium leaves Envoy's 15 s route timeout in place unless a timeout is set;
+# 0s disables it, closest to nginx (which had no total request timeout, only idle timeouts).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
-  annotations:
-    #kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: "letsencrypt-dns01-prod"
-    #cert-manager.io/cluster-issuer: "letsencrypt-staging"
-    kubernetes.io/ingress.class: "nginx"
-    gethomepage.dev/description: Handy online tools for developers
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Productivity
-    gethomepage.dev/icon: it-tools-light
-    gethomepage.dev/name: IT Tools
   name: it-tools
+  annotations:
+    gethomepage.dev/description: "Handy online tools for developers"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: "Productivity"
+    gethomepage.dev/icon: "it-tools-light"
+    gethomepage.dev/name: "IT Tools"
 spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - it-tools.rockyroad.rocks
   rules:
-    - host: it-tools.rockyroad.rocks
-      http:
-        paths:
-          - backend:
-              service:
-                name: http-svc
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - it-tools.rockyroad.rocks
-      secretName: it-tools-tls
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: http-svc
+          port: 80
+      timeouts:
+        request: 0s
