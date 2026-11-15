@@ -12,7 +12,6 @@ resources:
   - ./metallb-system/metallb
   - ./local-path-storage/local-path-provisioner
   - ./kube-system/nfs-subdir-external-provisioner
-  - ./ingress-nginx/ingress-nginx
   - ./kube-system/cilium
   - ./argocd/argocd
   - ./argocd/application-sets
