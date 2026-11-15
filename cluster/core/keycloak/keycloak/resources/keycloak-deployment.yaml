@@ -50,19 +50,10 @@ spec:
   bootstrapAdmin:
     user:
       secret: keycloak-externalsecrets # must contain username and password keys
+  # Served through Cilium's external-gateway (keycloak-httproute.yaml) since 2026-11-15; the operator deletes the
+  # Ingress it created. keycloak-tls stays: Keycloak still serves HTTPS on 8443 inside the cluster.
   ingress:
-    enabled: true
-    # ingressClassName: nginx # not valid
-    tlsSecret: keycloak-tls
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      # cert-manager.io/cluster-issuer: letsencrypt-prod
-      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
-      # gethomepage.dev/description: Identity and Access Management
-      # gethomepage.dev/enabled: "true"
-      # gethomepage.dev/group: Network Services
-      # gethomepage.dev/icon: keycloak
-      # gethomepage.dev/name: Keycloak
+    enabled: false
   networkPolicy:
     enabled: true
     http:

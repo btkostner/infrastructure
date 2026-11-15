@@ -1,7 +1,6 @@
-# Gateway API route for Keycloak (Ingress → Gateway API migration). Step 1: test hostname only, alongside the
-# operator-created Ingress; at cutover the hostname becomes keycloak.rockyroad.rocks and the Keycloak CR's
-# `ingress.enabled` is set to false.
-# TLS is terminated at the gateway; the gateway reaches Keycloak over plain HTTP on 8080 (allowed below).
+# Keycloak is served through Cilium's external-gateway (moved from the operator-created Ingress 2026-11-15; the CR has
+# `ingress.enabled: false`). TLS is terminated at the gateway; the gateway reaches Keycloak over plain HTTP on 8080
+# (allowed below).
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -12,7 +11,7 @@ spec:
       namespace: kube-system
       sectionName: https
   hostnames:
-    - keycloak-gw.rockyroad.rocks
+    - keycloak.rockyroad.rocks
   rules:
     - matches:
         - path:
