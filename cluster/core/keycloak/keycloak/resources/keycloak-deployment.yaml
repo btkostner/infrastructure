@@ -33,6 +33,10 @@ spec:
     httpsPort: 8443
   # proxy: # deprecated
   #   proxyAddressForwarding: true
+  # Behind a TLS-terminating proxy (ingress-nginx today, the Cilium gateway next): take scheme, host and client IP
+  # from X-Forwarded-* headers, but only from proxies in the pod network (ingress-nginx pods, Cilium's Envoy).
+  proxy:
+    headers: xforwarded
   db:
     vendor: postgres
     host: postgres-service
@@ -74,6 +78,10 @@ spec:
   additionalOptions:
     - name: hostname-debug
       value: 'true'
+    # Pairs with proxy.headers above: ignore X-Forwarded-* unless the request comes from the pod network (both
+    # nodes' pod CIDRs; Cilium gives its gateway Envoy an address from them too).
+    - name: proxy-trusted-addresses
+      value: 10.244.0.0/16
       # This allows us to test against: 
       #    curl http://keycloak-service.keycloak.svc.cluster.local:8080/realms/rockyroadrocks/.well-known/openid-configuration
 
