@@ -1,0 +1,26 @@
+# Gateway API route for the Argo CD UI (Ingress → Gateway API migration). Step 1: test hostname only, alongside the
+# Ingress; at cutover the hostname becomes argo-cd.rockyroad.rocks, the homepage annotations move here and the
+# Ingress is removed. TLS is terminated at the gateway with the *.rockyroad.rocks wildcard certificate.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argo-cd-ui
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - argo-cd-gw.rockyroad.rocks
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: argocd-server
+          port: 80 # Service port "http" → 8080; argocd-server runs with server.insecure
+      # The UI keeps long-lived event streams open; Cilium leaves Envoy's 15 s route timeout in place unless a
+      # timeout is set, and 0s disables it.
+      timeouts:
+        request: 0s
