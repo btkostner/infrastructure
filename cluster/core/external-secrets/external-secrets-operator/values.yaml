@@ -13,7 +13,9 @@ crds:
   # No conversion webhook is deployed (webhook.create: false); v1 and v1beta1 share a schema and need none.
   conversion:
     enabled: false
-processClusterExternalSecret: true
+# No ClusterExternalSecrets are used; from 2.x processing them also grants the controller
+# update/patch on every Namespace. The CRD is still installed.
+processClusterExternalSecret: false
 processClusterStore: true
 processPushSecret: true
 createOperator: true

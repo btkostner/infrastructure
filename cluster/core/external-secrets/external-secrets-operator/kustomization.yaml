@@ -11,7 +11,7 @@ helmCharts:
     releaseName: external-secrets
     namespace: external-secrets
     # Path 0.14 -> 0.16 (serves v1 and v1beta1) -> manifests to v1 -> latest (0.17+ stops serving v1beta1).
-    version: 0.16.2 # 0.16.2 as at 20261115 https://github.com/external-secrets/external-secrets/releases
+    version: 2.15.0 # 2.15.0 as at 20261115 https://github.com/external-secrets/external-secrets/releases
     valuesFile: values.yaml
 
 resources:
