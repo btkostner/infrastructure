@@ -34,27 +34,8 @@ hubble:
         ipv6:
           enabled: false
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-        cert-manager.io/cluster-issuer: "letsencrypt-dns01-prod"
-        #cert-manager.io/cluster-issuer: "letsencrypt-staging"
-        #nginx.org/websocket-services: "ghs-http-svc"        
-        nginx.org/proxy-read-timeout: "3600"
-        nginx.org/proxy-send-timeout: "3600" 
-        nginx.ingress.kubernetes.io/proxy-body-size: "100m" # allow uploads (aka backups) of up to 100MB
-        gethomepage.dev/description: K8s Network Observability
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Network Services
-        gethomepage.dev/icon: cilium
-        gethomepage.dev/name: Cilium Hubble
- 
-      hosts: 
-        - cilium-hubble.rockyroad.rocks
-      tls:
-        - hosts:
-            - cilium-hubble.rockyroad.rocks
-          secretName: cilium-hubble-tls
+      # Served by resources/hubble-ui-httproute.yaml on the Gateway API instead (2026-11-15).
+      enabled: false
 
 ingressController:
   enabled: false

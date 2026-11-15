@@ -1,0 +1,30 @@
+# Hubble UI through Cilium's external-gateway (moved from the chart's ingress-nginx Ingress 2026-11-15; the Cilium
+# chart has no HTTPRoute option for Hubble UI, so hubble.ui.ingress is disabled in values.yaml). TLS is terminated at
+# the gateway with the *.rockyroad.rocks wildcard certificate; HTTP is redirected by https-redirect. The UI keeps
+# gRPC-web streams open to follow flows, so the route timeout is disabled (Envoy's default is 15 s).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: hubble-ui
+  annotations:
+    gethomepage.dev/description: "K8s Network Observability"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: "Network Services"
+    gethomepage.dev/icon: "cilium"
+    gethomepage.dev/name: "Cilium Hubble"
+spec:
+  parentRefs:
+    - name: external-gateway
+      sectionName: https
+  hostnames:
+    - cilium-hubble.rockyroad.rocks
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: hubble-ui
+          port: 80
+      timeouts:
+        request: 0s
