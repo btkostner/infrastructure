@@ -80,6 +80,7 @@ spec:
   parentRefs:
     - name: external-gateway
       namespace: kube-system
+      sectionName: https # HTTPS only; plain HTTP is redirected by kube-system/https-redirect
   hostnames:
     - "bentopdf.rockyroad.rocks"
   rules:
