@@ -18,3 +18,4 @@ resources:
   - ./resources/keycloak-externalsecrets.yaml
   - ./resources/keycloak-postgres.yaml
   - ./resources/keycloak-deployment.yaml
+  - ./resources/keycloak-httproute.yaml

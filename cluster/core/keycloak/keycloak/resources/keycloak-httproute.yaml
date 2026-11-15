@@ -1,0 +1,46 @@
+# Gateway API route for Keycloak (Ingress → Gateway API migration). Step 1: test hostname only, alongside the
+# operator-created Ingress; at cutover the hostname becomes keycloak.rockyroad.rocks and the Keycloak CR's
+# `ingress.enabled` is set to false.
+# TLS is terminated at the gateway; the gateway reaches Keycloak over plain HTTP on 8080 (allowed below).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: keycloak
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - keycloak-gw.rockyroad.rocks
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: keycloak-service
+          port: 8080
+      timeouts:
+        request: 60s # ingress-nginx's default proxy timeouts were 60 s; Envoy's default is 15 s
+---
+# The operator's NetworkPolicy only lets the argocd, mealie and wallos namespaces reach port 8080. Gateway traffic
+# arrives from Cilium's Envoy with the reserved `ingress` identity, which a namespaceSelector can't match, so allow
+# that identity too. Cilium allows the union of all policies selecting a pod.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: keycloak-allow-gateway
+spec:
+  endpointSelector:
+    matchLabels:
+      app: keycloak
+      app.kubernetes.io/instance: keycloak
+      app.kubernetes.io/managed-by: keycloak-operator
+  ingress:
+    - fromEntities:
+        - ingress
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
