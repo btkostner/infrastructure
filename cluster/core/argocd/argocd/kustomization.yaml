@@ -8,7 +8,6 @@ namespace: argocd
 
 resources:
   - ./resources/namespace.yaml
-  - ./resources/argo-cd-ui-ingress.yaml
   - ./resources/argo-cd-ui-httproute.yaml
   - ./resources/argocd-oidc-client-secret.yaml
   # One minor at a time (3.3 -> 3.4 -> 3.5 -> 3.6); 3.3+ requires the argocd app to use ServerSideApply.

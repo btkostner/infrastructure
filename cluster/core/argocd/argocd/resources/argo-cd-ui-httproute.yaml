@@ -1,17 +1,23 @@
-# Gateway API route for the Argo CD UI (Ingress → Gateway API migration). Step 1: test hostname only, alongside the
-# Ingress; at cutover the hostname becomes argo-cd.rockyroad.rocks, the homepage annotations move here and the
-# Ingress is removed. TLS is terminated at the gateway with the *.rockyroad.rocks wildcard certificate.
+# Argo CD UI, served through Cilium's external-gateway (moved from the ingress-nginx Ingress 2026-11-15). TLS is
+# terminated at the gateway with the *.rockyroad.rocks wildcard certificate; HTTP is redirected by
+# kube-system/https-redirect.
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: argo-cd-ui
+  annotations:
+    gethomepage.dev/description: GitOps Continuous Delivery for Kubernetes
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Network Services
+    gethomepage.dev/icon: argocd
+    gethomepage.dev/name: Argo CD
 spec:
   parentRefs:
     - name: external-gateway
       namespace: kube-system
       sectionName: https
   hostnames:
-    - argo-cd-gw.rockyroad.rocks
+    - argo-cd.rockyroad.rocks
   rules:
     - matches:
         - path:
