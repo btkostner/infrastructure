@@ -11,7 +11,8 @@ resources:
   - ./resources/argo-cd-ui-ingress.yaml
   - ./resources/argocd-oidc-client-secret.yaml
   # One minor at a time (3.3 -> 3.4 -> 3.5 -> 3.6); 3.3+ requires the argocd app to use ServerSideApply.
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.4.13/manifests/install.yaml # v3.4.13 as at 20261115 https://github.com/argoproj/argo-cd/releases
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.5.7/manifests/install.yaml # v3.5.7 as at 20261115 https://github.com/argoproj/argo-cd/releases
+  # - https://raw.githubusercontent.com/argoproj/argo-cd/v3.4.13/manifests/install.yaml # v3.4.13 as at 20261115
   # - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.19/manifests/install.yaml # v3.3.19 as at 20261115
   # - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.5/manifests/install.yaml # v3.2.5 as at 20260120
   # - https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.9/manifests/install.yaml # v3.1.9 as at ?
