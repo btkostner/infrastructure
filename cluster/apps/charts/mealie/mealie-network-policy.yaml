@@ -38,9 +38,6 @@ spec:
           "k8s:io.kubernetes.pod.namespace": vllm
     - toEndpoints: # allow within the namespace
       - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": ingress-nginx
-    - toEndpoints: # allow within the namespace
-      - matchLabels:
           "k8s:io.kubernetes.pod.namespace": keycloak
     # Apps served through the Cilium gateway (keycloak.rockyroad.rocks from 2026-11-15): connections to the
     # gateway's address are handled by Cilium's Envoy, which carries the reserved `ingress` identity.
