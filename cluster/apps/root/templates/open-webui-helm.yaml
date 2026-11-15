@@ -17,8 +17,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: ollama
   project: default
-  source:
-    chart: open-webui
+  sources:
+  - chart: open-webui
     repoURL: https://helm.openwebui.com/
     # targetRevision: 5.13.0 # 5.13.0 as at 20250216
     # targetRevision: 8.11.0  #8.11.0 as at 20251015
@@ -36,19 +36,8 @@ spec:
               # -- Specify the number of GPU to 1
               number: 1
           ingress:
-            enabled: true
-            annotations:
-              cert-manager.io/cluster-issuer: "letsencrypt-dns01-prod"
-              kubernetes.io/ingress.class: "nginx"
-            hosts:
-            - host: ollama.rockyroad.rocks
-              paths:
-                - path: /
-                  pathType: Prefix
-            tls:
-              - hosts:
-                - ollama.rockyroad.rocks
-                secretName: ollama-tls
+            # Served by cluster/apps/charts/open-webui (HTTPRoute "ollama") instead (2026-11-15).
+            enabled: false
           persistentVolume:
             enabled: true
         extraEnvVars:
@@ -59,28 +48,12 @@ spec:
         tika:
           enabled: true
         ingress:
-          enabled: true
-          class: "nginx"
-          host: open-webui.rockyroad.rocks
-          tls: true
-          annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-dns01-prod"
-            gethomepage.dev/description: Open-WebUI Self Hosted AI Platform
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/group: AI Tools
-            gethomepage.dev/icon: open-webui
-            gethomepage.dev/name: Open WebUI
-            # kubernetes.io/ingress.class: "nginx"
-
-          # hosts:
-          # - host: open-webui.rockyroad.rocks
-          #   paths:
-          #     - path: /
-          #       pathType: Prefix
-          # tls:
-          #   - hosts:
-          #     - open-webui.rockyroad.rocks
-          #     secretName: open-webui-tls
+          # Served by cluster/apps/charts/open-webui (HTTPRoute "open-webui") instead (2026-11-15).
+          enabled: false
+  # HTTPRoutes for open-webui.rockyroad.rocks and ollama.rockyroad.rocks (the chart has no Gateway API option)
+  - path: cluster/apps/charts/open-webui
+    repoURL: https://github.com/ugoogalizer/kubernetes-talos.git
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

@@ -1,0 +1,56 @@
+# Open WebUI and the Ollama API through Cilium's external-gateway (moved from the open-webui chart's ingress-nginx
+# Ingresses 2026-11-15; the chart (10.2.1) and its ollama subchart have no HTTPRoute option, so both chart ingresses
+# are disabled in cluster/apps/root/templates/open-webui-helm.yaml and these routes are a second Application source).
+# TLS is terminated at the gateway with the *.rockyroad.rocks wildcard certificate; HTTP is redirected by
+# kube-system/https-redirect. Route timeouts are disabled: model responses stream for longer than Envoy's 15 s
+# default, and model pulls/uploads are long. Websocket upgrades (Open WebUI's socket.io) are allowed by default.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: open-webui
+  annotations:
+    gethomepage.dev/description: "Open-WebUI Self Hosted AI Platform"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: "AI Tools"
+    gethomepage.dev/icon: "open-webui"
+    gethomepage.dev/name: "Open WebUI"
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - open-webui.rockyroad.rocks
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: open-webui
+          port: 80
+      timeouts:
+        request: 0s
+---
+# The Ollama API has no authentication of its own; like the old Ingress, this is reachable from the LAN only.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ollama
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - ollama.rockyroad.rocks
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: open-webui-ollama
+          port: 11434
+      timeouts:
+        request: 0s
