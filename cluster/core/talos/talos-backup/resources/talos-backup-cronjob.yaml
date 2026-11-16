@@ -32,7 +32,7 @@ spec:
                     name: talos-backup-externalsecrets
                     key: secret-access-key
               - name: AWS_REGION
-                value: east
+                value: us-east-1 # must match the S3 server's region (SigV4)
               # CUSTOM_S3_ENDPOINT is optional; if omitted the service will fallback to default AWS endpoints.
               - name: CUSTOM_S3_ENDPOINT
                 valueFrom:
@@ -40,7 +40,7 @@ spec:
                     name: talos-backup-externalsecrets
                     key: endpoint
               - name: BUCKET
-                value: etcd-omni
+                value: talos-backup
               # CLUSTER_NAME is optional; if omitted it will fall back to the name of the default context.
               - name: CLUSTER_NAME
                 value: "talos-gpu"
@@ -52,10 +52,10 @@ spec:
                   secretKeyRef:
                     name: talos-backup-externalsecrets
                     key: age-public-key
-              # USE_PATH_STYLE is optional; set this to false if you have another s3 like endpoint such as minio.
-              # If not, the S3 will resolve to a hostname based on https://$BUCKET_NAME.$CUSTOM_S3_ENDPOINT/
+              # Path-style (https://endpoint/bucket/key) is the default with CUSTOM_S3_ENDPOINT since v0.1.0;
+              # "false" switches to virtual-hosted style (https://bucket.endpoint/key), which needs wildcard DNS.
               - name: USE_PATH_STYLE
-                value: "false"
+                value: "true"
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
