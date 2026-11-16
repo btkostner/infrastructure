@@ -4,11 +4,19 @@ kind: CronJob
 metadata:
   name: talos-backup
 spec:
-  schedule: "0/10 * * * *"
+  # Hourly: the snapshot is the whole etcd DB (~166 MB uncompressed, 2026-11-17); the NAS keeps 14 days.
+  schedule: "17 * * * *"
+  timeZone: Australia/Sydney
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 900
       template:
         spec:
+          automountServiceAccountToken: false # Talos API access comes from the talos-backup-secrets volume
           hostAliases:
             - ip: "10.20.10.1"
               hostnames:
@@ -56,6 +64,15 @@ spec:
               # "false" switches to virtual-hosted style (https://bucket.endpoint/key), which needs wildcard DNS.
               - name: USE_PATH_STYLE
                 value: "true"
+              # zstd before age encryption; etcd's DB is mostly free pages, so this shrinks it a lot.
+              - name: ENABLE_COMPRESSION
+                value: "true"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
