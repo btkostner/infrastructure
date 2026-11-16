@@ -109,11 +109,5 @@ metadata:
 spec:
     roles:
         - os:etcd:backup
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: talos-backup-secrets
-  annotations:
-    kubernetes.io/service-account.name: talos-backup-secrets
----
+# Talos creates the Secret talos-backup-secrets (Talos API credentials with the roles above) from this
+# resource; don't define it here: Talos refuses to manage a Secret it didn't create.
