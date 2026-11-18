@@ -27,6 +27,10 @@ spec:
           env:
             - name: TZ
               value: "Australia/Sydney"
+            # Wallos drops OIDC/webhook/SMTP targets that resolve to private IPs unless allowlisted; Keycloak
+            # resolves to the gateway's LAN IP. Replaces the Admin → Security allowlist entirely (field greys out).
+            - name: SSRF_ALLOWLIST
+              value: "keycloak.rockyroad.rocks"
           ports:
             - containerPort: 80
               name: wallos-http
