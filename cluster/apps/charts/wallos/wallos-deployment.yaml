@@ -21,8 +21,9 @@ spec:
     spec:
       containers:
         - name: wallos
-          image: bellamy/wallos:latest
-          imagePullPolicy: Always
+          # 5.11.1 as at 20261118 https://github.com/ellite/Wallos/releases
+          image: bellamy/wallos:5.11.1@sha256:182d4be4dae26834cc5cec3686bb142e78b0a139a0eb1059355d061d8c0de3e5
+          imagePullPolicy: IfNotPresent
           env:
             - name: TZ
               value: "Australia/Sydney"
