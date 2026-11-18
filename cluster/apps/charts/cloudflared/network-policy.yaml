@@ -84,16 +84,6 @@ spec:
             - port: "3000"
               protocol: TCP
 
-    # scotland-yard.rockyroad.rocks -> scotland-yard-http-svc.scotland-yard:8000
-    - toServices:
-        - k8sService:
-            serviceName: scotland-yard-http-svc
-            namespace: scotland-yard
-      toPorts:
-        - ports:
-            - port: "8000"
-              protocol: TCP
-
     # cmui.rockyroad.rocks -> cmui-web-http-svc.cmui:80 (targetPort 8080)
     - toServices:
         - k8sService:
