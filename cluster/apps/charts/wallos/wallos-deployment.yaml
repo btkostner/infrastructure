@@ -27,10 +27,11 @@ spec:
           env:
             - name: TZ
               value: "Australia/Sydney"
-            # Wallos drops OIDC/webhook/SMTP targets that resolve to private IPs unless allowlisted; Keycloak
-            # resolves to the gateway's LAN IP. Replaces the Admin → Security allowlist entirely (field greys out).
+            # Wallos drops OIDC/webhook/SMTP targets that resolve to private IPs unless allowlisted. Its OIDC token
+            # and userinfo URLs (Admin → OIDC) call Keycloak's in-cluster Service directly (ClusterIP); the public
+            # name resolves to the gateway's LAN IP. Replaces the Admin → Security allowlist entirely.
             - name: SSRF_ALLOWLIST
-              value: "keycloak.rockyroad.rocks"
+              value: "keycloak-service.keycloak.svc.cluster.local,keycloak.rockyroad.rocks"
           ports:
             - containerPort: 80
               name: wallos-http
