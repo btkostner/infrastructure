@@ -69,10 +69,12 @@ spec:
   additionalOptions:
     - name: hostname-debug
       value: 'true'
-    # Pairs with proxy.headers above: ignore X-Forwarded-* unless the request comes from the pod network (both
-    # nodes' pod CIDRs; Cilium gives its gateway Envoy an address from them too).
+    # Pairs with proxy.headers above: ignore X-Forwarded-* unless the request comes from the gateway's Envoy.
+    # Envoy reaches Keycloak from its node's Cilium ingress IP (pod CIDR) when Keycloak is on the other node, but
+    # from the node IP when the node holding the gateway's L2 lease also runs Keycloak (seen 2026-11-18). Trust
+    # both nodes' IPs too (DHCP reservations; update if a node's address changes).
     - name: proxy-trusted-addresses
-      value: 10.244.0.0/16
+      value: 10.244.0.0/16,10.20.8.61/32,10.20.8.62/32
       # This allows us to test against: 
       #    curl http://keycloak-service.keycloak.svc.cluster.local:8080/realms/rockyroadrocks/.well-known/openid-configuration
 
