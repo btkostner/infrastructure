@@ -32,6 +32,40 @@ spec:
             # name resolves to the gateway's LAN IP. Replaces the Admin → Security allowlist entirely.
             - name: SSRF_ALLOWLIST
               value: "keycloak-service.keycloak.svc.cluster.local,keycloak.rockyroad.rocks"
+            # SSO via Keycloak, declared here instead of Admin → OIDC: each OIDC_* variable overrides the database
+            # value (the UI field greys out). No OIDC_ISSUER: discovery would replace the in-cluster token/userinfo
+            # URLs with the public ones. The browser-facing URLs (auth, logout) must be public.
+            - name: OIDC_ENABLED
+              value: "true"
+            - name: OIDC_PROVIDER_NAME
+              value: "Rockyroad"
+            - name: OIDC_CLIENT_ID
+              value: "wallos"
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wallos-oidc
+                  key: client-secret
+            - name: OIDC_AUTH_URL
+              value: "https://keycloak.rockyroad.rocks/realms/rockyroadrocks/protocol/openid-connect/auth"
+            - name: OIDC_TOKEN_URL
+              value: "http://keycloak-service.keycloak.svc.cluster.local:8080/realms/rockyroadrocks/protocol/openid-connect/token"
+            - name: OIDC_USERINFO_URL
+              value: "http://keycloak-service.keycloak.svc.cluster.local:8080/realms/rockyroadrocks/protocol/openid-connect/userinfo"
+            - name: OIDC_REDIRECT_URL
+              value: "https://wallos.rockyroad.rocks/"
+            - name: OIDC_LOGOUT_URL
+              value: "https://keycloak.rockyroad.rocks/realms/rockyroadrocks/protocol/openid-connect/logout"
+            - name: OIDC_USER_IDENTIFIER
+              value: "sub"
+            - name: OIDC_SCOPES
+              value: "openid email profile"
+            - name: OIDC_AUTO_CREATE_USER
+              value: "false"
+            - name: OIDC_DISABLE_PASSWORD_LOGIN
+              value: "false"
+            - name: OIDC_REQUIRE_EMAIL_VERIFIED
+              value: "true"
           ports:
             - containerPort: 80
               name: wallos-http
