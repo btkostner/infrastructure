@@ -1,19 +1,19 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-dns01-prod
+  name: letsencrypt-dns01-staging
   namespace: cert-manager
   annotations:
     cert-manager.io/issue-temporary-certificate: "true"
 spec:
   acme:
     # The ACME server URL
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     # Email address used for ACME registration
     email: signup@mattcurtis.id.au
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-dns01-prod
+      name: letsencrypt-dns01-staging
     solvers:
     - dns01:
         cloudflare:
