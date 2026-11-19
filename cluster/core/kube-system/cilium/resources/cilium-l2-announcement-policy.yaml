@@ -3,6 +3,14 @@ kind: CiliumL2AnnouncementPolicy
 metadata:
   name: default-l2-announcement-policy
 spec:
+  # Every LoadBalancer Service except ha-gateway's, which has its own policy (ha-gateway.yaml). NotIn also matches
+  # Services without the label, i.e. all the others.
+  serviceSelector:
+    matchExpressions:
+      - key: io.cilium.gateway/owning-gateway
+        operator: NotIn
+        values:
+          - ha-gateway
   externalIPs: true
   loadBalancerIPs: true
   # Optional: Select specific nodes to perform announcements

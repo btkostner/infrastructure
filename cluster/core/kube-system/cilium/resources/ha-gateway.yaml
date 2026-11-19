@@ -1,0 +1,70 @@
+# Dedicated gateway for Home Assistant, announced (L2) only from maurice.
+#
+# Why: Home Assistant runs with hostNetwork on maurice-02. The gateway's Envoy on the node that holds a gateway's
+# L2 lease cannot reach a host-network backend on that same node (503 after Envoy's 5 s connect timeout; cf.
+# cilium/cilium#44529, still unfixed). external-gateway's lease can land on either node, so Home Assistant gets
+# its own gateway whose lease can only be on maurice, while Home Assistant is pinned to maurice-02.
+# Trade-off: homeassistant.rockyroad.rocks on the LAN needs maurice up (HA's own LB 10.20.26.13:8123 and the
+# Cloudflare tunnel don't). Every other app stays on external-gateway, which fails over between nodes.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ha-gateway
+spec:
+  gatewayClassName: cilium-lb
+  addresses:
+    - type: IPAddress
+      value: 10.20.26.3 # from default-load-balancer-ip-pool; external-dns points homeassistant.rockyroad.rocks here
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: homeassistant.rockyroad.rocks
+      allowedRoutes:
+        namespaces:
+          from: Same # only the redirect below
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: homeassistant.rockyroad.rocks
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: wild-rockyroad-rocks-tls # same wildcard secret as external-gateway (same namespace)
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: home-assistant
+---
+# Plain HTTP → HTTPS, as kube-system/https-redirect does for external-gateway.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ha-https-redirect
+spec:
+  parentRefs:
+    - name: ha-gateway
+      sectionName: http
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+---
+# Announce ha-gateway's IP only from maurice. default-l2-announcement-policy excludes this Service; otherwise
+# maurice-02 could also win the lease.
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: ha-gateway-l2-announcement-policy
+spec:
+  serviceSelector:
+    matchLabels:
+      io.cilium.gateway/owning-gateway: ha-gateway
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: maurice
+  loadBalancerIPs: true

@@ -17,6 +17,7 @@ helmCharts:
 resources:
   - ./resources/cilium-gateway.yaml
   - ./resources/gateway-https-redirect.yaml
+  - ./resources/ha-gateway.yaml
   - ./resources/hubble-ui-httproute.yaml
   - ./resources/cilium-l2-announcement-policy.yaml
   - ./resources/cilium-load-balancer-ip-pool.yaml
